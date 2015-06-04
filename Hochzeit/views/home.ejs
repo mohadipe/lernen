@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 
     <!-- Custom styles for this template -->
-    <link href="navbar.css" rel="stylesheet">
+    <link href="../navbar.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -29,7 +29,7 @@
     <![endif]-->
     <style type="text/css">
       .jumbotron{
-          background: #efefef url(Hintergrund.png) no-repeat center center;
+          background: #efefef url(../Hintergrund.png) no-repeat center center;
               -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -63,7 +63,11 @@
               <li><a href="/hochzeit/info">Informationen</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="/hochzeit/login"> Login</a></li>
+              <% if (typeof user == undefined) { %>
+                  <li><a href="/hochzeit/logout"> Logout</a></li>
+              <% } else { %> 
+                  <li><a href="/hochzeit/login"> Login</a></li>
+              <% } %>              
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -83,7 +87,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
   </body>

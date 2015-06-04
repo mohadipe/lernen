@@ -29,7 +29,7 @@
     <![endif]-->
     <style type="text/css">
       .jumbotron{
-          background: #efefef url(Hintergrund_matt.png) no-repeat center center;
+          background: #efefef url(../Hintergrund_matt.png) no-repeat center center;
               -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -63,8 +63,11 @@
               <li class="active"><a href="/hochzeit/info">Informationen</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="/hochzeit/login"> Login</a></li>
-            </ul>
+              <% if (typeof user == undefined) { %>
+                  <li><a href="/hochzeit/logout"> Logout</a></li>
+              <% } else { %> 
+                  <li><a href="/hochzeit/login"> Login</a></li>
+              <% } %>            </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
@@ -72,14 +75,25 @@
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h1>Wichtigen Informationen</h1>
-        <h2>Ort</h2>
-        <p>Wir sind guter Dinge einen Ort für unsere Hochzeitsfeier zu haben :-) .</p>
-        <p>
-        <h2>Ablauf des Tages</h2>
-        <p>Hier werden wir die wichtigen Zeiten + Orte beschreiben.<br>
-          Wann/Wo kirchliche Trauung.<br>
-          Ab wann am Ort der Feier ....
+        <p>Die kirchliche Trauung findet in der evangelischen Kirche in Frauenaurach statt.<br>
+          Adresse: Wallenrodstraße 4, 91056 Erlangen<br>
+          Uhrzeit: 12 Uhr Datum: 03.10.2015
         </p>
+        <p>Nach der kirchlichen Trauung fahren wir gemeinsam zur Festhalle nach Herzogenaurach.
+        </p>
+        <p>Für alles weitere last euch einfach überraschen :-)</p>
+
+        <h2>Übernachtung</h2>
+        <ol>
+          <li><a href="http://www.el-castano.de/">Zum Kastanienbaum Herzogenaurach</a></li>
+          <li><a href="http://www.ihrekrone.de/">Hotel und Gasthof Krone</a></li>
+          <li><a href="http://engelsschlaf.de/">Gästehaus in der Engelgasse</a></li>
+          <li><a href="http://www.auracher-hof.de/">Hotel Auracher Hof</a></li>
+          <li><a href="http://www.hotel-aurach.de/">Hotel Aurach</a></li>
+          <li><a href="https://www.google.de/maps/search/Hotel+Herzogenaurach/@49.5706594,10.8753091,15z?hl=de">Mehr...</a></li>
+        </ol>
+        
+
       </div>
 
     </div> <!-- /container -->
@@ -89,7 +103,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
   </body>

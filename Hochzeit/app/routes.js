@@ -4,32 +4,32 @@ var userModel = require('./models/user_models.js');
 module.exports = function(app, passport) {
  
                 // show the home page (will also have our login links)
-                app.get('/', function(req, res) {
+                app.get('/hochzeit/', function(req, res) {
                                 res.render('home.ejs');
                 });
  
                 // PROFILE SECTION
-                app.get('/profile', isLoggedIn, function(req, res) {
+                app.get('/hochzeit/profile', isLoggedIn, function(req, res) {
                                 res.render('user_profile.ejs', {
                                                 user : req.user
                                 });
                 });
  
                 // LOGOUT
-                app.get('/logout', function(req, res) {
+                app.get('/hochzeit/logout', function(req, res) {
                                 req.logout();
-                                res.redirect('/');
+                                res.redirect('/hochzeit/');
                 });
  
 //-----------------Authenticate login-----------
                 // show the login form
                 // TODO csrf token für mehr sicherheit: 1:01:37
-                app.get('/login', function(req, res) {
+                app.get('/hochzeit/login', function(req, res) {
                                 res.render('user_login.ejs', { message: req.flash('loginMessage') });
                 });
 
                 // process the login form
-                app.post('/login', passport.authenticate('local-login', {
+                app.post('/hochzeit/login', passport.authenticate('local-login', {
                                 successRedirect : '/hochzeit/zusage', // redirect to the secure zusage section
                                 failureRedirect : '/hochzeit/login', // redirect back to the signup page if there is an error
                                 failureFlash : true // allow flash messages
@@ -37,25 +37,25 @@ module.exports = function(app, passport) {
  
 //----------------User Regitration------
                 // show the signup form
-                app.get('/register', function(req, res) {
+                app.get('/hochzeit/register', function(req, res) {
                                 res.render('user_registration.ejs', { message: req.flash('loginMessage') });
                 });
 
                 // process the signup form
-                app.post('/register', passport.authenticate('local-signup', {
-                                successRedirect : '/hochzeit/zusage', // redirect to the secure zusage section
+                app.post('/hochzeit/register', passport.authenticate('local-signup', {
+                                successRedirect : '/hochzeit/profile', // redirect to the secure zusage section
                                 failureRedirect : '/hochzeit/register', // redirect back to the signup page if there is an error
                                 failureFlash : true // allow flash messages
                 }));
  
 //---------------Authorizing already logining
                 // local login
-                app.get('/connect/local', function(req, res) {
+                app.get('/hochzeit/connect/local', function(req, res) {
                                 res.render('user_login.ejs', { message: req.flash('loginMessage') });
                 });
-                app.post('/connect/local', passport.authenticate('local-signup', {
+                app.post('/hochzeit/connect/local', passport.authenticate('local-signup', {
                                 successRedirect : '/hochzeit/zusage', // redirect to the secure zusage section
-                                failureRedirect : '/hochzeit/connect/local', // redirect back to the signup page if there is an error
+                                failureRedirect : '/hochzeit/local', // redirect back to the signup page if there is an error
                                 failureFlash : true // allow flash messages
                 }));
  
@@ -65,7 +65,7 @@ module.exports = function(app, passport) {
  user account will stay active in case they want to reconnect in the future
 */
                 // local login
-                app.get('/unlink/local', function(req, res) {
+                app.get('/hochzeit/unlink/local', function(req, res) {
                                 var user            = req.user;
                                 user.local.email    = undefined;
                                 user.local.password = undefined;
@@ -76,7 +76,7 @@ module.exports = function(app, passport) {
                                 });
                 });
 
-                app.get('/zusage', isLoggedIn,
+                app.get('/hochzeit/zusage', isLoggedIn,
                         function(req, res) {
                                  zusageModel.findOne({'email': req.user.local.email }, 
                                         function(err, gefunden) {
@@ -94,7 +94,7 @@ module.exports = function(app, passport) {
                         }
                 );
 
-                app.post('/change/zusage', isLoggedIn,
+                app.post('/hochzeit/change/zusage', isLoggedIn,
                         function(req, res) {
                                 // console.log('/change/zusage | req user : ' + req.user);
                                 var email = req.user.local.email;
@@ -111,7 +111,7 @@ module.exports = function(app, passport) {
                         }
                 );
 
-                app.get('/gaeste', isLoggedIn,
+                app.get('/hochzeit/gaeste', isLoggedIn,
                         function(req, res) {
                             // alle registrierten benutzer
                             userModel.find({}, function(err, allUser) {
@@ -132,8 +132,9 @@ module.exports = function(app, passport) {
                                             for (var i = allUser.length - 1; i >= 0; i--) {
                                                 for (var j = allZusagen.length - 1; j >= 0; j--) {
                                                     if (allZusagen[j].email == allUser[i].local.email) {
-                                                        gaeste.push({
-                                                            'name': allUser[i].local.email, 
+                                                        // console.log("Name + Vorname: " + allUser[i].vorname + " " + allUser[i].nachname);
+                                                        gaeste.push({ 
+                                                            'name': allUser[i].vorname + ' ' + allUser[i].nachname,
                                                             'dabei': allZusagen[j].dabei ? 'Ja' : 'Nein', 
                                                             'mitpartner': allZusagen[j].mitpartner ? 'Ja' : 'Nein', 
                                                             'mitkind': allZusagen[j].mitkind ? 'Ja' : 'Nein'});
@@ -148,17 +149,37 @@ module.exports = function(app, passport) {
                         }
                 );
 
-                app.get('/bilder', isLoggedIn,
+                app.get('/hochzeit/bilder', isLoggedIn,
                         function(req, res) {res.render('bilder.ejs');});
  
-                app.get('/info', isLoggedIn,
+                app.get('/hochzeit/info', isLoggedIn,
                         function(req, res) {res.render('infos.ejs');});
+                app.post('/hochzeit/change/profile', isLoggedIn, function(req, res) {
+                        console.log('bin in /change/profile');
+                        var email = req.user.local.email;
+                        var query = {'local.email': email};
+                        var update = {$set:{
+                                'nachname': req.body.nachname,
+                                'vorname': req.body.vorname,
+                                'local' : {
+                                    'email' : req.user.local.email,
+                                    'password' : req.user.local.password
+                                    }
+                                }};
+                        var options = {upsert: true};
+
+                        userModel.findOneAndUpdate(query, update, options, function(err, aktuellesObj) {
+                                                if (err) return handleError(err);
+                                                // console.log('Aktuallisierte Zusage: ' + aktuellesObj);
+                                                res.render('user_profile.ejs', {user : aktuellesObj});
+                                        }
+                                );
+                });
 };
  
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
                 if (req.isAuthenticated())
-                                return next();
- 
+                                return next();               
                 res.redirect('/hochzeit/');
 }

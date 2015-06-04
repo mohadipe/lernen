@@ -25,7 +25,7 @@ module.exports = function(passport) {
     });
  
 //LOCAL LOGIN =============================================================
-        passport.use('local-login', new LocalStrategy({
+    passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
         passwordField : 'password',
@@ -95,7 +95,7 @@ module.exports = function(passport) {
                 else {
                     // create the user
                     var newUser            = new User();
-
+                    
                     newUser.local.email    = email;
                     newUser.local.password = newUser.generateHash(password);
  

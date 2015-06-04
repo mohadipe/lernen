@@ -29,7 +29,7 @@
     <![endif]-->
     <style type="text/css">
       .jumbotron{
-          background: #efefef url(Hintergrund.png) no-repeat center center;
+          background: #efefef url(../Hintergrund_matt.png) no-repeat center center;
               -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -63,8 +63,11 @@
               <li><a href="/hochzeit/info">Informationen</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="/hochzeit/login"> Login</a></li>
-            </ul>
+              <% if (typeof user == undefined) { %>
+                  <li class="active"><a href="/hochzeit/logout"> Logout</a></li>
+              <% } else { %> 
+                  <li class="active"><a href="/hochzeit/login"> Login</a></li>
+              <% } %>            </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
@@ -91,7 +94,7 @@
           <button type="submit" class="btn btn-danger btn-lg">registrieren</button>
         </form>
         <hr>
-        <p>Du hast bereits einen Account? <a href="/hochzeit/login">Login</a> | <a href="/hochzeit/">home</a>.</p>   
+        <p>Du hast bereits einen Account? <a href="/hochzeit/login">Login</a> | <a href="/">home</a>.</p>   
       </div>
 
     </div> <!-- /container -->
@@ -101,7 +104,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
   </body>
