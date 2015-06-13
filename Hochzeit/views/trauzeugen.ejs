@@ -13,7 +13,6 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 
     <!-- Custom styles for this template -->
@@ -50,46 +49,40 @@
             <ul class="nav navbar-nav">
               <li><a href="/hochzeit/">Home</a></li>
               <li><a href="/hochzeit/zusage">Zusagen</a></li>
-              <li class="active"><a href="/hochzeit/gaeste">Gäste</a></li>
+              <li><a href="/hochzeit/gaeste">Gäste</a></li>
               <li><a href="/hochzeit/bilder">Bilder</a></li>
               <li><a href="/hochzeit/info">Informationen</a></li>
-              <li><a href="/hochzeit/trauzeugen">Trauzeugen</a></li>
+              <li class="active"><a href="/hochzeit/trauzeugen">Trauzeugen</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <% if (typeof user == undefined) { %>
-                  <li><a href="/hochzeit/logout"> Logout</a></li>
-              <% } else { %> 
-                  <li><a href="/hochzeit/login"> Login</a></li>
-              <% } %>            </ul>
+              <li><a href="/hochzeit/login"> Login</a></li>
+            </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <div class="table-responsive"> 
+        <h1>Trauzeugen</h1>
+        <p>Falls ihr Fragen zur Hochzeit habt könnt ihr euch auch gerne an unsere Trauzeugen wenden.</p>
           <table class="table table-striped table-hover table-bordered table-condensed">
             <thead>
             <tr class="info">
               <th>Name</th>
-              <th>Dabei</th>
-              <th>Mit Partner</th>
-              <th>Mit Kind/ern</th>
+              <th>Kontakt</th>
             </tr>
             </thead>
             <tbody>
-          <% for(var i=0; i<gaeste.length; i++) {%>
             <tr>
-             <td><%= gaeste[i].name %></td>
-             <td><%= gaeste[i].dabei %></td>
-             <td><%= gaeste[i].mitpartner %></td>
-             <td><%= gaeste[i].mitkind %></td>
+             <td>Maria Braun</td>
+             <td>maria89braun@googlemail.com</td>
             </tr>
-
-          <% } %>
-            </tbody>
+            <tr>
+             <td>Andreas Störmer</td>
+             <td>andreas.stoermer@freenet.de</td>
+            </tr>
+            </tbody>            
           </table>
-        </div>  
       </div>
 
     </div> <!-- /container -->

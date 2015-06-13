@@ -154,6 +154,8 @@ module.exports = function(app, passport) {
  
                 app.get('/hochzeit/info', isLoggedIn,
                         function(req, res) {res.render('infos.ejs');});
+                app.get('/hochzeit/trauzeugen', isLoggedIn,
+                        function(req, res) {res.render('trauzeugen.ejs');});                
                 app.post('/hochzeit/change/profile', isLoggedIn, function(req, res) {
                         console.log('bin in /change/profile');
                         var email = req.user.local.email;
