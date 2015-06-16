@@ -83,11 +83,11 @@ module.exports = function(app, passport) {
                                                 if (err) return handleError(err);
                                                 if (gefunden) {
                                                         console.log('etwas gefunden:' + gefunden);
-                                                        res.render('zusage.ejs', {'item': gefunden});
+                                                        res.render('zusage.ejs', {'item': gefunden, 'message':""});
                                                 } else {
                                                         console.log('nichts gefunden.');
                                                         var tmp = {dabei: false, mitPartner: false, mitKind: false}; 
-                                                        res.render('zusage.ejs', {'item': tmp});
+                                                        res.render('zusage.ejs', {'item': tmp, 'message':""});
                                                 }
                                         }
                                 )
@@ -105,9 +105,10 @@ module.exports = function(app, passport) {
                                 zusageModel.findOneAndUpdate(query, update, options, function(err, aktuellesObj) {
                                                 if (err) return handleError(err);
                                                 // console.log('Aktuallisierte Zusage: ' + aktuellesObj);
+                                                res.render('zusage.ejs', {'item': aktuellesObj, 'message' : "Erfolgreich"});
                                         }
                                 );
-                                res.redirect('/hochzeit/zusage');
+                                //res.redirect('/hochzeit/zusage');
                         }
                 );
 
