@@ -86,7 +86,7 @@ module.exports = function(app, passport) {
                                                         res.render('zusage.ejs', {'item': gefunden, 'message':""});
                                                 } else {
                                                         console.log('nichts gefunden.');
-                                                        var tmp = {dabei: false, mitPartner: false, mitKind: false}; 
+                                                        var tmp = {dabei: false, mitPartner: false, mitKind: false, absage: false}; 
                                                         res.render('zusage.ejs', {'item': tmp, 'message':""});
                                                 }
                                         }
@@ -99,7 +99,7 @@ module.exports = function(app, passport) {
                                 // console.log('/change/zusage | req user : ' + req.user);
                                 var email = req.user.local.email;
                                 var query = {'email': email};
-                                var update = {'dabei': req.body.dabei, 'mitpartner': req.body.mitpartner, 'mitkind': req.body.mitkind, 'email': email};
+                                var update = {'dabei': req.body.dabei, 'mitpartner': req.body.mitpartner, 'mitkind': req.body.mitkind, 'absage': req.body.absage, 'email': email};
                                 var options = {upsert: true};
                                 // find and update or create new
                                 zusageModel.findOneAndUpdate(query, update, options, function(err, aktuellesObj) {
@@ -138,7 +138,8 @@ module.exports = function(app, passport) {
                                                             'name': allUser[i].vorname + ' ' + allUser[i].nachname,
                                                             'dabei': allZusagen[j].dabei ? 'Ja' : 'Nein', 
                                                             'mitpartner': allZusagen[j].mitpartner ? 'Ja' : 'Nein', 
-                                                            'mitkind': allZusagen[j].mitkind ? 'Ja' : 'Nein'});
+                                                            'mitkind': allZusagen[j].mitkind ? 'Ja' : 'Nein',
+                                                            'absage': allZusagen[j].absage ? 'Ja' : 'Nein'});
                                                     }
                                                 };
                                             };
