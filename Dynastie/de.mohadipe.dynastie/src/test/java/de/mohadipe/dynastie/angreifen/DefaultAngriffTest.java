@@ -19,6 +19,7 @@ import de.mohadipe.dynastie.karte.FuenfMalFuenfKarte;
 import de.mohadipe.dynastie.karte.Karte;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
+import de.mohadipe.dynastie.output.SysOutSpielZug;
 import de.mohadipe.dynastie.sieg.SpielKonfiguration;
 import de.mohadipe.dynastie.spieler.ComputerSpieler;
 import de.mohadipe.dynastie.spieler.MenschSpieler;
@@ -69,6 +70,7 @@ public class DefaultAngriffTest {
 		DefaultAngriff defaultAngriff = new DefaultAngriff();
 		defaultAngriff.setKonfiguration(konfiguration);
 		defaultAngriff.setSpieler(aktSpieler);
+		defaultAngriff.setOutput(new SysOutSpielZug());
 		defaultAngriff.angreifen();
 
 		// keine Veränderung
@@ -90,6 +92,7 @@ public class DefaultAngriffTest {
 		Angreifen defaultAngriff = new DefaultAngriff();
 		defaultAngriff.setKonfiguration(konfiguration);
 		defaultAngriff.setSpieler(aktSpieler);
+		defaultAngriff.setOutput(new SysOutSpielZug());
 		((DummyRandomServiceImpl) this.randomService).setRandomValue(4);
 		defaultAngriff.setRandomService(this.randomService);
 		defaultAngriff.angreifen();
@@ -117,6 +120,7 @@ public class DefaultAngriffTest {
 		defaultAngriff.setSpieler(aktSpieler);
 		((DummyRandomServiceImpl) this.randomService).setRandomValue(4);
 		defaultAngriff.setRandomService(this.randomService);
+		defaultAngriff.setOutput(new SysOutSpielZug());
 		defaultAngriff.angreifen();
 
 		Map<Koordinate, Feld> einheitenMitKoordinatenVonAnderenSpielern = karte.getEinheitenMitKoordinatenVonAnderenSpielern(aktSpieler);
@@ -144,6 +148,7 @@ public class DefaultAngriffTest {
 		defaultAngriff.setSpieler(aktSpieler);
 		((DummyRandomServiceImpl) this.randomService).setRandomValue(4);
 		defaultAngriff.setRandomService(this.randomService);
+		defaultAngriff.setOutput(new SysOutSpielZug());
 		defaultAngriff.angreifen();
 
 		Assert.assertTrue(karte.hasSpielerEinheiten(aktSpieler));
