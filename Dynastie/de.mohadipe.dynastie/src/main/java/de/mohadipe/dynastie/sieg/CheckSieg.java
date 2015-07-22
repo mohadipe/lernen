@@ -6,7 +6,7 @@ import de.mohadipe.dynastie.karte.Karte;
 import de.mohadipe.dynastie.spieler.Spieler;
 
 public interface CheckSieg {
-	public static final String ES_MÜSSEN_SPIELER_VORHANDEN_SEIN = "Es müssen Spieler vorhanden sein.";
+	public static final String ES_MUESSEN_SPIELER_VORHANDEN_SEIN = "Es mï¿½ssen Spieler vorhanden sein.";
 
 	void auswerten();
 

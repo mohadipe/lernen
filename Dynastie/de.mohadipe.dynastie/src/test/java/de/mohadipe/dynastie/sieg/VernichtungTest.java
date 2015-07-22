@@ -86,7 +86,7 @@ public class VernichtungTest {
 			Assert.fail("Bei null beteiligten Spieler wird RuntimeException erwartet.");
 		} catch (Exception e) {
 			String actual = e.getMessage();
-			Assert.assertEquals(CheckSieg.ES_MÜSSEN_SPIELER_VORHANDEN_SEIN, actual);
+			Assert.assertEquals(CheckSieg.ES_MUESSEN_SPIELER_VORHANDEN_SEIN, actual);
 		}
 	}
 }

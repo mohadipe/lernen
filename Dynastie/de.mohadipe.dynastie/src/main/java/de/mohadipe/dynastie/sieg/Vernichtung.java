@@ -46,7 +46,7 @@ public class Vernichtung implements CheckSieg {
 	@Override
 	public void setSpieler(List<Spieler> beteiligteSpieler) {
 		if (beteiligteSpieler == null) {
-			throw new RuntimeException(ES_MÜSSEN_SPIELER_VORHANDEN_SEIN);
+			throw new RuntimeException(ES_MUESSEN_SPIELER_VORHANDEN_SEIN);
 		}
 		this.spieler.addAll(beteiligteSpieler);
 	}
