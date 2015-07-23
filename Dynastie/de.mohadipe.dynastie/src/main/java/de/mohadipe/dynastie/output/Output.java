@@ -13,4 +13,12 @@ public interface Output {
 
 	void anzeigeGegnerInReichweite(Map<Einheit, List<Feld>> gegnerZuEinheit);
 
+	void einheitBekaempfen(Einheit angreifer, Feld ziel);
+
+	void zielZerstoert(Einheit copyOfEinheit);
+
+	void einheitVerfaehlt(int randomNummerEinsBis);
+
+	void einheitGetroffen(Einheit copyOfEinheit);
+
 }

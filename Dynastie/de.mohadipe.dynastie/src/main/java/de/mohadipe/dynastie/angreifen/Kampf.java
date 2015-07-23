@@ -3,6 +3,8 @@ package de.mohadipe.dynastie.angreifen;
 import de.mohadipe.dynastie.RandomService;
 import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.karte.Feld;
+import de.mohadipe.dynastie.output.Output;
+import de.mohadipe.dynastie.output.TutNixOutput;
 
 public class Kampf {
 	public static final String KEIN_RANDOM_SERVICE_DEFINIERT = "Kein RandomService definiert.";
@@ -11,10 +13,12 @@ public class Kampf {
 	private final Einheit angreifer;
 	private final Feld ziel;
 	private RandomService randomService = null;
+	private Output output;
 
 	public Kampf(final Einheit angreifer, final Feld ziel) {
 		this.angreifer = angreifer;
 		this.ziel = ziel;
+		this.output = new TutNixOutput();
 	}
 
 	public void setRandomService(RandomService randomService) {
@@ -31,10 +35,18 @@ public class Kampf {
 			Einheit copyOfEinheit = ziel.getEinheit();
 			copyOfEinheit.erleideTrefferStaerke(angreifer.getStaerke());
 			if (copyOfEinheit.isAmLeben()) {
+				output.einheitGetroffen(copyOfEinheit);
 				ziel.setEinheit(copyOfEinheit);
 			} else {
 				ziel.setEinheit(null);
+				output.zielZerstoert(copyOfEinheit);
 			}
+		} else {
+			output.einheitVerfaehlt(randomNummerEinsBis);
 		}
+	}
+
+	public void setOutput(Output output) {
+		this.output = output;
 	}
 }

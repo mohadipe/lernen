@@ -11,13 +11,14 @@ import de.mohadipe.dynastie.karte.Feld;
 import de.mohadipe.dynastie.karte.Karte;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.output.Output;
+import de.mohadipe.dynastie.output.TutNixOutput;
 import de.mohadipe.dynastie.spieler.Spieler;
 
 public class DefaultAngriff implements Angreifen {
 	private Spieler spieler;
 	private RandomService randomService;
 	private Konfiguration konfiguration;
-	private Output output;
+	private Output output = new TutNixOutput();
 
 	@Override
 	public void angreifen() {
@@ -35,6 +36,7 @@ public class DefaultAngriff implements Angreifen {
 				Einheit angreifer = entry.getKey();
 				// kein Algorithmus fuer Zielermittlung
 				Feld ziel = entry.getValue().get(0);
+				output.einheitBekaempfen(angreifer, ziel);
 				angriffAusfuehren(angreifer, ziel);
 			}
 		}
@@ -43,6 +45,7 @@ public class DefaultAngriff implements Angreifen {
 	private void angriffAusfuehren(Einheit angreifer, Feld ziel) {
 		Kampf kampf = new Kampf(angreifer, ziel);
 		kampf.setRandomService(randomService);
+		kampf.setOutput(output);
 		kampf.ausfuehren();
 	}
 

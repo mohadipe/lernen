@@ -9,7 +9,7 @@ import de.mohadipe.dynastie.karte.Feld;
 import de.mohadipe.dynastie.karte.Karte;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 
-public class SysOutKarteAnzeige implements Output {
+public class SysOutKarteAnzeige extends TutNixOutput {
 	private Karte karte;
 
 	public SysOutKarteAnzeige(Karte karte) {
@@ -52,6 +52,12 @@ public class SysOutKarteAnzeige implements Output {
 
 	@Override
 	public void anzeigeGegnerInReichweite(Map<Einheit, List<Feld>> gegnerZuEinheit) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void einheitBekaempfen(Einheit angreifer, Feld ziel) {
 		// TODO Auto-generated method stub
 
 	}

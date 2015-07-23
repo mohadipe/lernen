@@ -22,7 +22,10 @@ public class Infanterie implements Einheit {
 
 	@Override
 	public String toString() {
-		return InfanterieDaten.kuerzel + "|" + spieler.toString() + "|" + aktLebenspunkte;
+		String trenner = "|";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(InfanterieDaten.kuerzel).append("-").append(eindeutigeKennung).append(trenner).append(spieler.toString()).append(trenner).append(aktLebenspunkte);
+		return stringBuilder.toString();
 	}
 
 	@Override
