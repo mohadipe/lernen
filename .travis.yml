@@ -1,5 +1,19 @@
 language: java
 jdk:
   - oraclejdk8
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "RhikZYuYBb9YIDjXLv5sm/vpZxH1LwYx4nUPJ7/i02QsS3FEzLh6wXM323AkWrnfymiOg6ggUKCO5FNBIInlKyPzi0u8KCeKVErmIEznnZntPT3Pw5oj9uDrPmgmjWQjUQd2nvu9XzCl+P73/DZGCXq1WICPsnvLqqZURKwU7PmEHS4SILScJXVP5H3bfl2EyuUrAOiudf3Dr/I4gQngx/KAITPdrhsjZksRoGeTAVOmXQ5wXKzlVkf7h1z5oG5ZDUsJ0XrsWDMP+L4RpGuInJhxTWcnNmkgRYIwWpThXGHhwZpZeTCu+95PyiddoDxZo9rha0LKNcQxSU04I0eJxOjWDZ4Bbp5JPPVDf4nB4h0gDvmVRnE53OjPocJA7o6nI6lynHI8lg7UrfTZvho4SwW6R3BaYVhsfpYNZXE+nXqwQTnt8/oH0yakAtwkuRMqWoBaw+zljUxk4cS2x7hDBx9JDZMoCSHbRLDChAfsOQclSOnxenNvBNFlvUj+JZb3ogjB2JuS3e4FU5zd7bPiY4RnioFkNHHgB/lOZumrgmmsEGYUGXJLVE9XafuwLTrHV/S7vuFe0E0Hxvv1gtYs6MmSmwADBvOFcP5mvzKUBkEPh21bLLVDCQLoF+g9/ox1umG79ZmnBwYvO3KBP0ynuYBZJID8SkHhL0AOOw7OjMQ="
+addons:
+  coverity_scan:
+    project:
+      name: "mohadipe/lernen"
+      description: "Build submitted via Travis CI"
+    notification_email: github@mohadipe.de
+    build_command_prepend: "cd Dynastie/de.mohadipe.dynastie && mvn clean"
+    build_command:   "cd Dynastie/de.mohadipe.dynastie && mvn -DskipTests=true compile"
+    branch_pattern: coverity_scan	
 script:
  - cd Dynastie/de.mohadipe.dynastie && mvn test
