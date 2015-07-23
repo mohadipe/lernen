@@ -12,8 +12,8 @@ addons:
       name: "mohadipe/lernen"
       description: "Build submitted via Travis CI"
     notification_email: github@mohadipe.de
-    build_command_prepend: "cd Dynastie/de.mohadipe.dynastie && mvn clean"
-    build_command:   "cd Dynastie/de.mohadipe.dynastie && mvn -DskipTests=true compile"
+    build_command_prepend: "mvn clean"
+    build_command: "mvn -DskipTests=true compile"
     branch_pattern: coverity_scan	
 script:
  - cd Dynastie/de.mohadipe.dynastie && mvn test
