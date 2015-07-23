@@ -6,3 +6,7 @@ Projekte die ich gebastelt habe und an denen ich arbeite um neue Dinge zu lernen
 </a>
 <br>
 <strong>Tickets:</strong><a href="https://trello.com/b/kXxmjbbQ/dynastie">Trello</a>
+<strong>Code-Analyse - Coverity:</strong><a href="https://scan.coverity.com/projects/5831">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/5831/badge.svg"/>
+</a>
