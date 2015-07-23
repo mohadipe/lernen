@@ -22,8 +22,8 @@ public class SysoEinheitAufstellenKoordinaten implements Input {
 	@Override
 	public void frageInputAb() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Sie dürfen Einheiten für " + spielKonfiguration.getEinheitenPunkte() + " Punkte aufstellen.");
-		System.out.println("Geben Sie die Koordinaten für Ihre Einheit an.");
+		System.out.println("Sie duerfen Einheiten fuer " + spielKonfiguration.getEinheitenPunkte() + " Punkte aufstellen.");
+		System.out.println("Geben Sie die Koordinaten fuer Ihre Einheit an.");
 		try {
 			System.out.println("X:");
 			int x = Integer.parseInt(br.readLine());

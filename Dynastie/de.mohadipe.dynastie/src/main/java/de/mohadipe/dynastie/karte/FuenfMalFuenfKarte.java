@@ -114,7 +114,7 @@ public class FuenfMalFuenfKarte implements Karte {
 	public void bewegeEinheitVonNach(Einheit einheit, Koordinate standort, Koordinate ziel) {
 		Feld feld = felderMap.get(standort);
 		if (!feld.getEinheit().equals(einheit)) {
-			throw new RuntimeException("Einheit auf Feld am Standort stimmt nicht mit der zu bewegenden Einheit überein.");
+			throw new RuntimeException("Einheit auf Feld am Standort stimmt nicht mit der zu bewegenden Einheit ueberein.");
 		}
 		feld.setEinheit(null);
 		felderMap.get(ziel).setEinheit(einheit);

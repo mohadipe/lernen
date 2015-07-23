@@ -1,8 +1,8 @@
 package de.mohadipe.dynastie.karte;
 
 public enum GelaendeBeschaffenheit {
-	EBENE,WALD,HUEGEL;
-	
+	EBENE, WALD, HUEGEL;
+
 	public static GelaendeBeschaffenheit getEnum(int i) {
 		switch (i) {
 		case 1:
@@ -12,10 +12,10 @@ public enum GelaendeBeschaffenheit {
 		case 3:
 			return HUEGEL;
 		default:
-			throw new RuntimeException("Für: " + i + " ist keine GelaendeBeschaffenheit definiert.");
+			throw new RuntimeException("Fuer: " + i + " ist keine GelaendeBeschaffenheit definiert.");
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		switch (this) {
@@ -26,7 +26,7 @@ public enum GelaendeBeschaffenheit {
 		case HUEGEL:
 			return "H";
 		default:
-			throw new RuntimeException("Für: " + this + " ist kein SysO-Kuerzel definiert.");
+			throw new RuntimeException("Fuer: " + this + " ist kein SysO-Kuerzel definiert.");
 		}
 	}
 }

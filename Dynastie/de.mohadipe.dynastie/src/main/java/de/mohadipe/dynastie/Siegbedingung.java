@@ -11,7 +11,7 @@ public enum Siegbedingung {
 		case VERNICHTEN:
 			return new Vernichtung();
 		default:
-			throw new RuntimeException("Kein Checker für Siegbedingung definiert: " + this);
+			throw new RuntimeException("Kein Checker fuer Siegbedingung definiert: " + this);
 		}
 	}
 

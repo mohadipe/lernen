@@ -32,7 +32,7 @@ public class EinheitenAufstellen implements Schritt {
 		// Spieler stellt Einheiten auf
 		Spieler player2 = spielKonfiguration.getSpieler(1);
 		player2.stelleEinheitenAuf(fuenfMalFuenfKarte, spielKonfiguration, aufstellenInput);
-		// nächster Schritt -> Beginn der SpielZüge
+		// naechster Schritt -> Beginn der SpielZuege
 		fuenfMalFuenfKarte.anzeigen();
 		input.frageInputAb();
 		spielKonfiguration.setKarte(fuenfMalFuenfKarte);

@@ -38,9 +38,9 @@ public class SpielTest {
 		boolean laeuft = true;
 		while (laeuft) {
 			int i = spielWorkflow.anzeigen();
-			System.out.println("Sie möchten: " + i);
+			System.out.println("Sie moechten: " + i);
 			if (i == 2) {
-				System.out.println("Schön wars.");
+				System.out.println("Schoen wars.");
 				laeuft = false;
 				continue;
 			}

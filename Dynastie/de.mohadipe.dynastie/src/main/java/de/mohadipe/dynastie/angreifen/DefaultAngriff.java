@@ -29,11 +29,11 @@ public class DefaultAngriff implements Angreifen {
 		einheitenMitKoordinatenVonSpieler.entrySet().forEach(gegnerEinheitenErmittler);
 		Map<Einheit, List<Feld>> gegnerZuEinheit = gegnerEinheitenErmittler.getGegnerZuEinheit();
 		output.anzeigeGegnerInReichweite(gegnerZuEinheit);
-		// Je Einheit angriff auf Ziel(e) ausführen
+		// Je Einheit angriff auf Ziel(e) ausfuehren
 		for (Entry<Einheit, List<Feld>> entry : gegnerZuEinheit.entrySet()) {
 			if (entry.getValue().size() > 0) {
 				Einheit angreifer = entry.getKey();
-				// kein Algorithmus für Zielermittlung
+				// kein Algorithmus fuer Zielermittlung
 				Feld ziel = entry.getValue().get(0);
 				angriffAusfuehren(angreifer, ziel);
 			}
@@ -53,7 +53,7 @@ public class DefaultAngriff implements Angreifen {
 
 	@Override
 	public void setKarte(Karte karte) {
-		throw new UnsupportedOperationException("Karte wird nicht benötigt.");
+		throw new UnsupportedOperationException("Karte wird nicht benoetigt.");
 	}
 
 	@Override

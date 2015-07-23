@@ -59,7 +59,7 @@ public class KIBewegung extends AbstractBewegung {
 				return standortX - bewegungsReichweite;
 			}
 		}
-		throw new RuntimeException("Keine gueltige Bewegung auf X Koordinate möglich.");
+		throw new RuntimeException("Keine gueltige Bewegung auf X Koordinate moeglich.");
 	}
 
 	private int yDiagonaleBewegung(int bewegungsReichweite, int standortY, AufKartePlausi aufKartePlausi) {
@@ -70,6 +70,6 @@ public class KIBewegung extends AbstractBewegung {
 				return standortY - bewegungsReichweite;
 			}
 		}
-		throw new RuntimeException("Keine gueltige Bewegung auf Y Koordinate möglich.");
+		throw new RuntimeException("Keine gueltige Bewegung auf Y Koordinate moeglich.");
 	}
 }

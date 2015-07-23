@@ -55,7 +55,7 @@ public class SpielZuege implements Schritt {
 			angreifen.setRandomService(spielWorkflow.getRandomService());
 			angreifen.setOutput(output);
 			angreifen.angreifen();
-			// nächster Spieler
+			// naechster Spieler
 			output.anzeigeSpielZugEnde(runde, konfiguration);
 			sieg.auswerten();
 			++runde;

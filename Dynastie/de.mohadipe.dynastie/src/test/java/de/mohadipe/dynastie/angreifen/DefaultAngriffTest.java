@@ -73,8 +73,8 @@ public class DefaultAngriffTest {
 		defaultAngriff.setOutput(new SysOutSpielZug());
 		defaultAngriff.angreifen();
 
-		// keine Veränderung
-		// Alle Einheiten bei voller Stärke
+		// keine Veraenderung
+		// Alle Einheiten bei voller Staerke
 		Map<Koordinate, Feld> einheitenMitKoordinatenVonAnderenSpielern = karte.getEinheitenMitKoordinatenVonAnderenSpielern(aktSpieler);
 		Assert.assertTrue("Es sollte mindestens eine Einheit vorhanden sein.", einheitenMitKoordinatenVonAnderenSpielern.size() > 0);
 
