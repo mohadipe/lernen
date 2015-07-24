@@ -1,6 +1,8 @@
 language: java
 jdk:
   - oraclejdk8
+before_install:
+  - cd Dynastie/de.mohadipe.dynastie
 env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
@@ -13,7 +15,7 @@ addons:
       description: "Build submitted via Travis CI"
     notification_email: github@mohadipe.de
     build_command_prepend: "mvn clean"
-    build_command: "mvn -DskipTests=true compile"
+    build_command: "cov-build --dir cov-int mvn -DskipTests=true compile"
     branch_pattern: coverity_scan	
 script:
- - cd Dynastie/de.mohadipe.dynastie && mvn test
+ - mvn test
