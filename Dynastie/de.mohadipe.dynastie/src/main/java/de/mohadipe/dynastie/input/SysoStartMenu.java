@@ -4,18 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import de.mohadipe.dynastie.Konfiguration;
-import de.mohadipe.dynastie.einheiten.Einheit;
-import de.mohadipe.dynastie.karte.Koordinate;
-
-public class SysoStartMenu implements Input {
+public class SysoStartMenu extends SysoTutNixInput {
 	private int naechsterSchritt;
-
-	@Override
-	public Koordinate getInputKoordinate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void frageInputAb() {
@@ -33,23 +23,5 @@ public class SysoStartMenu implements Input {
 	@Override
 	public Integer getInputFromMenu() {
 		return naechsterSchritt;
-	}
-
-	@Override
-	public void setKonfiguration(Konfiguration spielKonfiguration) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setZuBewegendeEinheit(Einheit einheit) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setAusgangsKoordinateFuerBewegung(Koordinate standort) {
-		// TODO Auto-generated method stub
-
 	}
 }

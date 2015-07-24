@@ -5,11 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import de.mohadipe.dynastie.Konfiguration;
-import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 
-public class SysoEinheitAufstellenKoordinaten implements Input {
+public class SysoEinheitAufstellenKoordinaten extends SysoTutNixInput {
 
 	private Koordinate koordinate;
 	private Konfiguration spielKonfiguration;
@@ -36,25 +35,7 @@ public class SysoEinheitAufstellenKoordinaten implements Input {
 	}
 
 	@Override
-	public Integer getInputFromMenu() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void setKonfiguration(Konfiguration spielKonfiguration) {
 		this.spielKonfiguration = spielKonfiguration;
-	}
-
-	@Override
-	public void setZuBewegendeEinheit(Einheit einheit) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setAusgangsKoordinateFuerBewegung(Koordinate standort) {
-		// TODO Auto-generated method stub
-
 	}
 }

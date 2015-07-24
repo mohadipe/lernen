@@ -4,12 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import de.mohadipe.dynastie.Konfiguration;
 import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 
-public class SysoBewegungZielKoordinaten implements Input {
+public class SysoBewegungZielKoordinaten extends SysoTutNixInput {
 
 	private Einheit einheit;
 	private Koordinate standort;
@@ -39,12 +38,6 @@ public class SysoBewegungZielKoordinaten implements Input {
 	@Override
 	public Integer getInputFromMenu() {
 		throw new RuntimeException("Kein Menu, nur Koordinaten abfrage.");
-	}
-
-	@Override
-	public void setKonfiguration(Konfiguration spielKonfiguration) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
