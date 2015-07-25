@@ -18,4 +18,4 @@ addons:
     build_command: "cov-build --dir cov-int mvn -DskipTests=true compile"
     branch_pattern: coverity_scan	
 script:
- - mvn test
+ - mvn clean install

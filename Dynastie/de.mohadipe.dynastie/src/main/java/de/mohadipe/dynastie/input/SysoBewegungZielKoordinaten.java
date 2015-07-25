@@ -8,7 +8,7 @@ import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 
-public class SysoBewegungZielKoordinaten extends SysoTutNixInput {
+public class SysoBewegungZielKoordinaten extends TutNixInput {
 
 	private Einheit einheit;
 	private Koordinate standort;

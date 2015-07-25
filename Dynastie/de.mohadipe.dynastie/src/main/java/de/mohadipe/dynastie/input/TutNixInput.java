@@ -11,7 +11,7 @@ import de.mohadipe.dynastie.karte.Koordinate;
  * 
  * @author Mohadipe
  */
-public class SysoTutNixInput implements Input {
+public class TutNixInput implements Input {
 
 	@Override
 	public Koordinate getInputKoordinate() {

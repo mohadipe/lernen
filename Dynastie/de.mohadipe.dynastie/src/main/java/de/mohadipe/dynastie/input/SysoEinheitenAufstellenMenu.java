@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SysoEinheitenAufstellenMenu extends SysoTutNixInput {
+public class SysoEinheitenAufstellenMenu extends TutNixInput {
 
 	private int naechsterSchritt;
 

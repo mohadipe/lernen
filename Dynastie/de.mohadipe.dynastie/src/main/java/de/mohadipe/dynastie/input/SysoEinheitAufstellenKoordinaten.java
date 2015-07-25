@@ -8,7 +8,7 @@ import de.mohadipe.dynastie.Konfiguration;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 
-public class SysoEinheitAufstellenKoordinaten extends SysoTutNixInput {
+public class SysoEinheitAufstellenKoordinaten extends TutNixInput {
 
 	private Koordinate koordinate;
 	private Konfiguration spielKonfiguration;

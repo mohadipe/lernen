@@ -24,6 +24,7 @@ public class SpielZuege implements Schritt {
 	private Workflow spielWorkflow;
 	private Input input;
 	private Output output;
+	private int spielZug;
 
 	public SpielZuege(Konfiguration konfiguration, Workflow spielWorkflow, Input input, Output output) {
 		this.spielWorkflow = spielWorkflow;
@@ -38,7 +39,7 @@ public class SpielZuege implements Schritt {
 		// ist.
 		int nrSpieler = 0;
 		CheckSieg sieg = checkSiegbedinungErfuellt();
-		int runde = 1;
+		spielZug = 1;
 		while (!sieg.isSpielBeendet()) {
 			// Welcher Spieler ist an der Reihe?
 			Spieler spieler = konfiguration.getSpieler(nrSpieler);
@@ -56,20 +57,20 @@ public class SpielZuege implements Schritt {
 			angreifen.setOutput(output);
 			angreifen.angreifen();
 			// naechster Spieler
-			output.anzeigeSpielZugEnde(runde, konfiguration);
 			sieg.auswerten();
-			++runde;
-			nrSpieler = getNaechstenSpieler(nrSpieler);
-			if (runde > 10000) {
+			nrSpieler = getNaechstenSpieler(nrSpieler, spielZug);
+			if (spielZug > 10000) {
 				throw new RuntimeException("Vermutliche Endlosschleife. Mehr als 10000 Runden gespielt");
 			}
 		}
 	}
 
-	private int getNaechstenSpieler(int nrSpieler) {
+	private int getNaechstenSpieler(int nrSpieler, int runde) {
 		if ((konfiguration.getAnzSpieler() - 1) > nrSpieler) {
 			return ++nrSpieler;
 		}
+		output.anzeigeSpielZugEnde(runde, konfiguration);
+		spielZug++;
 		return 0;
 	}
 
@@ -85,6 +86,10 @@ public class SpielZuege implements Schritt {
 	@Override
 	public int naechsterSchritt() {
 		return 999;
+	}
+
+	public int getGespielteRunden() {
+		return this.spielZug;
 	}
 
 }

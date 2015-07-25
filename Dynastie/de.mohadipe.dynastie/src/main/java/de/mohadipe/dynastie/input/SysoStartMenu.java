@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SysoStartMenu extends SysoTutNixInput {
+public class SysoStartMenu extends TutNixInput {
 	private int naechsterSchritt;
 
 	@Override

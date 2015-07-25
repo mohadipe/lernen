@@ -9,7 +9,7 @@ import de.mohadipe.dynastie.spieler.ComputerSpieler;
 import de.mohadipe.dynastie.spieler.MenschSpieler;
 import de.mohadipe.dynastie.spieler.Spieler;
 
-public class SysoKonfigurationsMenu extends SysoTutNixInput {
+public class SysoKonfigurationsMenu extends TutNixInput {
 
 	private int naechsterSchritt;
 	private Konfiguration spielKonfiguration;
