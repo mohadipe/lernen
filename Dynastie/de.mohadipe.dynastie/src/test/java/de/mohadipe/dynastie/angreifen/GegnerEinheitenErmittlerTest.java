@@ -8,11 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.mohadipe.dynastie.DummyRandomServiceImpl;
+import de.mohadipe.dynastie.Konfiguration;
 import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.karte.Feld;
-import de.mohadipe.dynastie.karte.FuenfMalFuenfKarte;
 import de.mohadipe.dynastie.karte.Karte;
+import de.mohadipe.dynastie.karte.KartenGenerator;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 import de.mohadipe.dynastie.sieg.SpielKonfiguration;
@@ -31,8 +32,12 @@ public class GegnerEinheitenErmittlerTest {
 		compSpieler = new ComputerSpieler();
 		angreifendeEinheit.setEindeutigeKennung("attacker");
 		angreifendeEinheit.setSpieler(compSpieler);
-		karte = new FuenfMalFuenfKarte(new SpielKonfiguration(), new DummyRandomServiceImpl());
+		Konfiguration konfiguration = new SpielKonfiguration();
+		KartenGenerator kartenGenerator = new KartenGenerator(new DummyRandomServiceImpl());
+		kartenGenerator.generiereKarte(konfiguration);
+		karte = konfiguration.getKarte();
 		karte.fuegeEinheitVonSpielerHinzu(new ZweiDimensionaleKoordinate(1, 1), angreifendeEinheit);
+
 	}
 
 	@Test

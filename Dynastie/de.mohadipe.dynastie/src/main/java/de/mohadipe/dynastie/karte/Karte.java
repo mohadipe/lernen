@@ -32,5 +32,4 @@ public interface Karte {
 	void platziereEinheitAnStartKoordinate(Einheit einheit);
 
 	boolean isKeineEinheitAnKoordinate(Koordinate ziel);
-
 }

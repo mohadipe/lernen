@@ -28,13 +28,15 @@ public class KarteTest {
 	@Before
 	public void setBevorAll() {
 		konfiguration = new SpielKonfiguration();
-		fuenfMalFuenfKarte = new FuenfMalFuenfKarte(konfiguration, new DummyRandomServiceImpl());
+		KartenGenerator kartenGenerator = new KartenGenerator(new DummyRandomServiceImpl());
+		kartenGenerator.generiereKarte(konfiguration);
+		fuenfMalFuenfKarte = konfiguration.getKarte();
 		einheit = new Infanterie();
+
 	}
 
 	@Test
 	public void einheitVonComputerAufKarte() {
-		Karte fuenfMalFuenfKarte = new FuenfMalFuenfKarte(new SpielKonfiguration(), new DummyRandomServiceImpl());
 		Einheit infanterie = new Infanterie();
 		ComputerSpieler computerSpieler = new ComputerSpieler();
 		infanterie.setSpieler(computerSpieler);
@@ -48,7 +50,6 @@ public class KarteTest {
 
 	@Test
 	public void einheitVonMenschUndComputerAufKarte() {
-		Karte fuenfMalFuenfKarte = new FuenfMalFuenfKarte(new SpielKonfiguration(), new DummyRandomServiceImpl());
 		Einheit infanterie = new Infanterie();
 		ComputerSpieler computerSpieler = new ComputerSpieler();
 		infanterie.setSpieler(computerSpieler);

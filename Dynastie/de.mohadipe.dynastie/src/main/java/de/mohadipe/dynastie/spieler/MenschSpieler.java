@@ -4,7 +4,6 @@ import de.mohadipe.dynastie.Konfiguration;
 import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.input.Input;
-import de.mohadipe.dynastie.karte.Karte;
 
 public class MenschSpieler implements Spieler {
 
@@ -12,18 +11,18 @@ public class MenschSpieler implements Spieler {
 	private String identitaet;
 
 	@Override
-	public void stelleEinheitenAuf(Karte fuenfMalFuenfKarte, Konfiguration spielKonfiguration, Input aufstellenInput) {
+	public void stelleEinheitenAuf(Konfiguration spielKonfiguration, Input aufstellenInput) {
 		aufstellenInput.setKonfiguration(spielKonfiguration);
 		aufstellenInput.frageInputAb();
 		Einheit einheit1 = new Infanterie();
 		einheit1.setEindeutigeKennung("1");
 		einheit1.setSpieler(this);
-		fuenfMalFuenfKarte.fuegeEinheitVonSpielerHinzu(aufstellenInput.getInputKoordinate(), einheit1);
+		spielKonfiguration.getKarte().fuegeEinheitVonSpielerHinzu(aufstellenInput.getInputKoordinate(), einheit1);
 		aufstellenInput.frageInputAb();
 		Einheit einheit2 = new Infanterie();
 		einheit2.setEindeutigeKennung("2");
 		einheit2.setSpieler(this);
-		fuenfMalFuenfKarte.fuegeEinheitVonSpielerHinzu(aufstellenInput.getInputKoordinate(), einheit2);
+		spielKonfiguration.getKarte().fuegeEinheitVonSpielerHinzu(aufstellenInput.getInputKoordinate(), einheit2);
 
 	}
 

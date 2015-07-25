@@ -5,11 +5,12 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.mohadipe.dynastie.RandomServiceImpl;
+import de.mohadipe.dynastie.DummyRandomServiceImpl;
+import de.mohadipe.dynastie.Konfiguration;
 import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
-import de.mohadipe.dynastie.karte.FuenfMalFuenfKarte;
 import de.mohadipe.dynastie.karte.Karte;
+import de.mohadipe.dynastie.karte.KartenGenerator;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 import de.mohadipe.dynastie.sieg.SpielKonfiguration;
@@ -20,7 +21,10 @@ public class EinheitenKollisionPlausiTest {
 
 	@Before
 	public void setUp() {
-		Karte karte = new FuenfMalFuenfKarte(new SpielKonfiguration(), new RandomServiceImpl());
+		Konfiguration spielKonfiguration = new SpielKonfiguration();
+		KartenGenerator kartenGenerator = new KartenGenerator(new DummyRandomServiceImpl());
+		kartenGenerator.generiereKarte(spielKonfiguration);
+		Karte karte = spielKonfiguration.getKarte();
 		Einheit einheit = new Infanterie();
 		einheit.setSpieler(new ComputerSpieler());
 		karte.platziereEinheitAnStartKoordinate(einheit);

@@ -13,6 +13,8 @@ public class SpielKonfiguration implements Konfiguration {
 	private Siegbedingung sieg = Siegbedingung.VERNICHTEN;
 	private List<Spieler> spieler = new ArrayList<Spieler>();
 	private Karte karte;
+	private int spielFeldMaxX;
+	private int spielFeldMaxY;
 
 	@Override
 	public Siegbedingung getSieg() {
@@ -51,5 +53,25 @@ public class SpielKonfiguration implements Konfiguration {
 	@Override
 	public Karte getKarte() {
 		return this.karte;
+	}
+
+	@Override
+	public void setSpielFeldMaxX(int maxX) {
+		this.spielFeldMaxX = maxX;
+	}
+
+	@Override
+	public void setSpielFeldMaxY(int maxY) {
+		this.spielFeldMaxY = maxY;
+	}
+
+	@Override
+	public int getSpielFeldMaxX() {
+		return this.spielFeldMaxX;
+	}
+
+	@Override
+	public int getSpielFeldMaxY() {
+		return this.spielFeldMaxY;
 	}
 }

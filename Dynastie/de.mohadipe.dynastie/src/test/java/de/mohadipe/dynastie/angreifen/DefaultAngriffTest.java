@@ -15,8 +15,8 @@ import de.mohadipe.dynastie.RandomService;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.einheiten.InfanterieDaten;
 import de.mohadipe.dynastie.karte.Feld;
-import de.mohadipe.dynastie.karte.FuenfMalFuenfKarte;
 import de.mohadipe.dynastie.karte.Karte;
+import de.mohadipe.dynastie.karte.KartenGenerator;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 import de.mohadipe.dynastie.output.SysOutSpielZug;
@@ -38,7 +38,9 @@ public class DefaultAngriffTest {
 		this.aktSpieler = new ComputerSpieler();
 		this.aktSpieler.setIdentitaet("KI");
 		this.randomService = new DummyRandomServiceImpl();
-		this.karte = new FuenfMalFuenfKarte(new SpielKonfiguration(), randomService);
+		KartenGenerator kartenGenerator = new KartenGenerator(this.randomService);
+		kartenGenerator.generiereKarte(konfiguration);
+		karte = konfiguration.getKarte();
 
 		Infanterie compInf = new Infanterie();
 		compInf.setSpieler(aktSpieler);

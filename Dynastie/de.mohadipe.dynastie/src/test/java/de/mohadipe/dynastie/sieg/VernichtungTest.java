@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-import de.mohadipe.dynastie.RandomServiceImpl;
+import de.mohadipe.dynastie.DummyRandomServiceImpl;
+import de.mohadipe.dynastie.Konfiguration;
 import de.mohadipe.dynastie.Siegbedingung;
 import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
-import de.mohadipe.dynastie.karte.FuenfMalFuenfKarte;
 import de.mohadipe.dynastie.karte.Karte;
+import de.mohadipe.dynastie.karte.KartenGenerator;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 import de.mohadipe.dynastie.spieler.ComputerSpieler;
 import de.mohadipe.dynastie.spieler.MenschSpieler;
@@ -19,9 +21,18 @@ import de.mohadipe.dynastie.spieler.Spieler;
 
 public class VernichtungTest {
 
+	private Karte karte;
+
+	@Before
+	public void setUp() {
+		Konfiguration konfiguration = new SpielKonfiguration();
+		KartenGenerator kartenGenerator = new KartenGenerator(new DummyRandomServiceImpl());
+		kartenGenerator.generiereKarte(konfiguration);
+		karte = konfiguration.getKarte();
+	}
+
 	@Test
 	public void pattTest() {
-		Karte karte = new FuenfMalFuenfKarte(new SpielKonfiguration(), new RandomServiceImpl());
 		List<Spieler> beteiligteSpieler = new ArrayList<Spieler>();
 		beteiligteSpieler.add(new ComputerSpieler());
 		beteiligteSpieler.add(new MenschSpieler());
@@ -37,7 +48,6 @@ public class VernichtungTest {
 	public void eindeutigerSiegTest() {
 		ComputerSpieler computerSpieler = new ComputerSpieler();
 		MenschSpieler menschSpieler = new MenschSpieler();
-		Karte karte = new FuenfMalFuenfKarte(new SpielKonfiguration(), new RandomServiceImpl());
 		Einheit humanInf = new Infanterie();
 		humanInf.setSpieler(menschSpieler);
 
@@ -58,7 +68,6 @@ public class VernichtungTest {
 	public void spielNochNichtBeendet() {
 		ComputerSpieler computerSpieler = new ComputerSpieler();
 		MenschSpieler menschSpieler = new MenschSpieler();
-		Karte karte = new FuenfMalFuenfKarte(new SpielKonfiguration(), new RandomServiceImpl());
 		Einheit humanInf = new Infanterie();
 		humanInf.setSpieler(menschSpieler);
 		Einheit compInf = new Infanterie();

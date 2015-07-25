@@ -13,8 +13,8 @@ import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.input.DummyZielX2Y1Koordinaten;
 import de.mohadipe.dynastie.karte.Feld;
-import de.mohadipe.dynastie.karte.FuenfMalFuenfKarte;
 import de.mohadipe.dynastie.karte.Karte;
+import de.mohadipe.dynastie.karte.KartenGenerator;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 import de.mohadipe.dynastie.sieg.SpielKonfiguration;
@@ -31,8 +31,11 @@ public class EinheitBewegenTest {
 	@Before
 	public void setBevorAll() {
 		konfiguration = new SpielKonfiguration();
-		fuenfMalFuenfKarte = new FuenfMalFuenfKarte(konfiguration, new DummyRandomServiceImpl());
+		KartenGenerator kartenGenerator = new KartenGenerator(new DummyRandomServiceImpl());
+		kartenGenerator.generiereKarte(konfiguration);
+		fuenfMalFuenfKarte = konfiguration.getKarte();
 		einheit = new Infanterie();
+
 	}
 
 	@Test

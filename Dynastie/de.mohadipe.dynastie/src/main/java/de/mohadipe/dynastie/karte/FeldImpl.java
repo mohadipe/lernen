@@ -53,4 +53,9 @@ public class FeldImpl implements Feld {
 		}
 		return true;
 	}
+
+	@Override
+	public GelaendeBeschaffenheit getGelaende() {
+		return gelaende;
+	}
 }

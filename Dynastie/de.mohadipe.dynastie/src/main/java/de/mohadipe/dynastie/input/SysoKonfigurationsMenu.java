@@ -22,31 +22,50 @@ public class SysoKonfigurationsMenu extends TutNixInput {
 		System.out.println("/ " + spielKonfiguration.getEinheitenPunkte());
 		System.out.println("Welche Siegbedingungen?");
 		System.out.println("/ " + spielKonfiguration.getSieg());
+
+		try {
+			gegnerFestlegen(br);
+			groesseDerKarteWaehlen(br);
+			naechsterSchritt(br);
+		} catch (NumberFormatException | IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void groesseDerKarteWaehlen(BufferedReader br) throws IOException {
+		System.out.println("Wie groß soll das Spielfeld sein?");
+		System.out.println("Maximale X Ausdehnung angeben:");
+		int maxX = Integer.parseInt(br.readLine());
+		System.out.println("Maximale Y Ausdehnung angeben:");
+		int maxY = Integer.parseInt(br.readLine());
+		spielKonfiguration.setSpielFeldMaxX(maxX);
+		spielKonfiguration.setSpielFeldMaxY(maxY);
+	}
+
+	private void naechsterSchritt(BufferedReader br) throws IOException {
+		System.out.println("15 Weiter");
+		System.out.println("2 Beenden");
+		naechsterSchritt = Integer.parseInt(br.readLine());
+	}
+
+	private void gegnerFestlegen(BufferedReader br) throws IOException {
 		System.out.println("1: Mensch gegen Computer");
 		System.out.println("2: Mensch gegen Mensch");
 		System.out.println("3: Computer gegen Computer");
-
-		try {
-			int auswahl = Integer.parseInt(br.readLine());
-			switch (auswahl) {
-			case 1:
-				menschVsComputer(br);
-				break;
-			case 2:
-				menschVsMensch(br);
-				break;
-			case 3:
-				computerVsComputer(br);
-				break;
-			default:
-				menschVsComputer(br);
-				break;
-			}
-			System.out.println("15 Weiter");
-			System.out.println("2 Beenden");
-			naechsterSchritt = Integer.parseInt(br.readLine());
-		} catch (NumberFormatException | IOException e) {
-			throw new RuntimeException(e);
+		int auswahl = Integer.parseInt(br.readLine());
+		switch (auswahl) {
+		case 1:
+			menschVsComputer(br);
+			break;
+		case 2:
+			menschVsMensch(br);
+			break;
+		case 3:
+			computerVsComputer(br);
+			break;
+		default:
+			menschVsComputer(br);
+			break;
 		}
 	}
 

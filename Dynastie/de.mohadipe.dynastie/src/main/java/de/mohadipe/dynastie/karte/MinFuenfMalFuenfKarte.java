@@ -11,23 +11,36 @@ import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.output.SysOutKarteAnzeige;
 import de.mohadipe.dynastie.spieler.Spieler;
 
-public class FuenfMalFuenfKarte implements Karte {
+public class MinFuenfMalFuenfKarte implements Karte {
 	private final Konfiguration konfiguration;
 	Map<Koordinate, Feld> felderMap = new HashMap<Koordinate, Feld>();
 	private final Koordinate start1 = new ZweiDimensionaleKoordinate(1, 1);
 	private final Koordinate start2 = new ZweiDimensionaleKoordinate(5, 5);
-	private final int maxX = 5;
-	private final int maxY = maxX;
+	private int maxX = 5;
+	private int maxY = maxX;
 	private final int minX = 1;
 	private final int minY = minX;
 
-	public FuenfMalFuenfKarte(final Konfiguration spielKonfiguration, RandomService randomService) {
+	public MinFuenfMalFuenfKarte(final Konfiguration spielKonfiguration) {
 		this.konfiguration = spielKonfiguration;
-		init(randomService);
 		initSiegbedingung();
 	}
 
-	private void init(RandomService randomService) {
+	protected void setMaxX(int maxX) {
+		if (this.maxX > maxX) {
+			return;
+		}
+		this.maxX = maxX;
+	}
+
+	protected void setMaxY(int maxY) {
+		if (this.maxY > maxY) {
+			return;
+		}
+		this.maxY = maxY;
+	}
+
+	protected void init(RandomService randomService) {
 		for (int x = minX; x <= maxX; x++) {
 			for (int y = minY; y <= maxY; y++) {
 				felderMap.put(new ZweiDimensionaleKoordinate(x, y), new FeldImpl(GelaendeAdapter.getGelaende(randomService)));

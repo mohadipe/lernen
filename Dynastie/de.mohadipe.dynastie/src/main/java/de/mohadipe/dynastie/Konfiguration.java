@@ -21,4 +21,12 @@ public interface Konfiguration {
 
 	Karte getKarte();
 
+	void setSpielFeldMaxX(int maxX);
+
+	void setSpielFeldMaxY(int maxY);
+
+	int getSpielFeldMaxX();
+
+	int getSpielFeldMaxY();
+
 }

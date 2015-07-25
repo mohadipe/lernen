@@ -4,7 +4,6 @@ import de.mohadipe.dynastie.Konfiguration;
 import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.input.Input;
-import de.mohadipe.dynastie.karte.Karte;
 
 public class ComputerSpieler implements Spieler {
 
@@ -20,10 +19,10 @@ public class ComputerSpieler implements Spieler {
 	}
 
 	@Override
-	public void stelleEinheitenAuf(Karte fuenfMalFuenfKarte, Konfiguration spielKonfiguration, Input input) {
+	public void stelleEinheitenAuf(Konfiguration spielKonfiguration, Input input) {
 		Einheit einheit = new Infanterie();
 		einheit.setSpieler(this);
-		fuenfMalFuenfKarte.platziereEinheitAnStartKoordinate(einheit);
+		spielKonfiguration.getKarte().platziereEinheitAnStartKoordinate(einheit);
 	}
 
 	@Override

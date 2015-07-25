@@ -14,4 +14,6 @@ public interface Feld {
 	Einheit getEinheit();
 
 	boolean hasEinheit();
+
+	GelaendeBeschaffenheit getGelaende();
 }
