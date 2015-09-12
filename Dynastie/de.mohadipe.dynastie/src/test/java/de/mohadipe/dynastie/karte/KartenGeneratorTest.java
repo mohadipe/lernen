@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import de.mohadipe.dynastie.DummyRandomServiceImpl;
 import de.mohadipe.dynastie.RandomService;
-import de.mohadipe.dynastie.sieg.SpielKonfiguration;
+import de.mohadipe.dynastie.SpielKonfiguration;
 
 public class KartenGeneratorTest {
 

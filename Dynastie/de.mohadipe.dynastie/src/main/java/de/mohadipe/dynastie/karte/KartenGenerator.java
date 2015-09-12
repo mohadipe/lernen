@@ -12,7 +12,7 @@ public class KartenGenerator {
 	}
 
 	public void generiereKarte(Konfiguration spielKonfiguration) {
-		Karte karte = new MinFuenfMalFuenfKarte(spielKonfiguration);
+		Karte karte = new MinFuenfMalFuenfKarte();
 		((MinFuenfMalFuenfKarte) karte).setMaxX(spielKonfiguration.getSpielFeldMaxX());
 		((MinFuenfMalFuenfKarte) karte).setMaxY(spielKonfiguration.getSpielFeldMaxY());
 		((MinFuenfMalFuenfKarte) karte).init(randomService);

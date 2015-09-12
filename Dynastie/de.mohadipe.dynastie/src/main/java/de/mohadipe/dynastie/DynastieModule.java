@@ -3,7 +3,6 @@ package de.mohadipe.dynastie;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 
-import de.mohadipe.dynastie.sieg.SpielKonfiguration;
 import de.mohadipe.dynastie.workflow.WorkflowKonfiguration;
 import de.mohadipe.dynastie.workflow.WorkflowSchritteKonfiguration;
 

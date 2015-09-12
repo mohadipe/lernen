@@ -29,7 +29,7 @@ public interface Karte {
 
 	int getMinY();
 
-	void platziereEinheitAnStartKoordinate(Einheit einheit);
+	void platziereEinheitInStartZone(Einheit einheit);
 
 	boolean isKeineEinheitAnKoordinate(Koordinate ziel);
 }

@@ -5,13 +5,13 @@ import org.junit.Test;
 
 import de.mohadipe.dynastie.DummyRandomServiceImpl;
 import de.mohadipe.dynastie.Konfiguration;
+import de.mohadipe.dynastie.SpielKonfiguration;
 import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.karte.Karte;
 import de.mohadipe.dynastie.karte.KartenGenerator;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 import de.mohadipe.dynastie.output.SysOutKarteAnzeige;
-import de.mohadipe.dynastie.sieg.SpielKonfiguration;
 import de.mohadipe.dynastie.spieler.ComputerSpieler;
 import de.mohadipe.dynastie.spieler.MenschSpieler;
 

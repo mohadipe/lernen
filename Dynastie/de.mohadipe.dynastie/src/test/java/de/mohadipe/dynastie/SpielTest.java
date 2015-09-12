@@ -10,7 +10,6 @@ import de.mohadipe.dynastie.input.DummyStartMenu;
 import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
 import de.mohadipe.dynastie.output.SysOutSpielZug;
-import de.mohadipe.dynastie.sieg.SpielKonfiguration;
 import de.mohadipe.dynastie.spieler.ComputerSpieler;
 import de.mohadipe.dynastie.workflow.EinheitenAufstellen;
 import de.mohadipe.dynastie.workflow.KonfigurationsMenu;

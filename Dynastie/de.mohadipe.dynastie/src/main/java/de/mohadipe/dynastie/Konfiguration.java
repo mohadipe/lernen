@@ -28,5 +28,4 @@ public interface Konfiguration {
 	int getSpielFeldMaxX();
 
 	int getSpielFeldMaxY();
-
 }

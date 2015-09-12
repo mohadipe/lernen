@@ -22,7 +22,7 @@ public class ComputerSpieler implements Spieler {
 	public void stelleEinheitenAuf(Konfiguration spielKonfiguration, Input input) {
 		Einheit einheit = new Infanterie();
 		einheit.setSpieler(this);
-		spielKonfiguration.getKarte().platziereEinheitAnStartKoordinate(einheit);
+		spielKonfiguration.getKarte().platziereEinheitInStartZone(einheit);
 	}
 
 	@Override

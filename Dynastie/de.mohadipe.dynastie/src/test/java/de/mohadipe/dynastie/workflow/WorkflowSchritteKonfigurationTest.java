@@ -4,9 +4,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import de.mohadipe.dynastie.SpielKonfiguration;
 import de.mohadipe.dynastie.input.DummyKonfigurationsMenu;
 import de.mohadipe.dynastie.input.DummyStartMenu;
-import de.mohadipe.dynastie.sieg.SpielKonfiguration;
 
 public class WorkflowSchritteKonfigurationTest {
 

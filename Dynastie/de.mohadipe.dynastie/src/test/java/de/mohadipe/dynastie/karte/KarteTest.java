@@ -12,9 +12,9 @@ import org.junit.Test;
 
 import de.mohadipe.dynastie.DummyRandomServiceImpl;
 import de.mohadipe.dynastie.Konfiguration;
+import de.mohadipe.dynastie.SpielKonfiguration;
 import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
-import de.mohadipe.dynastie.sieg.SpielKonfiguration;
 import de.mohadipe.dynastie.spieler.ComputerSpieler;
 import de.mohadipe.dynastie.spieler.MenschSpieler;
 import de.mohadipe.dynastie.spieler.Spieler;
@@ -131,6 +131,47 @@ public class KarteTest {
 		Assert.assertEquals(1, einheitenMitKoordinatenVonSpieler.size());
 		Assert.assertNull("An diesen Koordinaten sollte keine Einheit mehr sein.", einheitenMitKoordinatenVonSpieler.get(koordinate));
 		Assert.assertTrue("An diesen Koordinaten sollte eine Einheit sein.", einheitenMitKoordinatenVonSpieler.get(ziel).hasEinheitOf(computerSpieler));
+	}
+
+	@Test
+	public void platziereEinheitInFreierAufmarschZone() {
+		ComputerSpieler computerSpieler = new ComputerSpieler("KI1");
+		einheit.setSpieler(computerSpieler);
+		fuenfMalFuenfKarte.platziereEinheitInStartZone(einheit);
+		ComputerSpieler computerSpieler2 = new ComputerSpieler("KI2");
+		Infanterie infanterie = new Infanterie();
+		infanterie.setSpieler(computerSpieler2);
+		fuenfMalFuenfKarte.platziereEinheitInStartZone(infanterie);
+
+		Einheit einheit2 = fuenfMalFuenfKarte.getFelderMap().get(new ZweiDimensionaleKoordinate(1, 1)).getEinheit();
+		Assert.assertEquals(einheit, einheit2);
+
+		Einheit einheit3 = fuenfMalFuenfKarte.getFelderMap().get(new ZweiDimensionaleKoordinate(5, 5)).getEinheit();
+		Assert.assertEquals(infanterie, einheit3);
+	}
+
+	@Test
+	public void keineFreieAufmarschZone() {
+		ComputerSpieler computerSpieler = new ComputerSpieler("KI1");
+		einheit.setSpieler(computerSpieler);
+		fuenfMalFuenfKarte.platziereEinheitInStartZone(einheit);
+		ComputerSpieler computerSpieler2 = new ComputerSpieler("KI2");
+		Infanterie infanterie = new Infanterie();
+		infanterie.setSpieler(computerSpieler2);
+		fuenfMalFuenfKarte.platziereEinheitInStartZone(infanterie);
+
+		try {
+			ComputerSpieler computerSpieler3 = new ComputerSpieler("KI3");
+			Infanterie infanterie2 = new Infanterie();
+			infanterie2.setSpieler(computerSpieler3);
+			fuenfMalFuenfKarte.platziereEinheitInStartZone(infanterie2);
+			Assert.fail("Es sollten keine AufmarschZonen mehr frei sein.");
+		} catch (RuntimeException e) {
+			String actual = e.getMessage();
+			String expected = "Es sind keine weiteren StartKoordinaten vorhanden.";
+			Assert.assertEquals(expected, actual);
+		}
+
 	}
 
 	private Feld createValue(GelaendeBeschaffenheit gelaende) {

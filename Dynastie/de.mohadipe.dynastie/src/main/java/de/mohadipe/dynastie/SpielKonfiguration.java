@@ -1,10 +1,8 @@
-package de.mohadipe.dynastie.sieg;
+package de.mohadipe.dynastie;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.mohadipe.dynastie.Konfiguration;
-import de.mohadipe.dynastie.Siegbedingung;
 import de.mohadipe.dynastie.karte.Karte;
 import de.mohadipe.dynastie.spieler.Spieler;
 
