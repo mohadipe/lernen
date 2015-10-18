@@ -10,3 +10,5 @@ Falls jemand Interesse an einer Schulung zum Thema BDD & TDD hat stehe ich gerne
 
 Präsentation/Dokumentation
 https://docs.google.com/presentation/d/1Hs3ML-TBufRKX4d1yKpRBgzxEubS5EUfrPExQe6hQJ0/edit?usp=sharing
+
+Status: In Arbeit
