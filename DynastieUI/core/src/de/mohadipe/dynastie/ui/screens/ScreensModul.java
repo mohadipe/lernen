@@ -7,5 +7,7 @@ public class ScreensModul extends AbstractModule {
     protected void configure() {
         bind(ISplash.class).to(Splash.class);
         bind(IMainMenu.class).to(MainMenu.class);
+        bind(ISpielSetupScreen.class).to(SpielSetupScreen.class);
+        bind(IMapSetupScreen.class).to(MapSetupScreen.class);
     }
 }
