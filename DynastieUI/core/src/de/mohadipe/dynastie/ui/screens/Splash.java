@@ -2,7 +2,6 @@ package de.mohadipe.dynastie.ui.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -15,15 +14,13 @@ import de.mohadipe.dynastie.ui.Assets;
 import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.tween.SpriteAccessor;
 
-public class Splash implements Screen {
+public class Splash implements ISplash {
 
-    private final DynastieUI game;
+    private DynastieUI game;
     private Sprite splash;
     private TweenManager tweenManager;
 
-    public Splash(DynastieUI dynastie) {
-        this.game = dynastie;
-    }
+
 
     @Override
     public void show() {
@@ -41,7 +38,9 @@ public class Splash implements Screen {
         Tween.to(splash, SpriteAccessor.ALPHA, 2).target(zielWert).repeatYoyo(1, 0.5f).setCallback(new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(game));
+                IMainMenu mainMenu = game.injector.getInstance(IMainMenu.class);
+                mainMenu.setGame(game);
+                ((Game) Gdx.app.getApplicationListener()).setScreen(mainMenu);
             }
         }).start(tweenManager);
     }
@@ -84,5 +83,10 @@ public class Splash implements Screen {
     @Override
     public void dispose() {
         splash.getTexture().dispose();
+    }
+
+    @Override
+    public void setGame(DynastieUI dynastieUI) {
+        this.game = dynastieUI;
     }
 }

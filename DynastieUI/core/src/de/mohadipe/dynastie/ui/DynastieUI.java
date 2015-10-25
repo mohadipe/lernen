@@ -11,6 +11,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.mohadipe.dynastie.ui.config.Config;
+import de.mohadipe.dynastie.ui.screens.ISplash;
+import de.mohadipe.dynastie.ui.screens.ScreensModul;
 import de.mohadipe.dynastie.ui.screens.Splash;
 
 public class DynastieUI extends Game {
@@ -38,8 +40,10 @@ public class DynastieUI extends Game {
 		viewport.apply();
 		batch = new SpriteBatch();
 		font = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
-		injector = Guice.createInjector(new KonfigurationsModul());
-		setScreen(new Splash(this));
+		injector = Guice.createInjector(new ScreensModul());
+		ISplash splash = injector.getInstance(ISplash.class);
+		splash.setGame(this);
+		setScreen(splash);
 	}
 
 	@Override

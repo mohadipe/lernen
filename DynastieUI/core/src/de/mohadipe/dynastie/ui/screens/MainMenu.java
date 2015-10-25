@@ -1,7 +1,6 @@
 package de.mohadipe.dynastie.ui.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,8 +15,8 @@ import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.screens.listener.ExitButtonClickListener;
 import de.mohadipe.dynastie.ui.screens.listener.OpenScreenButtonClickListener;
 
-public class MainMenu implements Screen {
-    private final DynastieUI game;
+public class MainMenu implements IMainMenu {
+    private DynastieUI game;
     private Stage stage;
     private TextureAtlas textureAtlas;
     private Skin skin;
@@ -26,10 +25,6 @@ public class MainMenu implements Screen {
     private TextButton playButton;
     private TextButton spielSetupButton;
     private Label heading;
-
-    public MainMenu(DynastieUI dynastie) {
-        this.game = dynastie;
-    }
 
     @Override
     public void show() {
@@ -115,5 +110,10 @@ public class MainMenu implements Screen {
         stage.dispose();
         textureAtlas.dispose();
         skin.dispose();
+    }
+
+    @Override
+    public void setGame(DynastieUI game) {
+        this.game = game;
     }
 }
