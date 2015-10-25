@@ -1,4 +1,4 @@
-package de.mohadipe.dynastie.ui.screens;
+package de.mohadipe.dynastie.ui.screens.internal;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -16,7 +16,7 @@ import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.screens.listener.ExitButtonClickListener;
 import de.mohadipe.dynastie.ui.screens.listener.OpenScreenButtonClickListener;
 
-public class SpielSetupScreen implements ISpielSetupScreen {
+public class SpielSetupScreen implements de.mohadipe.dynastie.ui.screens.external.ISpielSetupScreen {
     private DynastieUI game;
     private Stage stage;
     private TextureAtlas textureAtlas;
@@ -40,7 +40,7 @@ public class SpielSetupScreen implements ISpielSetupScreen {
 //        Button punkte = createPopUpButton("Punkte: ", new PunkteInputListener(konfiguration));
 //        Button siegbedingung = createPopUpButton("Siegbedingung: ", new SiegbedingungInputListener(konfiguration));
 //        Button kartengroesse = createPopUpButton("Karten: ", new KartenInputListener(konfiguration));
-        IMapSetupScreen mapSetupScreen = game.injector.getInstance(IMapSetupScreen.class);
+        de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen mapSetupScreen = game.injector.getInstance(de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen.class);
         mapSetupScreen.setGame(game);
         playButton = createButton("PLAY", new OpenScreenButtonClickListener(mapSetupScreen));
         exitButton = createButton("EXIT", new ExitButtonClickListener());

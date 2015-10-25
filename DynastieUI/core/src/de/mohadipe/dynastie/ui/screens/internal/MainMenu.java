@@ -1,4 +1,4 @@
-package de.mohadipe.dynastie.ui.screens;
+package de.mohadipe.dynastie.ui.screens.internal;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -15,7 +15,7 @@ import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.screens.listener.ExitButtonClickListener;
 import de.mohadipe.dynastie.ui.screens.listener.OpenScreenButtonClickListener;
 
-public class MainMenu implements IMainMenu {
+public class MainMenu implements de.mohadipe.dynastie.ui.screens.external.IMainMenu {
     private DynastieUI game;
     private Stage stage;
     private TextureAtlas textureAtlas;
@@ -36,7 +36,7 @@ public class MainMenu implements IMainMenu {
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         exitButton = createButton("EXIT", new ExitButtonClickListener());
-        ISpielSetupScreen spielSetup = game.injector.getInstance(ISpielSetupScreen.class);
+        de.mohadipe.dynastie.ui.screens.external.ISpielSetupScreen spielSetup = game.injector.getInstance(de.mohadipe.dynastie.ui.screens.external.ISpielSetupScreen.class);
         spielSetup.setGame(game);
         spielSetupButton = createButton("Setup Game", new OpenScreenButtonClickListener(spielSetup));
 

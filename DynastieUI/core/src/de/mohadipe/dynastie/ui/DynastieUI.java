@@ -11,9 +11,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.mohadipe.dynastie.ui.config.Config;
-import de.mohadipe.dynastie.ui.screens.ISplash;
-import de.mohadipe.dynastie.ui.screens.ScreensModul;
-import de.mohadipe.dynastie.ui.screens.Splash;
+import de.mohadipe.dynastie.ui.screens.external.ISplash;
+import de.mohadipe.dynastie.ui.screens.external.ScreensModul;
 
 public class DynastieUI extends Game {
 	public static final String TITLE = "Dynastie - Spiel der Meister";

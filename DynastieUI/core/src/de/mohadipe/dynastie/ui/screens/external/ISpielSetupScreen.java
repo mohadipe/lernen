@@ -1,4 +1,4 @@
-package de.mohadipe.dynastie.ui.screens;
+package de.mohadipe.dynastie.ui.screens.external;
 
 import com.badlogic.gdx.Screen;
 

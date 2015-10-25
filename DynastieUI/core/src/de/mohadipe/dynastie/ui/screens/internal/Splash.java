@@ -1,4 +1,4 @@
-package de.mohadipe.dynastie.ui.screens;
+package de.mohadipe.dynastie.ui.screens.internal;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -14,7 +14,7 @@ import de.mohadipe.dynastie.ui.Assets;
 import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.tween.SpriteAccessor;
 
-public class Splash implements ISplash {
+public class Splash implements de.mohadipe.dynastie.ui.screens.external.ISplash {
 
     private DynastieUI game;
     private Sprite splash;
@@ -38,7 +38,7 @@ public class Splash implements ISplash {
         Tween.to(splash, SpriteAccessor.ALPHA, 2).target(zielWert).repeatYoyo(1, 0.5f).setCallback(new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                IMainMenu mainMenu = game.injector.getInstance(IMainMenu.class);
+                de.mohadipe.dynastie.ui.screens.external.IMainMenu mainMenu = game.injector.getInstance(de.mohadipe.dynastie.ui.screens.external.IMainMenu.class);
                 mainMenu.setGame(game);
                 ((Game) Gdx.app.getApplicationListener()).setScreen(mainMenu);
             }

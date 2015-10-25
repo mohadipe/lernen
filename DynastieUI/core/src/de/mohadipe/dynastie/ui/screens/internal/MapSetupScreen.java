@@ -1,4 +1,4 @@
-package de.mohadipe.dynastie.ui.screens;
+package de.mohadipe.dynastie.ui.screens.internal;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 
 import de.mohadipe.dynastie.ui.DynastieUI;
 
-public class MapSetupScreen implements IMapSetupScreen {
+public class MapSetupScreen implements de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen {
     private DynastieUI game;
     private Music marschMusic;
     private TiledMap tiledMap;
