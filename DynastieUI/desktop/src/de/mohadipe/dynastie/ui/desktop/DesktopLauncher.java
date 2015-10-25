@@ -6,7 +6,13 @@ import de.mohadipe.dynastie.ui.DynastieUI;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new DynastieUI(), config);
+		LwjglApplicationConfiguration appConfig = new LwjglApplicationConfiguration();
+		appConfig.title = DynastieUI.TITLE;
+		appConfig.vSyncEnabled = true;
+		appConfig.useGL30 = true;
+//		appConfig.fullscreen = true;
+		appConfig.width = 800;
+		appConfig.height = 400;
+		new LwjglApplication(new DynastieUI(), appConfig);
 	}
 }
