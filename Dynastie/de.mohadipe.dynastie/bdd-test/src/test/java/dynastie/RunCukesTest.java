@@ -1,4 +1,4 @@
-package taschenrechner;
+package dynastie;
 
 import org.junit.runner.RunWith;
 
