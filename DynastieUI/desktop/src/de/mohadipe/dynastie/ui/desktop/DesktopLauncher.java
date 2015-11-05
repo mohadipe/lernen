@@ -11,8 +11,8 @@ public class DesktopLauncher {
 		appConfig.vSyncEnabled = true;
 		appConfig.useGL30 = true;
 //		appConfig.fullscreen = true;
-		appConfig.width = 800;
-		appConfig.height = 400;
+		appConfig.width = 1024;
+		appConfig.height = 864;
 		new LwjglApplication(new DynastieUI(), appConfig);
 	}
 }
