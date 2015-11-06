@@ -78,10 +78,10 @@ public class MainMenu implements de.mohadipe.dynastie.ui.screens.external.IMainM
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.gameCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        game.camera.update();
-        game.batch.setProjectionMatrix(game.camera.combined);
+        game.gameCamera.update();
+        game.batch.setProjectionMatrix(game.gameCamera.combined);
         game.batch.begin();
         stage.act(delta);
         stage.draw();

@@ -3,7 +3,6 @@ package de.mohadipe.dynastie.ui;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -13,13 +12,13 @@ import com.google.inject.Injector;
 
 import de.mohadipe.dynastie.ui.config.Config;
 import de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen;
-import de.mohadipe.dynastie.ui.screens.external.ISplash;
 import de.mohadipe.dynastie.ui.screens.external.ScreensModul;
 
 public class DynastieUI extends Game {
 	public static final String TITLE = "Dynastie - Spiel der Meister";
 
-	public OrthographicCamera camera;
+	public OrthographicCamera gameCamera;
+	public OrthographicCamera menuCamera;
 	public Viewport viewport;
 	public SpriteBatch batch;
 	public BitmapFont font;
@@ -36,7 +35,8 @@ public class DynastieUI extends Game {
 	public void create () {
 //        https://github.com/libgdx/libgdx/wiki/A-simple-game
 		config = new Config();
-		createCamera();
+		createGameCamera();
+		createMenuCamera();
 //		createViewPort();
 //		viewport.apply();
 		batch = new SpriteBatch();
@@ -59,20 +59,24 @@ public class DynastieUI extends Game {
 		font.dispose();
 	}
 
-	private void createCamera() {
+	private void createGameCamera() {
 //		float w = Gdx.graphics.getWidth();
 //		float h = Gdx.graphics.getHeight();
 //		float aspectRatio = h / w;
-//		camera = new OrthographicCamera(100 * aspectRatio, 100);
-//		camera.translate(w/2, h/2);
-		camera = new OrthographicCamera();
+//		gameCamera = new OrthographicCamera(100 * aspectRatio, 100);
+//		gameCamera.translate(w/2, h/2);
+		gameCamera = new OrthographicCamera();
+	}
+
+	private void createMenuCamera() {
+		menuCamera = new OrthographicCamera();
 	}
 
 	private void createViewPort() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		viewport = new FillViewport(w, h, camera);
+		viewport = new FillViewport(w, h, gameCamera);
 		viewport.apply(true);
-//		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+//		gameCamera.position.set(gameCamera.viewportWidth / 2f, gameCamera.viewportHeight / 2f, 0);
 	}
 }

@@ -50,10 +50,10 @@ public class Splash implements de.mohadipe.dynastie.ui.screens.external.ISplash 
         Gdx.gl.glClearColor(255, 255, 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.gameCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        game.camera.update();
-        game.batch.setProjectionMatrix(game.camera.combined);
+        game.gameCamera.update();
+        game.batch.setProjectionMatrix(game.gameCamera.combined);
         tweenManager.update(delta);
 
         game.batch.begin();
