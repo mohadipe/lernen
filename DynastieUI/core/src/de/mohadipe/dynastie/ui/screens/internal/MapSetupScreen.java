@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import de.mohadipe.dynastie.ui.DynastieUI;
+import de.mohadipe.dynastie.ui.entities.Einheit;
 import de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen;
 import de.mohadipe.dynastie.ui.screens.listener.ExitButtonClickListener;
 import javafx.application.Platform;
@@ -33,6 +34,8 @@ public class MapSetupScreen implements IMapSetupScreen {
     private Stage stage;
 
     private float rotationSpeed;
+    private int[] background = new int[] {0}, foreground = new int[] {1};
+    private Einheit einheit;
 
     @Override
     public void show() {
@@ -55,6 +58,8 @@ public class MapSetupScreen implements IMapSetupScreen {
         renderer = new IsometricTiledMapRenderer(tiledMap);
 //        https://github.com/libgdx/libgdx/wiki/Tile-maps
 //        https://www.youtube.com/watch?v=DOpqkaX9844
+
+        einheit = new Einheit(new TextureAtlas("ui/monk.atlas"));
     }
 
     private TextButton createButton(String text, EventListener buttonclickListener) {
@@ -78,7 +83,6 @@ public class MapSetupScreen implements IMapSetupScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         handleInput();
-        game.gameCamera.update();
 
         game.menuCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.menuCamera.update();
@@ -88,8 +92,13 @@ public class MapSetupScreen implements IMapSetupScreen {
         stage.draw();
         game.batch.end();
 
+        game.gameCamera.update();
         renderer.setView(game.gameCamera);
-        renderer.render();
+        renderer.render(background);
+        ((IsometricTiledMapRenderer)renderer).getBatch().begin();
+        einheit.draw(((IsometricTiledMapRenderer) renderer).getBatch());
+        ((IsometricTiledMapRenderer)renderer).getBatch().end();
+        renderer.render(foreground);
     }
 
     @Override
