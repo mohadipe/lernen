@@ -6,13 +6,20 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.Map;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import de.mohadipe.dynastie.ui.DynastieUI;
@@ -20,6 +27,8 @@ import de.mohadipe.dynastie.ui.entities.Einheit;
 import de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen;
 import de.mohadipe.dynastie.ui.screens.listener.ExitButtonClickListener;
 import javafx.application.Platform;
+
+import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Line;
 
 public class MapSetupScreen implements IMapSetupScreen {
 
@@ -36,6 +45,10 @@ public class MapSetupScreen implements IMapSetupScreen {
     private float rotationSpeed;
     private int[] background = new int[] {0}, foreground = new int[] {1};
     private Einheit einheit;
+    private int tilePixelWidth;
+    private int tilePixelHeight;
+    private int mapPixelWidth;
+    private int mapPixelHeight;
 
     @Override
     public void show() {
@@ -46,19 +59,39 @@ public class MapSetupScreen implements IMapSetupScreen {
         textureAtlas = new TextureAtlas("ui/button.pack");
         skin = new Skin(textureAtlas);
         exitButton = createButton("Exit", new ExitButtonClickListener());
-        stage.addActor(exitButton);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(game.font, Color.WHITE);
+        Label debug = new Label("Debug Debug Debug", labelStyle);
+
+        Table table = new Table(null);
+        table.setBounds(200, 0, 100, 100);
+        table.add(debug);
+        table.row();
+        table.add(exitButton);
+        stage.addActor(table);
 //        marschMusic = Gdx.audio.newMusic(Gdx.files.internal(("sounds/military-march-intro2.wav")));
 //
 //        marschMusic.setLooping(true);
 //        marschMusic.play();
 
 //        game.gameCamera.setToOrtho(false, 2000, 1000);
-
-        tiledMap = new TmxMapLoader().load("maps/gruen.tmx");
-        renderer = new IsometricTiledMapRenderer(tiledMap);
+//        final String map_gruen = "maps/gruen.tmx";
+        final String einfach_ortho_map = "maps/einfach_ortho_map.tmx";
+        tiledMap = new TmxMapLoader().load(einfach_ortho_map);
+//        renderer = new IsometricTiledMapRenderer(tiledMap);
+        renderer = new OrthogonalTiledMapRenderer(tiledMap);
 //        https://github.com/libgdx/libgdx/wiki/Tile-maps
 //        https://www.youtube.com/watch?v=DOpqkaX9844
+        MapProperties properties = tiledMap.getProperties();
+        int mapWidth = properties.get("width", Integer.class);
+        int mapHeight = properties.get("height", Integer.class);
+        tilePixelWidth = properties.get("tilewidth", Integer.class);
+        tilePixelHeight = properties.get("tileheight", Integer.class);
 
+        mapPixelWidth = mapWidth * tilePixelWidth;
+        mapPixelHeight = mapHeight * tilePixelHeight;
+
+        debug.setText("MapWith: " + mapHeight + " MapHeight: " + mapHeight + "\n TilePixelWidth: " + tilePixelWidth + " TilePixelHeight: " + tilePixelHeight
+            + "\n MapPixelWidth: " + mapPixelWidth + " MapPixelHeight: " + mapPixelHeight);
         einheit = new Einheit(new TextureAtlas("ui/monk.atlas"));
     }
 
@@ -84,6 +117,23 @@ public class MapSetupScreen implements IMapSetupScreen {
 
         handleInput();
 
+        game.gameCamera.update();
+        renderer.setView(game.gameCamera);
+        renderer.render(background);
+        ((OrthogonalTiledMapRenderer)renderer).getBatch().begin();
+        einheit.draw(((OrthogonalTiledMapRenderer) renderer).getBatch());
+        ((OrthogonalTiledMapRenderer)renderer).getBatch().end();
+        renderer.render(foreground);
+
+//        ShapeRenderer shapeRenderer = new ShapeRenderer();
+//        shapeRenderer.setProjectionMatrix(game.gameCamera.combined);
+//        shapeRenderer.begin(Line);
+//        for(int x = 0; x < mapPixelWidth; x += tilePixelWidth)
+//            shapeRenderer.line(x, 0, x, mapPixelHeight);
+//        for(int y = 0; y < mapPixelHeight; y += tilePixelHeight)
+//            shapeRenderer.line(0, y, mapPixelWidth, y);
+//        shapeRenderer.end();
+
         game.menuCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.menuCamera.update();
         game.batch.setProjectionMatrix(game.menuCamera.combined);
@@ -92,13 +142,6 @@ public class MapSetupScreen implements IMapSetupScreen {
         stage.draw();
         game.batch.end();
 
-        game.gameCamera.update();
-        renderer.setView(game.gameCamera);
-        renderer.render(background);
-        ((IsometricTiledMapRenderer)renderer).getBatch().begin();
-        einheit.draw(((IsometricTiledMapRenderer) renderer).getBatch());
-        ((IsometricTiledMapRenderer)renderer).getBatch().end();
-        renderer.render(foreground);
     }
 
     @Override
