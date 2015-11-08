@@ -24,6 +24,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.entities.Einheit;
+import de.mohadipe.dynastie.ui.entities.Monk;
+import de.mohadipe.dynastie.ui.map.KoordinatenSystem;
+import de.mohadipe.dynastie.ui.menu.SpielMenu;
 import de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen;
 import de.mohadipe.dynastie.ui.screens.listener.ExitButtonClickListener;
 import javafx.application.Platform;
@@ -37,18 +40,11 @@ public class MapSetupScreen implements IMapSetupScreen {
     private TiledMap tiledMap;
     private TiledMapRenderer renderer;
 
-    private TextureAtlas textureAtlas;
-    private Skin skin;
-    private TextButton exitButton;
     private Stage stage;
 
     private float rotationSpeed;
     private int[] background = new int[] {0}, foreground = new int[] {1};
     private Einheit einheit;
-    private int tilePixelWidth;
-    private int tilePixelHeight;
-    private int mapPixelWidth;
-    private int mapPixelHeight;
 
     @Override
     public void show() {
@@ -56,59 +52,23 @@ public class MapSetupScreen implements IMapSetupScreen {
         Gdx.input.setInputProcessor(stage);
 
         rotationSpeed = 0.5f;
-        textureAtlas = new TextureAtlas("ui/button.pack");
-        skin = new Skin(textureAtlas);
-        exitButton = createButton("Exit", new ExitButtonClickListener());
-        Label.LabelStyle labelStyle = new Label.LabelStyle(game.font, Color.WHITE);
-        Label debug = new Label("Debug Debug Debug", labelStyle);
-
-        Table table = new Table(null);
-        table.setBounds(200, 0, 100, 100);
-        table.add(debug);
-        table.row();
-        table.add(exitButton);
-        stage.addActor(table);
+        SpielMenu menu = new SpielMenu(this.game);
+        menu.addMenuToStage(stage);
 //        marschMusic = Gdx.audio.newMusic(Gdx.files.internal(("sounds/military-march-intro2.wav")));
 //
 //        marschMusic.setLooping(true);
 //        marschMusic.play();
 
-//        game.gameCamera.setToOrtho(false, 2000, 1000);
-//        final String map_gruen = "maps/gruen.tmx";
         final String einfach_ortho_map = "maps/einfach_ortho_map.tmx";
         tiledMap = new TmxMapLoader().load(einfach_ortho_map);
-//        renderer = new IsometricTiledMapRenderer(tiledMap);
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
 //        https://github.com/libgdx/libgdx/wiki/Tile-maps
 //        https://www.youtube.com/watch?v=DOpqkaX9844
         MapProperties properties = tiledMap.getProperties();
-        int mapWidth = properties.get("width", Integer.class);
-        int mapHeight = properties.get("height", Integer.class);
-        tilePixelWidth = properties.get("tilewidth", Integer.class);
-        tilePixelHeight = properties.get("tileheight", Integer.class);
-
-        mapPixelWidth = mapWidth * tilePixelWidth;
-        mapPixelHeight = mapHeight * tilePixelHeight;
-
-        debug.setText("MapWith: " + mapHeight + " MapHeight: " + mapHeight + "\n TilePixelWidth: " + tilePixelWidth + " TilePixelHeight: " + tilePixelHeight
-            + "\n MapPixelWidth: " + mapPixelWidth + " MapPixelHeight: " + mapPixelHeight);
-        einheit = new Einheit(new TextureAtlas("ui/monk.atlas"));
+        final KoordinatenSystem koordinatenSystem = new KoordinatenSystem(properties);
+        koordinatenSystem.insertDebugInfoInto(menu.getDebugLabel());
+        einheit = new Monk();
     }
-
-    private TextButton createButton(String text, EventListener buttonclickListener) {
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = skin.getDrawable("button.up.patch");
-        textButtonStyle.down = skin.getDrawable("button.down.patch");
-        textButtonStyle.pressedOffsetX = 1;
-        textButtonStyle.pressedOffsetY = -1;
-        textButtonStyle.font = game.font;
-        textButtonStyle.fontColor = Color.BLACK;
-        TextButton tmpButton = new TextButton(text, textButtonStyle);
-        tmpButton.addListener(buttonclickListener);
-        tmpButton.pad(20);
-        return tmpButton;
-    }
-
 
     @Override
     public void render(float delta) {
@@ -125,15 +85,6 @@ public class MapSetupScreen implements IMapSetupScreen {
         ((OrthogonalTiledMapRenderer)renderer).getBatch().end();
         renderer.render(foreground);
 
-//        ShapeRenderer shapeRenderer = new ShapeRenderer();
-//        shapeRenderer.setProjectionMatrix(game.gameCamera.combined);
-//        shapeRenderer.begin(Line);
-//        for(int x = 0; x < mapPixelWidth; x += tilePixelWidth)
-//            shapeRenderer.line(x, 0, x, mapPixelHeight);
-//        for(int y = 0; y < mapPixelHeight; y += tilePixelHeight)
-//            shapeRenderer.line(0, y, mapPixelWidth, y);
-//        shapeRenderer.end();
-
         game.menuCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.menuCamera.update();
         game.batch.setProjectionMatrix(game.menuCamera.combined);
@@ -146,7 +97,6 @@ public class MapSetupScreen implements IMapSetupScreen {
 
     @Override
     public void resize(int width, int height) {
-//        game.viewport.update(width, height);
         game.gameCamera.viewportWidth = width/2;
         game.gameCamera.viewportHeight = height/2;
         game.gameCamera.position.set(400, 0, 0);
