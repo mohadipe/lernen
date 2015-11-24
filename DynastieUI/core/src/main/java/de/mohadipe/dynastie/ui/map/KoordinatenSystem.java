@@ -1,6 +1,7 @@
 package de.mohadipe.dynastie.ui.map;
 
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class KoordinatenSystem {
@@ -23,5 +24,12 @@ public class KoordinatenSystem {
     public void insertDebugInfoInto(Label debug) {
         debug.setText("MapWith: " + mapHeight + " MapHeight: " + mapHeight + "\n TilePixelWidth: " + tilePixelWidth + " TilePixelHeight: " + tilePixelHeight
                 + "\n MapPixelWidth: " + mapPixelWidth + " MapPixelHeight: " + mapPixelHeight);
+    }
+
+    public Vector2 getMitteDerMap() {
+        Vector2 mitteDerMap = new Vector2();
+        mitteDerMap.x = mapPixelWidth/2;
+        mitteDerMap.y = mapPixelHeight/2;
+        return mitteDerMap;
     }
 }

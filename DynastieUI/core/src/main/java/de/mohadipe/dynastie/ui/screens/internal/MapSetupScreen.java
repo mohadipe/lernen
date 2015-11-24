@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.entities.Einheit;
 import de.mohadipe.dynastie.ui.entities.Monk;
+import de.mohadipe.dynastie.ui.input.InputProcessor;
 import de.mohadipe.dynastie.ui.map.KoordinatenSystem;
 import de.mohadipe.dynastie.ui.menu.SpielMenu;
 import de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen;
@@ -39,20 +41,21 @@ public class MapSetupScreen implements IMapSetupScreen {
     private Music marschMusic;
     private TiledMap tiledMap;
     private TiledMapRenderer renderer;
+    private KoordinatenSystem koordinatenSystem;
 
     private Stage stage;
 
     private float rotationSpeed;
     private int[] background = new int[] {0}, foreground = new int[] {1};
     private Einheit einheit;
+    private SpielMenu menu;
 
     @Override
     public void show() {
-        stage = new Stage();
+        stage = new InputProcessor();
         Gdx.input.setInputProcessor(stage);
-
         rotationSpeed = 0.5f;
-        SpielMenu menu = new SpielMenu(this.game);
+        menu = new SpielMenu(this.game);
         menu.addMenuToStage(stage);
 //        marschMusic = Gdx.audio.newMusic(Gdx.files.internal(("sounds/military-march-intro2.wav")));
 //
@@ -65,7 +68,7 @@ public class MapSetupScreen implements IMapSetupScreen {
 //        https://github.com/libgdx/libgdx/wiki/Tile-maps
 //        https://www.youtube.com/watch?v=DOpqkaX9844
         MapProperties properties = tiledMap.getProperties();
-        final KoordinatenSystem koordinatenSystem = new KoordinatenSystem(properties);
+        koordinatenSystem = new KoordinatenSystem(properties);
         koordinatenSystem.insertDebugInfoInto(menu.getDebugLabel());
         einheit = new Monk();
     }
@@ -75,7 +78,7 @@ public class MapSetupScreen implements IMapSetupScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        handleInput();
+        handleInput((InputProcessor) Gdx.input.getInputProcessor());
 
         game.gameCamera.update();
         renderer.setView(game.gameCamera);
@@ -99,7 +102,8 @@ public class MapSetupScreen implements IMapSetupScreen {
     public void resize(int width, int height) {
         game.gameCamera.viewportWidth = width/2;
         game.gameCamera.viewportHeight = height/2;
-        game.gameCamera.position.set(400, 0, 0);
+        Vector2 position = koordinatenSystem.getMitteDerMap();
+        game.gameCamera.position.set(position.x, position.y, 0);
         game.gameCamera.update();
     }
 
@@ -129,30 +133,44 @@ public class MapSetupScreen implements IMapSetupScreen {
         this.game = game;
     }
 
-    private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+    private void handleInput(InputProcessor processor) {
+        if (processor.isZoomingOut()) {
             game.gameCamera.zoom += 0.02;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+        if (processor.isZoomingIn()) {
             game.gameCamera.zoom -= 0.02;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (processor.isGameCamMoveLeft()) {
             game.gameCamera.translate(-3, 0, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (processor.isGameCamMoveRight()) {
             game.gameCamera.translate(3, 0, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        if (processor.isGameCamMoveDown()) {
             game.gameCamera.translate(0, -3, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if (processor.isGameCamMoveUp()) {
             game.gameCamera.translate(0, 3, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        if (processor.isGameCamRotateAgainstClock()) {
             game.gameCamera.rotate(-rotationSpeed, 0, 0, 1);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+        if (processor.isGameCamRotateWithClock()) {
             game.gameCamera.rotate(rotationSpeed, 0, 0, 1);
+        }
+        if (processor.isLeftMouseClicked()) {
+            Vector2 position = processor.getClickedMousePosition();
+            menu.getDebugLabel().setText("Mouse geklickt an X: " + position.x + " und Y: " + position.y);
+            // Herausfinden ob eine Einheit angeklickt wurde.
+            // Einheit ist "Aktiv"
+            // Ist an der geclickten Position eine Einheit wird diese aktiviert.
+            // MouseKlick resseten
+            // Wenn erneut geklickt wird und eine Einheit aktiv ist soll sich die aktive Einheit dort hin bewegen.
+            // TODO Check via Logik-Lib ob Bewegung erlaubt ist.
+        }
+        if (processor.isRightMouseClicked()) {
+            // Deselektieren der aktiven Einheit
+            // TODO later Kontextmenu an Einheit.
         }
 
         // TODO Grenzen für scrollen und zoomen müssen noch implementiert werden
