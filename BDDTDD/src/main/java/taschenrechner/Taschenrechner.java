@@ -23,4 +23,14 @@ public class Taschenrechner implements ITaschenrechner {
 		return summe;
 	}
 
+	@Override
+	public Bruch addiereBrueche(List<Bruch> brueche) {
+		BigInteger zaehlerSumme = BigInteger.ZERO;
+		BigInteger nenner = BigInteger.ZERO;
+		for (Bruch bruch : brueche) {
+			zaehlerSumme = zaehlerSumme.add(bruch.getZaehler());
+			nenner = bruch.getNenner();
+		}
+		return new Bruch(zaehlerSumme, nenner);
+	}
 }

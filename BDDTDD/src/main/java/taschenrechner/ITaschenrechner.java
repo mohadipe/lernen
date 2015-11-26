@@ -9,4 +9,6 @@ public interface ITaschenrechner {
 
 	BigInteger addiere(List<BigInteger> summanden);
 
+	Bruch addiereBrueche(List<Bruch> brueche);
+
 }
