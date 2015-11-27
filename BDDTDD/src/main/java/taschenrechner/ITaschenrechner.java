@@ -11,4 +11,6 @@ public interface ITaschenrechner {
 
 	Bruch addiereBrueche(List<Bruch> brueche);
 
+	Bruch kuerzeBruch(Bruch bruch);
+
 }

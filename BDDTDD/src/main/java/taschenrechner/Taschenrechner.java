@@ -33,4 +33,10 @@ public class Taschenrechner implements ITaschenrechner {
 		}
 		return new Bruch(zaehlerSumme, nenner);
 	}
+
+	@Override
+	public Bruch kuerzeBruch(Bruch bruch) {
+		
+		return null;
+	}
 }

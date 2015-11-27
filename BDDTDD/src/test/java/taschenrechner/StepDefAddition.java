@@ -18,9 +18,9 @@ public class StepDefAddition {
 
 	private List<BigInteger> summanden;
 	private ITaschenrechner taschenrechner;
-	private BigInteger summe;
+	private BigInteger actualSum;
 	private List<Bruch> brueche;
-	private Bruch summenBruch;
+	private Bruch actualBruch;
 
 	public StepDefAddition() {
 		Injector injector = Guice
@@ -47,22 +47,33 @@ public class StepDefAddition {
 
 	@When("^Die Brüche addiert werden\\.$")
 	public void dieBruecheAddiertWerden() {
-		summenBruch = taschenrechner.addiereBrueche(brueche);
+		actualBruch = taschenrechner.addiereBrueche(brueche);
 	}
 
 	@When("^Die Summanden addiert werden\\.$")
 	public void dieSummandenAddiertWerden() throws Throwable {
-		summe = taschenrechner.addiere(summanden);
+		actualSum = taschenrechner.addiere(summanden);
+	}
+	
+	@When("^Der Bruch gekürzt wird\\.$")
+	public void derBruchGekuerztWird() {
+		actualBruch = taschenrechner.kuerzeBruch(brueche.get(0));
+	}
+
+	@Then("^Ergibt dies den Bruch \"([^\"]*)\"\\.$")
+	public void ergibtDiesDenBruch(String stringBruch) {
+		Bruch expectedBruch = new HelperStepDef().wandleInBruch(stringBruch);
+		Assert.assertThat(actualBruch, Matchers.is(expectedBruch));
 	}
 
 	@Then("^Ist die Summe der Brüche \"([^\"]*)\"\\.$")
 	public void isDieSummeDerBrueche(String erwarteterBruch) {
 		Bruch bruch = new HelperStepDef().wandleInBruch(erwarteterBruch);
-		Assert.assertThat(summenBruch, Matchers.is(bruch));
+		Assert.assertThat(actualBruch, Matchers.is(bruch));
 	}
 	
 	@Then("^Die Summe beträgt \"([^\"]*)\"\\.$")
 	public void dieSummeBeträgt(BigInteger erwarteteSumme) throws Throwable {
-		Assert.assertThat(summe, Matchers.is(erwarteteSumme));
+		Assert.assertThat(actualSum, Matchers.is(erwarteteSumme));
 	}
 }
