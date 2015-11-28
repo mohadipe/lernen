@@ -143,4 +143,12 @@ public class InputProcessor extends Stage {
     public boolean isRightMouseClicked() {
         return rightMouseClicked;
     }
+
+    public void resetLeftMouseClick() {
+        leftMouseClicked = false;
+    }
+
+    public void resetRightMouseClick() {
+        rightMouseClicked = false;
+    }
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public abstract class Einheit extends Sprite implements IEinheit {
 
     private TextureAtlas textureAtlas;
+    private boolean isAktiv;
 
     @Override
     public void draw(Batch batch) {
@@ -30,5 +31,19 @@ public abstract class Einheit extends Sprite implements IEinheit {
     @Override
     public void setPosition() {
         throw new UnsupportedOperationException();
+    }
+
+    public void setAktiv() {
+        this.isAktiv = true;
+    }
+
+    @Override
+    public boolean isAktiv() {
+        return isAktiv;
+    }
+
+    @Override
+    public void setInAktiv() {
+        this.isAktiv = false;
     }
 }

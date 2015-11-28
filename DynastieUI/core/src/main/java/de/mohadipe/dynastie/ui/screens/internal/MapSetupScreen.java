@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import de.mohadipe.dynastie.ui.DynastieUI;
+import de.mohadipe.dynastie.ui.controler.EinheitAuswaehlenController;
 import de.mohadipe.dynastie.ui.entities.Einheit;
 import de.mohadipe.dynastie.ui.entities.Monk;
 import de.mohadipe.dynastie.ui.input.InputProcessor;
@@ -159,18 +161,32 @@ public class MapSetupScreen implements IMapSetupScreen {
             game.gameCamera.rotate(rotationSpeed, 0, 0, 1);
         }
         if (processor.isLeftMouseClicked()) {
-            Vector2 position = processor.getClickedMousePosition();
-            menu.getDebugLabel().setText("Mouse geklickt an X: " + position.x + " und Y: " + position.y);
+            Vector2 screenKoords = processor.getClickedMousePosition();
+            menu.getDebugLabel().setText("Mouse geklickt an X: " + screenKoords.x + " und Y: " + screenKoords.y);
+            // TODO gecklickte Position auf Map Koordinaten umrechnen.
+            Vector3 worldKoords = koordinatenSystem.getWorldKoords(game.gameCamera, screenKoords);
             // Herausfinden ob eine Einheit angeklickt wurde.
-            // Einheit ist "Aktiv"
-            // Ist an der geclickten Position eine Einheit wird diese aktiviert.
-            // MouseKlick resseten
-            // Wenn erneut geklickt wird und eine Einheit aktiv ist soll sich die aktive Einheit dort hin bewegen.
-            // TODO Check via Logik-Lib ob Bewegung erlaubt ist.
+            if (new EinheitAuswaehlenController(einheit, worldKoords).isEinheitAusgeweahlt()) {
+                // Einheit ist "Aktiv"
+                // Ist an der geclickten Position eine Einheit wird diese aktiviert.
+                einheit.setAktiv();
+            } else {
+                // Wenn erneut geklickt wird und eine Einheit aktiv ist soll sich die aktive Einheit dort hin bewegen.
+                // ermittle geklicktes Feld
+                // positioniere Einheit in Feld
+                if (einheit.isAktiv()) {
+                    einheit.setX(worldKoords.x);
+                    einheit.setY(worldKoords.y);
+                }
+                // TODO Check via Logik-Lib ob Bewegung erlaubt ist.
+            }
+            processor.resetLeftMouseClick();
         }
         if (processor.isRightMouseClicked()) {
             // Deselektieren der aktiven Einheit
+            einheit.setInAktiv();
             // TODO later Kontextmenu an Einheit.
+            processor.resetRightMouseClick();
         }
 
         // TODO Grenzen für scrollen und zoomen müssen noch implementiert werden

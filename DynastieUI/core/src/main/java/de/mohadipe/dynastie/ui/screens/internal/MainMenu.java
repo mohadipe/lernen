@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import de.mohadipe.dynastie.ui.DynastieUI;
+import de.mohadipe.dynastie.ui.screens.external.ISpielSetupScreen;
 import de.mohadipe.dynastie.ui.screens.listener.ExitButtonClickListener;
 import de.mohadipe.dynastie.ui.screens.listener.OpenScreenButtonClickListener;
 
@@ -36,7 +37,7 @@ public class MainMenu implements de.mohadipe.dynastie.ui.screens.external.IMainM
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         exitButton = createButton("EXIT", new ExitButtonClickListener());
-        de.mohadipe.dynastie.ui.screens.external.ISpielSetupScreen spielSetup = game.injector.getInstance(de.mohadipe.dynastie.ui.screens.external.ISpielSetupScreen.class);
+        ISpielSetupScreen spielSetup = game.injector.getInstance(ISpielSetupScreen.class);
         spielSetup.setGame(game);
         spielSetupButton = createButton("Setup Game", new OpenScreenButtonClickListener(spielSetup));
 

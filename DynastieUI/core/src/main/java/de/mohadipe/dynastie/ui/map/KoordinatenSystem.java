@@ -1,7 +1,9 @@
 package de.mohadipe.dynastie.ui.map;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class KoordinatenSystem {
@@ -31,5 +33,13 @@ public class KoordinatenSystem {
         mitteDerMap.x = mapPixelWidth/2;
         mitteDerMap.y = mapPixelHeight/2;
         return mitteDerMap;
+    }
+
+    public Vector3 getWorldKoords(OrthographicCamera gameCamera, Vector2 screenKoords) {
+        Vector3 positionWithZ = new Vector3();
+        positionWithZ.x = screenKoords.x;
+        positionWithZ.y = screenKoords.y;
+        positionWithZ.z = gameCamera.zoom;
+        return gameCamera.unproject(positionWithZ);
     }
 }
