@@ -28,6 +28,7 @@ import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.controler.EinheitAuswaehlenController;
 import de.mohadipe.dynastie.ui.entities.Einheit;
 import de.mohadipe.dynastie.ui.entities.Monk;
+import de.mohadipe.dynastie.ui.input.GameCameraBewegung;
 import de.mohadipe.dynastie.ui.input.InputProcessor;
 import de.mohadipe.dynastie.ui.map.KoordinatenSystem;
 import de.mohadipe.dynastie.ui.menu.SpielMenu;
@@ -51,12 +52,13 @@ public class MapSetupScreen implements IMapSetupScreen {
     private int[] background = new int[] {0}, foreground = new int[] {1};
     private Einheit einheit;
     private SpielMenu menu;
+    private GameCameraBewegung cameraBewegung;
 
     @Override
     public void show() {
         stage = new InputProcessor();
         Gdx.input.setInputProcessor(stage);
-        rotationSpeed = 0.5f;
+        cameraBewegung = new GameCameraBewegung(game.gameCamera);
         menu = new SpielMenu(this.game);
         menu.addMenuToStage(stage);
 //        marschMusic = Gdx.audio.newMusic(Gdx.files.internal(("sounds/military-march-intro2.wav")));
@@ -136,30 +138,8 @@ public class MapSetupScreen implements IMapSetupScreen {
     }
 
     private void handleInput(InputProcessor processor) {
-        if (processor.isZoomingOut()) {
-            game.gameCamera.zoom += 0.02;
-        }
-        if (processor.isZoomingIn()) {
-            game.gameCamera.zoom -= 0.02;
-        }
-        if (processor.isGameCamMoveLeft()) {
-            game.gameCamera.translate(-3, 0, 0);
-        }
-        if (processor.isGameCamMoveRight()) {
-            game.gameCamera.translate(3, 0, 0);
-        }
-        if (processor.isGameCamMoveDown()) {
-            game.gameCamera.translate(0, -3, 0);
-        }
-        if (processor.isGameCamMoveUp()) {
-            game.gameCamera.translate(0, 3, 0);
-        }
-        if (processor.isGameCamRotateAgainstClock()) {
-            game.gameCamera.rotate(-rotationSpeed, 0, 0, 1);
-        }
-        if (processor.isGameCamRotateWithClock()) {
-            game.gameCamera.rotate(rotationSpeed, 0, 0, 1);
-        }
+        cameraBewegung.handleInput(processor);
+
         if (processor.isLeftMouseClicked()) {
             Vector2 screenKoords = processor.getClickedMousePosition();
             menu.getDebugLabel().setText("Mouse geklickt an X: " + screenKoords.x + " und Y: " + screenKoords.y);
@@ -183,7 +163,6 @@ public class MapSetupScreen implements IMapSetupScreen {
             processor.resetLeftMouseClick();
         }
         if (processor.isRightMouseClicked()) {
-            // Deselektieren der aktiven Einheit
             einheit.setInAktiv();
             // TODO later Kontextmenu an Einheit.
             processor.resetRightMouseClick();

@@ -1,7 +1,6 @@
 package de.mohadipe.dynastie.ui.map;
 
 import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.math.Vector2;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
