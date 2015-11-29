@@ -30,6 +30,7 @@ import de.mohadipe.dynastie.ui.entities.Einheit;
 import de.mohadipe.dynastie.ui.entities.Monk;
 import de.mohadipe.dynastie.ui.input.GameCameraBewegung;
 import de.mohadipe.dynastie.ui.input.InputProcessor;
+import de.mohadipe.dynastie.ui.map.Feld;
 import de.mohadipe.dynastie.ui.map.KoordinatenSystem;
 import de.mohadipe.dynastie.ui.menu.SpielMenu;
 import de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen;
@@ -48,7 +49,6 @@ public class MapSetupScreen implements IMapSetupScreen {
 
     private Stage stage;
 
-    private float rotationSpeed;
     private int[] background = new int[] {0}, foreground = new int[] {1};
     private Einheit einheit;
     private SpielMenu menu;
@@ -155,8 +155,10 @@ public class MapSetupScreen implements IMapSetupScreen {
                 // ermittle geklicktes Feld
                 // positioniere Einheit in Feld
                 if (einheit.isAktiv()) {
-                    einheit.setX(worldKoords.x);
-                    einheit.setY(worldKoords.y);
+                    Feld feld = koordinatenSystem.getFeldByWorldKoords(worldKoords);
+                    Vector2 possitionFuerFeld = koordinatenSystem.getPossitionFuerFeld(feld);
+                    einheit.setX(possitionFuerFeld.x);
+                    einheit.setY(possitionFuerFeld.y);
                 }
                 // TODO Check via Logik-Lib ob Bewegung erlaubt ist.
             }

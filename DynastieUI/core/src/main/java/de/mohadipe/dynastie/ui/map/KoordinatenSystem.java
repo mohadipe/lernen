@@ -42,4 +42,16 @@ public class KoordinatenSystem {
         positionWithZ.z = gameCamera.zoom;
         return gameCamera.unproject(positionWithZ);
     }
+
+    public Feld getFeldByWorldKoords(Vector3 worldKoords) {
+        float x = worldKoords.x / tilePixelWidth;
+        float y = worldKoords.y / tilePixelHeight;
+        return new FeldImpl(x, y);
+    }
+
+    public Vector2 getPossitionFuerFeld(Feld feld) {
+        float x = feld.getX() * tilePixelWidth - tilePixelWidth;
+        float y = feld.getY() * tilePixelHeight - tilePixelHeight;
+        return new Vector2(x, y);
+    }
 }
