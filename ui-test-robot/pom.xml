@@ -4,13 +4,13 @@
 	<groupId>de.mohadipe</groupId>
 	<artifactId>ui-test-robot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>GOW-Robot</name>
+	<name>UI-Test-Robot</name>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.4</version>
+				<version>4.12</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -30,6 +30,23 @@
 				<version>1.9.5</version>
 				<scope>test</scope>
 			</dependency>
+			<dependency>
+				<groupId>info.cukes</groupId>
+				<artifactId>cucumber-java8</artifactId>
+				<version>1.2.3</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>info.cukes</groupId>
+				<artifactId>cucumber-junit</artifactId>
+				<version>1.2.3</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>2.5</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -44,6 +61,23 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java8</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.5</version>
 		</dependency>
 	</dependencies>
 

@@ -3,8 +3,6 @@ package de.mohadipe.ui.test.robot;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
@@ -18,11 +16,8 @@ public class IconFinden {
 	public final static String WIEDERHOLEN_03 = "wiederholen03.bmp";
 	public final static String X = "x.bmp";
 	public final static String BROWSER_X = "browser_x.bmp";
-	public final static String VMWARE_ROT = Paths.get("../../../icons/rot.bmp").toAbsolutePath().toString();
-	public final static String VMWARE_SCHWARZ = "../../../icons/schwarz.bmp";
-	public final static String GOW_EMULATED = "../../../icons/gow_emulated.bmp";
-	public final static String GOW_ICON = "../../../icons/gow.bmp";
 
+	private Koordinaten2D koordinaten = null;
 	private int xKoordinate = 0;
 	private int yKoordinate = 0;
 
@@ -47,9 +42,12 @@ public class IconFinden {
 						}
 					}
 					if (matches && anzahlPixelIcon == uebereinstimmendePixel) {
+						koordinaten = new Koordinaten2D();
 						System.out.println("Icon X: " + x);
+						koordinaten.x = x;
 						xKoordinate = x;
 						System.out.println("Icon Y: " + y);
+						koordinaten.y = y;
 						yKoordinate = y;
 						return;
 					}
@@ -69,5 +67,9 @@ public class IconFinden {
 
 	public int getyKoordinate() {
 		return yKoordinate;
+	}
+	
+	public Koordinaten2D getKoordinaten() {
+		return koordinaten;
 	}
 }
