@@ -21,8 +21,7 @@ public class IconFinden {
 	private int xKoordinate = 0;
 	private int yKoordinate = 0;
 
-	public void findeIcon(final String fileName,
-			final BufferedImage currentScreen) throws IconNotFoundException {
+	public void findeIcon(final String fileName, final BufferedImage currentScreen) throws IconNotFoundException {
 		try {
 			BufferedImage icon = ImageIO.read(new File(fileName));
 			int anzahlPixelIcon = icon.getWidth() * icon.getHeight();

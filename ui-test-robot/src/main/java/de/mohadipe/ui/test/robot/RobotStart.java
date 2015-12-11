@@ -4,6 +4,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
+import de.mohadipe.ui.test.robot.foe.FoEUIRobot;
+
 public class RobotStart {
 
 	public static void main(String[] args) {

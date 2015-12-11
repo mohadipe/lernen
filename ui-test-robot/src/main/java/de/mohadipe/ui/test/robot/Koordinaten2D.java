@@ -1,6 +1,7 @@
 package de.mohadipe.ui.test.robot;
 
-import gherkin.deps.com.google.gson.Gson;
+import com.google.gson.Gson;
+
 
 public class Koordinaten2D {
 	public int x;
