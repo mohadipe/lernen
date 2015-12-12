@@ -1,9 +1,9 @@
 package de.mohadipe.dynastie.spieler;
 
 import de.mohadipe.dynastie.Konfiguration;
-import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.input.Input;
+import de.mohadipe.dynastie.logik.model.Einheit;
 
 public class MenschSpieler implements Spieler {
 
@@ -16,12 +16,12 @@ public class MenschSpieler implements Spieler {
 		aufstellenInput.frageInputAb();
 		Einheit einheit1 = new Infanterie();
 		einheit1.setEindeutigeKennung("1");
-		einheit1.setSpieler(this);
+		((Infanterie)einheit1).setSpieler(this);
 		spielKonfiguration.getKarte().fuegeEinheitVonSpielerHinzu(aufstellenInput.getInputKoordinate(), einheit1);
 		aufstellenInput.frageInputAb();
 		Einheit einheit2 = new Infanterie();
 		einheit2.setEindeutigeKennung("2");
-		einheit2.setSpieler(this);
+		((Infanterie)einheit2).setSpieler(this);
 		spielKonfiguration.getKarte().fuegeEinheitVonSpielerHinzu(aufstellenInput.getInputKoordinate(), einheit2);
 
 	}

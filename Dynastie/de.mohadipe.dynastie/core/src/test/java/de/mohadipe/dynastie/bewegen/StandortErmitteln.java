@@ -3,10 +3,10 @@ package de.mohadipe.dynastie.bewegen;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.mohadipe.dynastie.einheiten.Einheit;
-import de.mohadipe.dynastie.karte.Feld;
 import de.mohadipe.dynastie.karte.Karte;
-import de.mohadipe.dynastie.karte.Koordinate;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 
 public class StandortErmitteln {
 

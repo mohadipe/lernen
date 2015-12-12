@@ -2,22 +2,22 @@ package de.mohadipe.dynastie.bewegen;
 
 import java.util.Map;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.mohadipe.dynastie.DummyRandomServiceImpl;
 import de.mohadipe.dynastie.Konfiguration;
 import de.mohadipe.dynastie.SpielKonfiguration;
-import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.input.DummyZielX2Y1Koordinaten;
-import de.mohadipe.dynastie.karte.Feld;
+import de.mohadipe.dynastie.karte.FeldImpl;
 import de.mohadipe.dynastie.karte.Karte;
 import de.mohadipe.dynastie.karte.KartenGenerator;
-import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.spieler.ComputerSpieler;
 import de.mohadipe.dynastie.spieler.MenschSpieler;
 import de.mohadipe.dynastie.spieler.Spieler;
@@ -41,7 +41,7 @@ public class EinheitBewegenTest {
 	@Test
 	public void bewegeInfantrieAlsComputer() {
 		ComputerSpieler computerSpieler = new ComputerSpieler();
-		einheit.setSpieler(computerSpieler);
+		((Infanterie)einheit).setSpieler(computerSpieler);
 		Koordinate koordinate = new ZweiDimensionaleKoordinate(1, 1);
 		fuenfMalFuenfKarte.fuegeEinheitVonSpielerHinzu(koordinate, einheit);
 
@@ -59,7 +59,7 @@ public class EinheitBewegenTest {
 	@Test
 	public void bewegenInfantrieAlsMensch() {
 		Spieler menschSpieler = new MenschSpieler();
-		einheit.setSpieler(menschSpieler);
+		((Infanterie)einheit).setSpieler(menschSpieler);
 		Koordinate koordinate = new ZweiDimensionaleKoordinate(1, 1);
 		fuenfMalFuenfKarte.fuegeEinheitVonSpielerHinzu(koordinate, einheit);
 
@@ -74,6 +74,6 @@ public class EinheitBewegenTest {
 		Assert.assertNull("An diesen Koordinaten sollte keine Einheit sein.", feld);
 		Feld feldMitEinheit = einheitenMitKoordinatenVonSpieler.get(new ZweiDimensionaleKoordinate(2, 1));
 		Assert.assertNotNull("An diesen Koordinaten sollte eine Einheit sein.", feldMitEinheit);
-		Assert.assertTrue("Auf diesem Feld sollte eine Einheit des Spielers sein.", feldMitEinheit.hasEinheitOf(menschSpieler));
+		Assert.assertTrue("Auf diesem Feld sollte eine Einheit des Spielers sein.", ((FeldImpl)feldMitEinheit).hasEinheitOf(menschSpieler));
 	}
 }

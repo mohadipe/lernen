@@ -2,7 +2,9 @@ package de.mohadipe.dynastie.karte;
 
 import java.util.Map;
 
-import de.mohadipe.dynastie.einheiten.Einheit;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.spieler.Spieler;
 
 public interface Karte {
@@ -32,4 +34,6 @@ public interface Karte {
 	void platziereEinheitInStartZone(Einheit einheit);
 
 	boolean isKeineEinheitAnKoordinate(Koordinate ziel);
+
+	Koordinate getStandortVonEinheit(Einheit einheit);
 }

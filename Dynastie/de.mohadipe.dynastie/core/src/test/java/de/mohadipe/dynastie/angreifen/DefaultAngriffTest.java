@@ -4,8 +4,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
 
-import junit.framework.Assert;
 
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,11 +16,11 @@ import de.mohadipe.dynastie.RandomService;
 import de.mohadipe.dynastie.SpielKonfiguration;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.einheiten.InfanterieDaten;
-import de.mohadipe.dynastie.karte.Feld;
 import de.mohadipe.dynastie.karte.Karte;
 import de.mohadipe.dynastie.karte.KartenGenerator;
-import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.output.SysOutSpielZug;
 import de.mohadipe.dynastie.spieler.ComputerSpieler;
 import de.mohadipe.dynastie.spieler.MenschSpieler;

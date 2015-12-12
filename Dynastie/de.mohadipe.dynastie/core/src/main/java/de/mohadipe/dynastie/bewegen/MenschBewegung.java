@@ -5,11 +5,11 @@ import java.util.Map.Entry;
 
 import javax.inject.Inject;
 
-import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.input.Input;
-import de.mohadipe.dynastie.karte.Feld;
 import de.mohadipe.dynastie.karte.Karte;
-import de.mohadipe.dynastie.karte.Koordinate;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.plausi.UmkreisPlausi;
 import de.mohadipe.dynastie.spieler.Spieler;
 

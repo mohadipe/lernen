@@ -1,8 +1,8 @@
 package de.mohadipe.dynastie.bewegen;
 
-import de.mohadipe.dynastie.einheiten.Einheit;
-import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.plausi.AufKartePlausi;
 import de.mohadipe.dynastie.plausi.EinheitenKollisionPlausi;
 

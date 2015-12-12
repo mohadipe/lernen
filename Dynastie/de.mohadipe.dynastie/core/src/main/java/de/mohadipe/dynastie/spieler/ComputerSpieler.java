@@ -1,9 +1,9 @@
 package de.mohadipe.dynastie.spieler;
 
 import de.mohadipe.dynastie.Konfiguration;
-import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.input.Input;
+import de.mohadipe.dynastie.logik.model.Einheit;
 
 public class ComputerSpieler implements Spieler {
 
@@ -21,7 +21,7 @@ public class ComputerSpieler implements Spieler {
 	@Override
 	public void stelleEinheitenAuf(Konfiguration spielKonfiguration, Input input) {
 		Einheit einheit = new Infanterie();
-		einheit.setSpieler(this);
+		((Infanterie)einheit).setSpieler(this);
 		spielKonfiguration.getKarte().platziereEinheitInStartZone(einheit);
 	}
 

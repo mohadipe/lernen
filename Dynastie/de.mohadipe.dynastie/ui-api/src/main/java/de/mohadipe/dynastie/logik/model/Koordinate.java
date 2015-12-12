@@ -1,4 +1,4 @@
-package de.mohadipe.dynastie.karte;
+package de.mohadipe.dynastie.logik.model;
 
 public interface Koordinate {
 

@@ -1,16 +1,15 @@
 package de.mohadipe.dynastie.angreifen;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import de.mohadipe.dynastie.DummyRandomServiceImpl;
-import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.einheiten.InfanterieDaten;
-import de.mohadipe.dynastie.karte.Feld;
 import de.mohadipe.dynastie.karte.FeldImpl;
 import de.mohadipe.dynastie.karte.GelaendeBeschaffenheit;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
 
 public class KampfTest {
 

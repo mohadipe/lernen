@@ -1,5 +1,6 @@
 package de.mohadipe.dynastie.einheiten;
 
+import de.mohadipe.dynastie.logik.model.Einheit;
 import de.mohadipe.dynastie.spieler.Spieler;
 
 public class Infanterie implements Einheit {
@@ -11,7 +12,6 @@ public class Infanterie implements Einheit {
 		this.aktLebenspunkte = InfanterieDaten.standardLebenspunkte;
 	}
 
-	@Override
 	public void setSpieler(Spieler spieler) {
 		this.spieler = spieler;
 	}
@@ -28,7 +28,6 @@ public class Infanterie implements Einheit {
 		return stringBuilder.toString();
 	}
 
-	@Override
 	public boolean isFromSpieler(Spieler spieler) {
 		return this.spieler.equals(spieler);
 	}

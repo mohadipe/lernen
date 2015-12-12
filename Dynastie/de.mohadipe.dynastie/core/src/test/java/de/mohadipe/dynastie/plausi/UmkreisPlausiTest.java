@@ -3,16 +3,15 @@ package de.mohadipe.dynastie.plausi;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import de.mohadipe.dynastie.einheiten.Infanterie;
-import de.mohadipe.dynastie.karte.Feld;
 import de.mohadipe.dynastie.karte.FeldImpl;
 import de.mohadipe.dynastie.karte.GelaendeBeschaffenheit;
-import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.spieler.ComputerSpieler;
 import de.mohadipe.dynastie.spieler.MenschSpieler;
 

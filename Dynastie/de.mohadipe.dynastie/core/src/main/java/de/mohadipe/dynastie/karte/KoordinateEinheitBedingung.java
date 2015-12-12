@@ -3,6 +3,8 @@ package de.mohadipe.dynastie.karte;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
 
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.spieler.Spieler;
 
 public class KoordinateEinheitBedingung implements Predicate<Entry<Koordinate, Feld>> {
@@ -12,9 +14,8 @@ public class KoordinateEinheitBedingung implements Predicate<Entry<Koordinate, F
 		this.spieler = spieler;
 	}
 
-	@Override
 	public boolean test(Entry<Koordinate, Feld> entry) {
-		return entry.getValue().hasEinheitOf(spieler);
+		return ((FeldImpl)entry.getValue()).hasEinheitOf(spieler);
 	}
 
 	@Override

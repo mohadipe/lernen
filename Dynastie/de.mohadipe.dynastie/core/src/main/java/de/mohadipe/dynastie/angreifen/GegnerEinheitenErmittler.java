@@ -6,10 +6,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
-import de.mohadipe.dynastie.einheiten.Einheit;
-import de.mohadipe.dynastie.karte.Feld;
+import de.mohadipe.dynastie.einheiten.Infanterie;
 import de.mohadipe.dynastie.karte.Karte;
-import de.mohadipe.dynastie.karte.Koordinate;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.plausi.UmkreisPlausi;
 import de.mohadipe.dynastie.spieler.Spieler;
 
@@ -24,7 +25,7 @@ public class GegnerEinheitenErmittler implements Consumer<Entry<Koordinate, Feld
 
 	@Override
 	public void accept(Entry<Koordinate, Feld> entry) {
-		Spieler spieler = entry.getValue().getEinheit().getSpieler();
+		Spieler spieler = ((Infanterie)entry.getValue().getEinheit()).getSpieler();
 		int angriffsReichweite = entry.getValue().getEinheit().getAngriffsReichweite();
 		Koordinate standort = entry.getKey();
 		Map<Koordinate, Feld> einheitenMitKoordinatenVonAnderenSpielern = karte.getEinheitenMitKoordinatenVonAnderenSpielern(spieler);

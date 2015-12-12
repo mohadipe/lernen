@@ -1,8 +1,8 @@
 package de.mohadipe.dynastie.input;
 
 import de.mohadipe.dynastie.Konfiguration;
-import de.mohadipe.dynastie.einheiten.Einheit;
-import de.mohadipe.dynastie.karte.Koordinate;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 
 public interface Input {
 	public Koordinate getInputKoordinate();

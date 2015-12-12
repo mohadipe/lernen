@@ -3,13 +3,14 @@ package de.mohadipe.dynastie.karte;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import de.mohadipe.dynastie.DummyRandomServiceImpl;
 import de.mohadipe.dynastie.RandomService;
 import de.mohadipe.dynastie.SpielKonfiguration;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 
 public class KartenGeneratorTest {
 
@@ -31,7 +32,7 @@ public class KartenGeneratorTest {
 		Assert.assertEquals(expectedY, spielKonfiguration.getKarte().getMaxY());
 		Set<Entry<Koordinate, Feld>> felder = spielKonfiguration.getKarte().getFelderMap().entrySet();
 		for (Entry<Koordinate, Feld> feld : felder) {
-			Assert.assertEquals(GelaendeBeschaffenheit.EBENE, feld.getValue().getGelaende());
+			Assert.assertEquals(GelaendeBeschaffenheit.EBENE, ((FeldImpl)feld.getValue()).getGelaende());
 		}
 	}
 
@@ -53,7 +54,7 @@ public class KartenGeneratorTest {
 		Assert.assertEquals(expectedY, spielKonfiguration.getKarte().getMaxY());
 		Set<Entry<Koordinate, Feld>> felder = spielKonfiguration.getKarte().getFelderMap().entrySet();
 		for (Entry<Koordinate, Feld> feld : felder) {
-			Assert.assertEquals(GelaendeBeschaffenheit.WALD, feld.getValue().getGelaende());
+			Assert.assertEquals(GelaendeBeschaffenheit.WALD, ((FeldImpl)feld.getValue()).getGelaende());
 		}
 	}
 
@@ -75,7 +76,7 @@ public class KartenGeneratorTest {
 		Assert.assertEquals(expectedY, spielKonfiguration.getKarte().getMaxY());
 		Set<Entry<Koordinate, Feld>> felder = spielKonfiguration.getKarte().getFelderMap().entrySet();
 		for (Entry<Koordinate, Feld> feld : felder) {
-			Assert.assertEquals(GelaendeBeschaffenheit.HUEGEL, feld.getValue().getGelaende());
+			Assert.assertEquals(GelaendeBeschaffenheit.HUEGEL, ((FeldImpl)feld.getValue()).getGelaende());
 		}
 	}
 

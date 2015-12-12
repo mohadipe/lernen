@@ -1,5 +1,7 @@
 package de.mohadipe.dynastie.karte;
 
+import de.mohadipe.dynastie.logik.model.Koordinate;
+
 public class ZweiDimensionaleKoordinate implements Koordinate {
 	public int x;
 	public int y;

@@ -2,21 +2,20 @@ package de.mohadipe.dynastie.angreifen;
 
 import java.util.Map;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.mohadipe.dynastie.DummyRandomServiceImpl;
 import de.mohadipe.dynastie.Konfiguration;
 import de.mohadipe.dynastie.SpielKonfiguration;
-import de.mohadipe.dynastie.einheiten.Einheit;
 import de.mohadipe.dynastie.einheiten.Infanterie;
-import de.mohadipe.dynastie.karte.Feld;
 import de.mohadipe.dynastie.karte.Karte;
 import de.mohadipe.dynastie.karte.KartenGenerator;
-import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.spieler.ComputerSpieler;
 import de.mohadipe.dynastie.spieler.MenschSpieler;
 import de.mohadipe.dynastie.spieler.Spieler;
@@ -31,7 +30,7 @@ public class GegnerEinheitenErmittlerTest {
 		angreifendeEinheit = new Infanterie();
 		compSpieler = new ComputerSpieler();
 		angreifendeEinheit.setEindeutigeKennung("attacker");
-		angreifendeEinheit.setSpieler(compSpieler);
+		((Infanterie)angreifendeEinheit).setSpieler(compSpieler);
 		Konfiguration konfiguration = new SpielKonfiguration();
 		KartenGenerator kartenGenerator = new KartenGenerator(new DummyRandomServiceImpl());
 		kartenGenerator.generiereKarte(konfiguration);
@@ -43,7 +42,7 @@ public class GegnerEinheitenErmittlerTest {
 	@Test
 	public void keineGegnerischenEinheitenInReichweite() {
 		Einheit infMen = new Infanterie();
-		infMen.setSpieler(new MenschSpieler());
+		((Infanterie)infMen).setSpieler(new MenschSpieler());
 		karte.fuegeEinheitVonSpielerHinzu(new ZweiDimensionaleKoordinate(5, 5), infMen);
 		Map<Koordinate, Feld> einheitenMitKoordinatenVonSpieler = karte.getEinheitenMitKoordinatenVonSpieler(compSpieler);
 
@@ -55,7 +54,7 @@ public class GegnerEinheitenErmittlerTest {
 	@Test
 	public void eineGegnerischeEinheitInReichweite() {
 		Einheit infMen = new Infanterie();
-		infMen.setSpieler(new MenschSpieler());
+		((Infanterie)infMen).setSpieler(new MenschSpieler());
 		karte.fuegeEinheitVonSpielerHinzu(new ZweiDimensionaleKoordinate(3, 1), infMen);
 		Map<Koordinate, Feld> einheitenMitKoordinatenVonSpieler = karte.getEinheitenMitKoordinatenVonSpieler(compSpieler);
 
@@ -68,11 +67,11 @@ public class GegnerEinheitenErmittlerTest {
 	public void zweiGegnerischeEinheitenInReichweite() {
 		Einheit infMen = new Infanterie();
 		infMen.setEindeutigeKennung("1");
-		infMen.setSpieler(new MenschSpieler());
+		((Infanterie)infMen).setSpieler(new MenschSpieler());
 		karte.fuegeEinheitVonSpielerHinzu(new ZweiDimensionaleKoordinate(3, 1), infMen);
 		Einheit infMen2 = new Infanterie();
 		infMen2.setEindeutigeKennung("2");
-		infMen2.setSpieler(new MenschSpieler());
+		((Infanterie)infMen2).setSpieler(new MenschSpieler());
 		karte.fuegeEinheitVonSpielerHinzu(new ZweiDimensionaleKoordinate(2, 2), infMen2);
 
 		Map<Koordinate, Feld> einheitenMitKoordinatenVonSpieler = karte.getEinheitenMitKoordinatenVonSpieler(compSpieler);

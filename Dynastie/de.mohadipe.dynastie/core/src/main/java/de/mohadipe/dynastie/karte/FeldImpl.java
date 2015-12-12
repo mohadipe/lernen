@@ -1,6 +1,8 @@
 package de.mohadipe.dynastie.karte;
 
-import de.mohadipe.dynastie.einheiten.Einheit;
+import de.mohadipe.dynastie.einheiten.Infanterie;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
 import de.mohadipe.dynastie.spieler.Spieler;
 
 public class FeldImpl implements Feld {
@@ -38,10 +40,9 @@ public class FeldImpl implements Feld {
 		return einheit.copy();
 	}
 
-	@Override
 	public boolean hasEinheitOf(Spieler spieler) {
 		if (this.einheit != null) {
-			return einheit.isFromSpieler(spieler);
+			return ((Infanterie)einheit).isFromSpieler(spieler);
 		}
 		return false;
 	}
@@ -54,7 +55,6 @@ public class FeldImpl implements Feld {
 		return true;
 	}
 
-	@Override
 	public GelaendeBeschaffenheit getGelaende() {
 		return gelaende;
 	}

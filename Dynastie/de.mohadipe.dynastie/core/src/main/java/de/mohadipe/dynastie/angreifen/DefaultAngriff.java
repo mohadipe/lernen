@@ -6,10 +6,10 @@ import java.util.Map.Entry;
 
 import de.mohadipe.dynastie.Konfiguration;
 import de.mohadipe.dynastie.RandomService;
-import de.mohadipe.dynastie.einheiten.Einheit;
-import de.mohadipe.dynastie.karte.Feld;
 import de.mohadipe.dynastie.karte.Karte;
-import de.mohadipe.dynastie.karte.Koordinate;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.output.Output;
 import de.mohadipe.dynastie.output.TutNixOutput;
 import de.mohadipe.dynastie.spieler.Spieler;

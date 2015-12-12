@@ -7,7 +7,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import de.mohadipe.dynastie.RandomService;
-import de.mohadipe.dynastie.einheiten.Einheit;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 import de.mohadipe.dynastie.output.SysOutKarteAnzeige;
 import de.mohadipe.dynastie.spieler.Spieler;
 
@@ -89,7 +91,7 @@ public class MinFuenfMalFuenfKarte implements Karte {
 
 		@Override
 		public boolean test(Feld feld) {
-			return feld.hasEinheitOf(this.spieler);
+			return ((FeldImpl)feld).hasEinheitOf(this.spieler);
 		}
 
 	}
@@ -147,6 +149,12 @@ public class MinFuenfMalFuenfKarte implements Karte {
 	@Override
 	public boolean isKeineEinheitAnKoordinate(Koordinate ziel) {
 		return !felderMap.get(ziel).hasEinheit();
+	}
+
+	@Override
+	public Koordinate getStandortVonEinheit(Einheit einheit) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

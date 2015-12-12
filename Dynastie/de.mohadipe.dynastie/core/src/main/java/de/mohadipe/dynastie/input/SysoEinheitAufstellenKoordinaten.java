@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import de.mohadipe.dynastie.Konfiguration;
-import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 
 public class SysoEinheitAufstellenKoordinaten extends TutNixInput {
 

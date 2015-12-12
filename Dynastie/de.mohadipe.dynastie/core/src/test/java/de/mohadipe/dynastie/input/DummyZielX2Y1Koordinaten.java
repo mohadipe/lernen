@@ -1,9 +1,9 @@
 package de.mohadipe.dynastie.input;
 
 import de.mohadipe.dynastie.Konfiguration;
-import de.mohadipe.dynastie.einheiten.Einheit;
-import de.mohadipe.dynastie.karte.Koordinate;
 import de.mohadipe.dynastie.karte.ZweiDimensionaleKoordinate;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 
 public class DummyZielX2Y1Koordinaten implements Input {
 	private Koordinate input = new ZweiDimensionaleKoordinate(2, 1);

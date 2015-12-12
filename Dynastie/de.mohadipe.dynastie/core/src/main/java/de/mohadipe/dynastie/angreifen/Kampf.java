@@ -1,8 +1,8 @@
 package de.mohadipe.dynastie.angreifen;
 
 import de.mohadipe.dynastie.RandomService;
-import de.mohadipe.dynastie.einheiten.Einheit;
-import de.mohadipe.dynastie.karte.Feld;
+import de.mohadipe.dynastie.logik.model.Einheit;
+import de.mohadipe.dynastie.logik.model.Feld;
 import de.mohadipe.dynastie.output.Output;
 import de.mohadipe.dynastie.output.TutNixOutput;
 

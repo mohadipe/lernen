@@ -1,18 +1,17 @@
-package de.mohadipe.dynastie.einheiten;
+package de.mohadipe.dynastie.logik.model;
 
-import de.mohadipe.dynastie.spieler.Spieler;
 
 public interface Einheit {
 
-	void setSpieler(Spieler spieler);
+//	void setSpieler(Spieler spieler);
 
-	boolean isFromSpieler(Spieler spieler);
+//	boolean isFromSpieler(Spieler spieler);
 
 	int getBewegungsReichweite();
 
 	Einheit copy();
 
-	Spieler getSpieler();
+//	Spieler getSpieler();
 
 	int getLebenspunkte();
 

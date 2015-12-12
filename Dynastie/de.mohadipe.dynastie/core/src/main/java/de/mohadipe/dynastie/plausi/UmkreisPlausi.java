@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
-import de.mohadipe.dynastie.karte.Feld;
-import de.mohadipe.dynastie.karte.Koordinate;
+import de.mohadipe.dynastie.logik.model.Feld;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 
 public class UmkreisPlausi implements Consumer<Entry<Koordinate, Feld>> {
 

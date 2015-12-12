@@ -1,7 +1,7 @@
 package de.mohadipe.dynastie.plausi;
 
 import de.mohadipe.dynastie.karte.Karte;
-import de.mohadipe.dynastie.karte.Koordinate;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 
 public class EinheitenKollisionPlausi {
 

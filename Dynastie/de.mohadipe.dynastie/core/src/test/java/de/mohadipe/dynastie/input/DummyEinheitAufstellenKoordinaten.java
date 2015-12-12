@@ -1,6 +1,6 @@
 package de.mohadipe.dynastie.input;
 
-import de.mohadipe.dynastie.karte.Koordinate;
+import de.mohadipe.dynastie.logik.model.Koordinate;
 
 public class DummyEinheitAufstellenKoordinaten extends TutNixInput {
 
