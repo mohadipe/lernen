@@ -27,24 +27,6 @@ public class FoEUIRobot extends Robot {
 		this.abweichung = abweichung_y;
 	}
 
-	private void doppelKlickEinfacheAbweichung(String dateiPfad) {
-		BufferedImage currentScreen = this.createScreenCapture(new Rectangle(
-				Toolkit.getDefaultToolkit().getScreenSize()));
-		IconFinden iconFinden = new IconFinden();
-		try {
-			iconFinden.findeIcon(dateiPfad, currentScreen);
-			int x = iconFinden.getxKoordinate();
-			int y = iconFinden.getyKoordinate();
-			mouseMove(x + EINFACHE_ABWEICHUNG, y + EINFACHE_ABWEICHUNG);
-			mousePress(InputEvent.BUTTON1_DOWN_MASK);
-			mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			mousePress(InputEvent.BUTTON1_DOWN_MASK);
-			mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		} catch (IconNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
 	private boolean klickSpezielleAbweichung(String dateiPfad, int abweichungY) {
 		BufferedImage currentScreen = this.createScreenCapture(new Rectangle(
 				Toolkit.getDefaultToolkit().getScreenSize()));
@@ -65,27 +47,39 @@ public class FoEUIRobot extends Robot {
 	}
 
 	public void starteFoEBrowser() {
-		String pfad = pfadeService.getPath() + IconFinden.KLICK_01;
-		System.out.println(pfad);
-		doppelKlickEinfacheAbweichung(pfad);
+		Koordinaten2D koordinaten2d = new Koordinaten2D();
+		String iconName = pfadeService.getPath() + IconFinden.KLICK_01;
+		System.out.println(iconName);
+		if (findeKoordinaten(koordinaten2d, iconName)) {
+			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
+		}
 	}
 
 	public void spieleFoE() {
-		String pfad = pfadeService.getPath() + IconFinden.KLICK_02;
-		System.out.println(pfad);
-		doppelKlickEinfacheAbweichung(pfad);
+		Koordinaten2D koordinaten2d = new Koordinaten2D();
+		String iconName = pfadeService.getPath() + IconFinden.KLICK_02;
+		System.out.println(iconName);
+		if (findeKoordinaten(koordinaten2d, iconName)) {
+			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
+		}
 	}
 
 	public void waehleServerRugnir() {
-		String pfad = pfadeService.getPath() + IconFinden.KLICK_03;
-		System.out.println(pfad);
-		doppelKlickEinfacheAbweichung(pfad);
+		Koordinaten2D koordinaten2d = new Koordinaten2D();
+		String iconName = pfadeService.getPath() + IconFinden.KLICK_03;
+		System.out.println(iconName);
+		if (findeKoordinaten(koordinaten2d, iconName)) {
+			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
+		}
 	}
 
 	public void menuesBestaetigen() {
-		String pfad = pfadeService.getPath() + IconFinden.KLICK_04;
-		System.out.println(pfad);
-		doppelKlickEinfacheAbweichung(pfad);
+		Koordinaten2D koordinaten2d = new Koordinaten2D();
+		String iconName = pfadeService.getPath() + IconFinden.KLICK_04;
+		System.out.println(iconName);
+		if (findeKoordinaten(koordinaten2d, iconName)) {
+			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
+		}
 	}
 
 	public void holeMuenzenAb() {
@@ -104,17 +98,43 @@ public class FoEUIRobot extends Robot {
 			muenzenKlickCount++;
 		}
 	}
-	
+
 	public void holeWerkzeugAb() {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		if (findeKoordinaten(koordinaten2d, IconFinden.WIEDERHOLEN_05)) {
 			klickKoordinaten(koordinaten2d);
-			werkzeugeKlickCount++;			
+			werkzeugeKlickCount++;
 		}
 	}
 
+	public boolean oeffneProduktion() {
+		Koordinaten2D koordinaten2d = new Koordinaten2D();
+		if (findeKoordinaten(koordinaten2d, IconFinden.PRODUZIEREN_01)) {
+			klickKoordinaten(koordinaten2d);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean guteHufeisenProduzieren() {
+		Koordinaten2D koordinaten2d = new Koordinaten2D();
+		if (findeKoordinaten(koordinaten2d, IconFinden.GUTES_HUFEISEN)) {
+			klickKoordinaten(koordinaten2d);
+			return true;
+		}
+		return false;
+	}
+	
 	private void klickKoordinaten(Koordinaten2D koordinaten2d) {
 		mouseMove(koordinaten2d.x, koordinaten2d.y + abweichung);
+		mousePress(InputEvent.BUTTON1_DOWN_MASK);
+		mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+	}
+	
+	private void doppelKlickKoordinaten(Koordinaten2D koordinaten2d, int abweichungX, int abweichungY) {
+		mouseMove(koordinaten2d.x + abweichungX, koordinaten2d.y + abweichungY);
+		mousePress(InputEvent.BUTTON1_DOWN_MASK);
+		mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 	}
@@ -144,19 +164,19 @@ public class FoEUIRobot extends Robot {
 		return klickSpezielleAbweichung(pfad, 0);
 	}
 
-	public void erhoeheAbweichung() {
-		abweichung += 10;
-	}
-
 	public void beendeBrowser() {
 		String pfad = pfadeService.getPath() + IconFinden.BROWSER_X;
 		klickSpezielleAbweichung(pfad, 0);
 	}
 
+	public void erhoeheAbweichung() {
+		abweichung += 10;
+	}
+
 	public void resetAbweichung() {
 		abweichung = abweichung_y;
 	}
-	
+
 	@Override
 	public synchronized BufferedImage createScreenCapture(Rectangle screenRect) {
 		if (screenCapture != null) {
@@ -164,11 +184,11 @@ public class FoEUIRobot extends Robot {
 		}
 		return super.createScreenCapture(screenRect);
 	}
-	
+
 	public void setScreenCapture(final BufferedImage geladenesBild) {
 		this.screenCapture = geladenesBild;
 	}
-	
+
 	public long getMuenzenKlickCount() {
 		return this.muenzenKlickCount;
 	}

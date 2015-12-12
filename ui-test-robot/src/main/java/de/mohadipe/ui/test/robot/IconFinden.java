@@ -18,6 +18,8 @@ public class IconFinden {
 	public final static String WIEDERHOLEN_05 = "wiederholen05.bmp";
 	public final static String X = "x.bmp";
 	public final static String BROWSER_X = "browser_x.bmp";
+	public static final String PRODUZIEREN_01 = "produzieren01.bmp";
+	public static final String GUTES_HUFEISEN = "gutesHufeisen.bmp";
 
 	private Koordinaten2D koordinaten = null;
 	private int xKoordinate = 0;

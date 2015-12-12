@@ -29,4 +29,14 @@ public class FoEUIRobotTest {
 		foEUIRobot.holeWerkzeugAb();
 		Assert.assertEquals(1, foEUIRobot.getWerkzeugeKlickCount());
 	}
+	
+	@Test
+	public void produziereWerkzeug() throws AWTException {
+		FoEUIRobot foEUIRobot = new FoEUIRobot();
+		foEUIRobot.setGrafikPathService(new GrafikDateiPfadeService(true));
+		BufferedImage werkzeugProduzierbar = new BilderLaden().ladeScreenshotWerkzeugeProduzierbar();
+		foEUIRobot.setScreenCapture(werkzeugProduzierbar);
+		boolean oeffneProduktion = foEUIRobot.oeffneProduktion();
+		Assert.assertTrue(oeffneProduktion);
+	}
 }

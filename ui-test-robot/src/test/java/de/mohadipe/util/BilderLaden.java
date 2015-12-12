@@ -77,4 +77,12 @@ public class BilderLaden {
 		return ladeBild("WerkzeugeSchmiedeAbholbereit.bmp");
 	}
 
+	public BufferedImage ladeScreenshotWerkzeugeProduzierbar() {
+		return ladeBild("WerkzeugeSchmiedeProduzierbar.bmp");
+	}
+
+	public BufferedImage ladeScreenshotSchmiedeProduktion() {
+		return ladeBild("SchmiedeProduktion.bmp");
+	}
+
 }
