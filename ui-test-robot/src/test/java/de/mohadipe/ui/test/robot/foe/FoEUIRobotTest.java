@@ -19,4 +19,14 @@ public class FoEUIRobotTest {
 		foEUIRobot.holeMuenzenAb();
 		Assert.assertEquals(1, foEUIRobot.getMuenzenKlickCount());
 	}
+	
+	@Test
+	public void holeWerkzeugAb() throws AWTException {
+		FoEUIRobot foEUIRobot = new FoEUIRobot();
+		foEUIRobot.setGrafikPathService(new GrafikDateiPfadeService(true));
+		BufferedImage werkzeugAbholbereit = new BilderLaden().ladeScreenshotWerkzeugeAbholbereit();
+		foEUIRobot.setScreenCapture(werkzeugAbholbereit);
+		foEUIRobot.holeWerkzeugAb();
+		Assert.assertEquals(1, foEUIRobot.getWerkzeugeKlickCount());
+	}
 }

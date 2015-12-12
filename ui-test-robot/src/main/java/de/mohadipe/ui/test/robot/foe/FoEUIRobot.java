@@ -19,6 +19,7 @@ public class FoEUIRobot extends Robot {
 	private int abweichung;
 	private BufferedImage screenCapture;
 	private long muenzenKlickCount = 0;
+	private long werkzeugeKlickCount = 0;
 	private GrafikDateiPfadeService pfadeService;
 
 	public FoEUIRobot() throws AWTException {
@@ -102,7 +103,14 @@ public class FoEUIRobot extends Robot {
 			klickKoordinaten(koordinaten2d);
 			muenzenKlickCount++;
 		}
-		
+	}
+	
+	public void holeWerkzeugAb() {
+		Koordinaten2D koordinaten2d = new Koordinaten2D();
+		if (findeKoordinaten(koordinaten2d, IconFinden.WIEDERHOLEN_05)) {
+			klickKoordinaten(koordinaten2d);
+			werkzeugeKlickCount++;			
+		}
 	}
 
 	private void klickKoordinaten(Koordinaten2D koordinaten2d) {
@@ -168,5 +176,9 @@ public class FoEUIRobot extends Robot {
 	public void setGrafikPathService(
 			GrafikDateiPfadeService grafikDateiPfadeService) {
 		this.pfadeService = grafikDateiPfadeService;
+	}
+
+	public long getWerkzeugeKlickCount() {
+		return this.werkzeugeKlickCount;
 	}
 }

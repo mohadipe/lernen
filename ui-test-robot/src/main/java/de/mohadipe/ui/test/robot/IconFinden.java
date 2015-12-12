@@ -15,6 +15,7 @@ public class IconFinden {
 	public final static String WIEDERHOLEN_02 = "wiederholen02.bmp";
 	public final static String WIEDERHOLEN_03 = "wiederholen03.bmp";
 	public final static String WIEDERHOLEN_04 = "wiederholen04.bmp";
+	public final static String WIEDERHOLEN_05 = "wiederholen05.bmp";
 	public final static String X = "x.bmp";
 	public final static String BROWSER_X = "browser_x.bmp";
 

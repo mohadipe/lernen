@@ -73,4 +73,8 @@ public class BilderLaden {
 		}
 	}
 
+	public BufferedImage ladeScreenshotWerkzeugeAbholbereit() {
+		return ladeBild("WerkzeugeSchmiedeAbholbereit.bmp");
+	}
+
 }

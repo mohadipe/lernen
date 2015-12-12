@@ -34,7 +34,10 @@ public class RobotStart {
 				Thread.sleep(1000L);
 				do {
 					foERobot.holeMuenzenAb();
+					foERobot.holeWerkzeugAb();
 					if (foERobot.beendePopUp()) {
+						// keine Ahnung zu was die Abweichung benötigt wird!!!
+						// diese beiden Schleifen müssen raus aus der Main Methode!!!
 						foERobot.erhoeheAbweichung();
 					} else {
 						foERobot.resetAbweichung();
