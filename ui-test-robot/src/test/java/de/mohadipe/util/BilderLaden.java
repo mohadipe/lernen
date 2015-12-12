@@ -7,10 +7,13 @@ import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
+import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
+
 public class BilderLaden {
 
 	private String ausgangspunkt;
 	private static final String ide_test_icon_pfad = "\\src\\test\\resources\\icons\\";
+	private GrafikDateiPfadeService pfadeService = new GrafikDateiPfadeService(true);
 	
 	public BufferedImage ladeScreenShotFoEVerknuepfung() {
 		ausgangspunkt = Paths.get("").toAbsolutePath().toString();
@@ -50,4 +53,25 @@ public class BilderLaden {
 			return null;
 		}
 	}
+
+	public BufferedImage ladeScreenshotMuenzenAbholbereit() {
+		return ladeBild("MuenzeAbholbereit.bmp");
+	}
+	
+	public BufferedImage ladeScreenshotMuenzenMitSternAbholbereit() {
+		return ladeBild("MuenzeMitSternAbholbereit.bmp");
+	}
+	
+	private BufferedImage ladeBild(String screenShotName) {
+		String filePath = pfadeService.getPath() + screenShotName;
+		BufferedImage screenShot;
+		try {
+			screenShot = ImageIO.read(new File(filePath));
+			return screenShot;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

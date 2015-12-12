@@ -6,22 +6,20 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import de.mohadipe.ui.test.robot.IconFinden;
 import de.mohadipe.ui.test.robot.IconNotFoundException;
 import de.mohadipe.ui.test.robot.Koordinaten2D;
+import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
 
 public class FoEUIRobot extends Robot {
 
 	private static final int abweichung_y = 60;
 	private static final int EINFACHE_ABWEICHUNG = 5;
-	private Path rootPath;
-	private String ausgangspunkt;
-	private static final String ide_icon_pfad = "\\src\\main\\resources\\icons\\";
-	private String pfadZumBild = "";
 	private int abweichung;
+	private BufferedImage screenCapture;
+	private long muenzenKlickCount = 0;
+	private GrafikDateiPfadeService pfadeService;
 
 	public FoEUIRobot() throws AWTException {
 		super();
@@ -66,33 +64,25 @@ public class FoEUIRobot extends Robot {
 	}
 
 	public void starteFoEBrowser() {
-		String pfad = ausgangspunkt
-				+ Paths.get("").resolve(pfadZumBild)
-						.resolve(IconFinden.KLICK_01).toString();
+		String pfad = pfadeService.getPath() + IconFinden.KLICK_01;
 		System.out.println(pfad);
 		doppelKlickEinfacheAbweichung(pfad);
 	}
 
 	public void spieleFoE() {
-		String pfad = ausgangspunkt
-				+ Paths.get("").resolve(pfadZumBild)
-						.resolve(IconFinden.KLICK_02).toString();
+		String pfad = pfadeService.getPath() + IconFinden.KLICK_02;
 		System.out.println(pfad);
 		doppelKlickEinfacheAbweichung(pfad);
 	}
 
 	public void waehleServerRugnir() {
-		String pfad = ausgangspunkt
-				+ Paths.get("").resolve(pfadZumBild)
-						.resolve(IconFinden.KLICK_03).toString();
+		String pfad = pfadeService.getPath() + IconFinden.KLICK_03;
 		System.out.println(pfad);
 		doppelKlickEinfacheAbweichung(pfad);
 	}
 
 	public void menuesBestaetigen() {
-		String pfad = ausgangspunkt
-				+ Paths.get("").resolve(pfadZumBild)
-						.resolve(IconFinden.KLICK_04).toString();
+		String pfad = pfadeService.getPath() + IconFinden.KLICK_04;
 		System.out.println(pfad);
 		doppelKlickEinfacheAbweichung(pfad);
 	}
@@ -101,11 +91,18 @@ public class FoEUIRobot extends Robot {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		if (findeKoordinaten(koordinaten2d, IconFinden.WIEDERHOLEN)) {
 			klickKoordinaten(koordinaten2d);
+			muenzenKlickCount++;
 		} else if (findeKoordinaten(koordinaten2d, IconFinden.WIEDERHOLEN_02)) {
 			klickKoordinaten(koordinaten2d);
+			muenzenKlickCount++;
 		} else if (findeKoordinaten(koordinaten2d, IconFinden.WIEDERHOLEN_03)) {
 			klickKoordinaten(koordinaten2d);
+			muenzenKlickCount++;
+		} else if (findeKoordinaten(koordinaten2d, IconFinden.WIEDERHOLEN_04)) {
+			klickKoordinaten(koordinaten2d);
+			muenzenKlickCount++;
 		}
+		
 	}
 
 	private void klickKoordinaten(Koordinaten2D koordinaten2d) {
@@ -116,9 +113,7 @@ public class FoEUIRobot extends Robot {
 
 	private boolean findeKoordinaten(Koordinaten2D koordinaten2d,
 			String iconName) {
-		String pfad = ausgangspunkt
-				+ Paths.get("").resolve(pfadZumBild).resolve(iconName)
-						.toString();
+		String pfad = pfadeService.getPath() + iconName;
 		return existIcon(pfad, koordinaten2d);
 	}
 
@@ -137,20 +132,8 @@ public class FoEUIRobot extends Robot {
 	}
 
 	public boolean beendePopUp() {
-		String pfad = ausgangspunkt
-				+ Paths.get("").resolve(pfadZumBild).resolve(IconFinden.X)
-						.toString();
+		String pfad = pfadeService.getPath() + IconFinden.X;
 		return klickSpezielleAbweichung(pfad, 0);
-	}
-
-	public void setRootPfad(Path currentRelativePath) {
-		this.rootPath = currentRelativePath;
-		this.ausgangspunkt = rootPath.toAbsolutePath().toString();
-		if (rootPath.toString().contains("workspace")) {
-			pfadZumBild = ide_icon_pfad;
-		} else {
-			pfadZumBild = "\\";
-		}
 	}
 
 	public void erhoeheAbweichung() {
@@ -158,13 +141,32 @@ public class FoEUIRobot extends Robot {
 	}
 
 	public void beendeBrowser() {
-		String pfad = ausgangspunkt
-				+ Paths.get("").resolve(pfadZumBild)
-						.resolve(IconFinden.BROWSER_X).toString();
+		String pfad = pfadeService.getPath() + IconFinden.BROWSER_X;
 		klickSpezielleAbweichung(pfad, 0);
 	}
 
 	public void resetAbweichung() {
 		abweichung = abweichung_y;
+	}
+	
+	@Override
+	public synchronized BufferedImage createScreenCapture(Rectangle screenRect) {
+		if (screenCapture != null) {
+			return screenCapture;
+		}
+		return super.createScreenCapture(screenRect);
+	}
+	
+	public void setScreenCapture(final BufferedImage geladenesBild) {
+		this.screenCapture = geladenesBild;
+	}
+	
+	public long getMuenzenKlickCount() {
+		return this.muenzenKlickCount;
+	}
+
+	public void setGrafikPathService(
+			GrafikDateiPfadeService grafikDateiPfadeService) {
+		this.pfadeService = grafikDateiPfadeService;
 	}
 }

@@ -5,16 +5,22 @@ import java.nio.file.Paths;
 import java.util.Date;
 
 import de.mohadipe.ui.test.robot.foe.FoEUIRobot;
+import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
 
 public class RobotStart {
 
 	public static void main(String[] args) {
 		try {
+			String programmRootVerzeichnis = args[0];
+			if (programmRootVerzeichnis == null) {
+				System.out.println("Programm Argument fehlt.");
+				System.out.println("Verzeichnis indem das JAR liegt angeben.");
+				return;
+			}
+			GrafikDateiPfadeService grafikDateiPfadeService = new GrafikDateiPfadeService(false);
+			grafikDateiPfadeService.setProgrammRoot(programmRootVerzeichnis);
 			FoEUIRobot foERobot = new FoEUIRobot();
-			Path currentRelativePath = Paths.get("");
-			String s = currentRelativePath.toAbsolutePath().toString();
-			System.out.println("Current relative path is: " + s);
-			foERobot.setRootPfad(currentRelativePath);
+			foERobot.setGrafikPathService(grafikDateiPfadeService);
 			Long waitAfterRestart = 0L;
 			while (true) {
 				Thread.sleep(waitAfterRestart);

@@ -12,6 +12,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
+
 public class IconFindenTest {
 	private String ausgangspunkt;
 	private static final String ide_test_icon_pfad = "\\src\\test\\resources\\icons\\";
@@ -33,6 +35,21 @@ public class IconFindenTest {
 		String iconName = ausgangspunkt + Paths.get("").resolve(ide_main_icon_pfad).resolve(IconFinden.KLICK_01).toString();
 		iconFinden.findeIcon(iconName, screenShot);
 		Assert.assertThat(iconFinden.getKoordinaten(), Matchers.equalTo(expected));
+	}
+	
+	@Test
+	public void findeMuenzeMitStern() throws IOException, IconNotFoundException {
+		GrafikDateiPfadeService grafikDateiPfadeService = new GrafikDateiPfadeService(true);
+		String iconName = grafikDateiPfadeService.getPath() + IconFinden.WIEDERHOLEN_04;
+		String screenShotName = grafikDateiPfadeService.getPath() + "MuenzeMitSternAbholbereit.bmp";
+		BufferedImage screenShot = ImageIO.read(new File(screenShotName));
+		IconFinden iconFinden = new IconFinden();
+		iconFinden.findeIcon(iconName, screenShot);
+		Koordinaten2D actual = iconFinden.getKoordinaten();
+		Koordinaten2D expected = new Koordinaten2D();
+		expected.x = 1092;
+		expected.y = 601;
+		Assert.assertThat(actual, Matchers.equalTo(expected));
 	}
 	
 	@Test(expected=RuntimeException.class)

@@ -1,5 +1,6 @@
 package foe;
 
+import java.awt.AWTException;
 import java.awt.image.BufferedImage;
 import java.nio.file.Paths;
 
@@ -12,6 +13,8 @@ import cucumber.api.java.en.When;
 import de.mohadipe.ui.test.robot.IconFinden;
 import de.mohadipe.ui.test.robot.IconNotFoundException;
 import de.mohadipe.ui.test.robot.Koordinaten2D;
+import de.mohadipe.ui.test.robot.foe.FoEUIRobot;
+import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
 import de.mohadipe.util.BilderLaden;
 
 public class StepDefFoE {
@@ -22,6 +25,7 @@ public class StepDefFoE {
 	private String klick01 = ausgangspunkt + Paths.get("").resolve(ide_main_icon_pfad).resolve(IconFinden.KLICK_01).toString();
 	private String klick02 = ausgangspunkt + Paths.get("").resolve(ide_main_icon_pfad).resolve(IconFinden.KLICK_02).toString();
 	private String klick03 = ausgangspunkt + Paths.get("").resolve(ide_main_icon_pfad).resolve(IconFinden.KLICK_03).toString();
+	private long muenzenKlickCount;
 
 	
 	@Given("^Ein Screenshot mit FoE-Verknüpfung\\.$")
@@ -32,12 +36,14 @@ public class StepDefFoE {
 
 	@Given("^Die Münzproduktion eines Wohnhauses ist fertig\\.$")
 	public void dieMuenzenproduktionEinesWohnhausesIstFertig() {
-		// TODO
+		screenShotFoEVerknuepfung = new BilderLaden().ladeScreenshotMuenzenAbholbereit();
+		Assert.assertNotNull(screenShotFoEVerknuepfung);
 	}
 
 	@Given("^Die Münzproduktion eines Wohnhauses mit Stern ist fertig\\.$")
 	public void dieMuenzproduktionEinesWohnhausesMitSternIstFertig() {
-		// TODO
+		screenShotFoEVerknuepfung = new BilderLaden().ladeScreenshotMuenzenMitSternAbholbereit();
+		Assert.assertNotNull(screenShotFoEVerknuepfung);
 	}
 
 	@Given("^Die Startseite von Forge of Empire ist im Browser offen\\.$")
@@ -48,7 +54,15 @@ public class StepDefFoE {
 
 	@When("^Nach fertigen Münzproduktionen gesucht wird\\.$")
 	public void nachFertigenMuenzproduktionenGesuchtWird() {
-		// TODO
+		try {
+			FoEUIRobot foEUIRobot = new FoEUIRobot();
+			foEUIRobot.setScreenCapture(screenShotFoEVerknuepfung);
+			foEUIRobot.setGrafikPathService(new GrafikDateiPfadeService(true));
+			foEUIRobot.holeMuenzenAb();
+			muenzenKlickCount = foEUIRobot.getMuenzenKlickCount();
+		} catch (AWTException e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@When("^Ein doppel Klick auf die Verknüpfung gemacht wird\\.$")
@@ -88,7 +102,7 @@ public class StepDefFoE {
 
 	@Then("^Die fertige Münzproduktion gefunden\\.$")
 	public void dieFertigeMuenzproduktionGefunden() {
-		// TODO
+		Assert.assertEquals(1, muenzenKlickCount);
 	}
 
 	@Then("^Öffnet sich ein Browser mit der Startseite von Forge of Empire\\.$")
