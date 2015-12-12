@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import de.mohadipe.dynastie.logik.adapter.DynastieLogikAdapter;
 import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.controler.EinheitAuswaehlenController;
 import de.mohadipe.dynastie.ui.entities.Einheit;
@@ -143,7 +144,6 @@ public class MapSetupScreen implements IMapSetupScreen {
         if (processor.isLeftMouseClicked()) {
             Vector2 screenKoords = processor.getClickedMousePosition();
             menu.getDebugLabel().setText("Mouse geklickt an X: " + screenKoords.x + " und Y: " + screenKoords.y);
-            // TODO gecklickte Position auf Map Koordinaten umrechnen.
             Vector3 worldKoords = koordinatenSystem.getWorldKoords(game.gameCamera, screenKoords);
             // Herausfinden ob eine Einheit angeklickt wurde.
             if (new EinheitAuswaehlenController(einheit, worldKoords).isEinheitAusgeweahlt()) {
@@ -152,15 +152,21 @@ public class MapSetupScreen implements IMapSetupScreen {
                 einheit.setAktiv();
             } else {
                 // Wenn erneut geklickt wird und eine Einheit aktiv ist soll sich die aktive Einheit dort hin bewegen.
-                // ermittle geklicktes Feld
-                // positioniere Einheit in Feld
                 if (einheit.isAktiv()) {
-                    Feld feld = koordinatenSystem.getFeldByWorldKoords(worldKoords);
-                    Vector2 possitionFuerFeld = koordinatenSystem.getPossitionFuerFeld(feld);
-                    einheit.setX(possitionFuerFeld.x);
-                    einheit.setY(possitionFuerFeld.y);
+                    // ermittle geklicktes Feld
+                    Feld zielFeld = koordinatenSystem.getFeldByWorldKoords(worldKoords);
+                    Vector2 possitionFuerFeld = koordinatenSystem.getPossitionFuerFeld(zielFeld);
+                    Feld aktuellesFeld = koordinatenSystem.getFeldByWorldKoords(einheit.getKoordinaten());
+                    // TODO Anbindung der DynastieLogik-Bibliothek
+                    if (DynastieLogikAdapter.getInstance().isBewegungErlaubt(einheit, zielFeld, aktuellesFeld)) {
+                        // positioniere Einheit in Feld
+                        einheit.setX(possitionFuerFeld.x);
+                        einheit.setY(possitionFuerFeld.y);
+                    } else {
+                        // TODO Hinweis Reichweite der Einheit überschritten.
+                    }
+
                 }
-                // TODO Check via Logik-Lib ob Bewegung erlaubt ist.
             }
             processor.resetLeftMouseClick();
         }

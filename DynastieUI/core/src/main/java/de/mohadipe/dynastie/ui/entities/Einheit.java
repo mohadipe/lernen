@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 
 public abstract class Einheit extends Sprite implements IEinheit {
 
@@ -45,5 +46,10 @@ public abstract class Einheit extends Sprite implements IEinheit {
     @Override
     public void setInAktiv() {
         this.isAktiv = false;
+    }
+
+    @Override
+    public Vector3 getKoordinaten() {
+        return new Vector3(getX(), getY(), 0);
     }
 }

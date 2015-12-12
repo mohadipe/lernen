@@ -1,5 +1,7 @@
 package de.mohadipe.dynastie.ui.entities;
 
+import com.badlogic.gdx.math.Vector3;
+
 public interface IEinheit {
 
     public void setPosition();
@@ -9,4 +11,6 @@ public interface IEinheit {
     boolean isAktiv();
 
     void setInAktiv();
+
+    Vector3 getKoordinaten();
 }
