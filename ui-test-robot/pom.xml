@@ -105,7 +105,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>de.mohadipe.gowrobot.RobotStart</mainClass>
+									<mainClass>de.mohadipe.ui.test.robot.RobotStart</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
