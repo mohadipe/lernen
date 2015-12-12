@@ -1,7 +1,5 @@
 package de.mohadipe.ui.test.robot;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Date;
 
 import de.mohadipe.ui.test.robot.foe.FoEUIRobot;

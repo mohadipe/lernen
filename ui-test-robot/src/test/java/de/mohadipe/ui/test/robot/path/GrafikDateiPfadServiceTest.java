@@ -14,8 +14,9 @@ public class GrafikDateiPfadServiceTest {
 	
 	@Test
 	public void absoluterPfadZuGrafikenInnerhalbRuntimeermitteln() {
-		String expected = "TODO";
-		GrafikDateiPfadeService grafikDateiPfadeService = new GrafikDateiPfadeService(true);
+		String expected = "irgendeinPfad\\grafiken\\";
+		GrafikDateiPfadeService grafikDateiPfadeService = new GrafikDateiPfadeService(false);
+		grafikDateiPfadeService.setProgrammRoot("irgendeinPfad");
 		String actual = grafikDateiPfadeService.getPathForRuntime();
 		Assert.assertEquals(expected, actual);
 	}
