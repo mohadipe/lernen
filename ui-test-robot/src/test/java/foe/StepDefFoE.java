@@ -2,7 +2,6 @@ package foe;
 
 import java.awt.AWTException;
 import java.awt.image.BufferedImage;
-import java.nio.file.Paths;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -20,11 +19,10 @@ import de.mohadipe.util.BilderLaden;
 public class StepDefFoE {
 	private BufferedImage screenShotFoEVerknuepfung;
 	private Koordinaten2D geklickteKoordinaten;
-	private static final String ide_main_icon_pfad = "\\src\\main\\resources\\icons\\";
-	private String ausgangspunkt = Paths.get("").toAbsolutePath().toString();;
-	private String klick01 = ausgangspunkt + Paths.get("").resolve(ide_main_icon_pfad).resolve(IconFinden.KLICK_01).toString();
-	private String klick02 = ausgangspunkt + Paths.get("").resolve(ide_main_icon_pfad).resolve(IconFinden.KLICK_02).toString();
-	private String klick03 = ausgangspunkt + Paths.get("").resolve(ide_main_icon_pfad).resolve(IconFinden.KLICK_03).toString();
+	private GrafikDateiPfadeService pfadeService = new GrafikDateiPfadeService(true);
+	private String klick01 = pfadeService.getPath() + IconFinden.KLICK_01;
+	private String klick02 = pfadeService.getPath() + IconFinden.KLICK_02;
+	private String klick03 = pfadeService.getPath() + IconFinden.KLICK_03;
 	private long muenzenKlickCount;
 
 	

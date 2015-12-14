@@ -1,20 +1,22 @@
 package de.mohadipe.ui.test.robot;
 
 import java.util.Date;
+import java.util.logging.Logger;
 
 import de.mohadipe.ui.test.robot.foe.FoEUIRobot;
 import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
 
 public class RobotStart {
-
+	private static Logger logger = Logger.getLogger("de.mohadipe.ui.test.robot.RobotStart");
+	
 	public static void main(String[] args) {
 		try {
-			String programmRootVerzeichnis = args[0];
-			if (programmRootVerzeichnis == null) {
-				System.out.println("Programm Argument fehlt.");
-				System.out.println("Verzeichnis indem das JAR liegt angeben.");
+			if (args == null || args.length == 0) {
+				logger.severe("Programm Argument fehlt.");
+				logger.severe("Verzeichnis indem das JAR liegt angeben.");
 				return;
 			}
+			String programmRootVerzeichnis = args[0];
 			GrafikDateiPfadeService grafikDateiPfadeService = new GrafikDateiPfadeService(false);
 			grafikDateiPfadeService.setProgrammRoot(programmRootVerzeichnis);
 			FoEUIRobot foERobot = new FoEUIRobot();
@@ -22,7 +24,7 @@ public class RobotStart {
 			Long waitAfterRestart = 0L;
 			while (true) {
 				Thread.sleep(waitAfterRestart);
-				System.out.println("WaitAfterRestart: " + waitAfterRestart);
+				logger.info("WaitAfterRestart: " + waitAfterRestart);
 				long startZeit = new Date().getTime();
 				foERobot.starteFoEBrowser();
 				Thread.sleep(5000L);
@@ -46,10 +48,10 @@ public class RobotStart {
 					}
 				} while (restart(startZeit, foERobot));
 				waitAfterRestart = Long.valueOf(600000L);
-				System.out.println("Restart in: " + waitAfterRestart + " ms");
+				logger.info("Restart in: " + waitAfterRestart + " ms");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.severe(e.getMessage());
 		}
 	}
 
