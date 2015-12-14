@@ -6,6 +6,7 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
+import java.util.Date;
 
 import de.mohadipe.ui.test.robot.IconFinden;
 import de.mohadipe.ui.test.robot.IconNotFoundException;
@@ -25,6 +26,57 @@ public class FoEUIRobot extends Robot {
 	public FoEUIRobot() throws AWTException {
 		super();
 		this.abweichung = abweichung_y;
+	}
+
+	public void starteRobot() {
+		try {
+			Long waitAfterRestart = 0L;
+			while (true) {
+				Thread.sleep(waitAfterRestart);
+				// logger.info("WaitAfterRestart: " + waitAfterRestart);
+				long startZeit = new Date().getTime();
+				this.starteFoEBrowser();
+				Thread.sleep(5000L);
+				this.spieleFoE();
+				Thread.sleep(2000L);
+				this.waehleServerRugnir();
+				Thread.sleep(25000L);
+				this.menuesBestaetigen();
+				Thread.sleep(1000L);
+				do {
+					this.holeMuenzenAb();
+					// foERobot.holeWerkzeugAb();
+					// foERobot.oeffneProduktion();
+					// foERobot.guteHufeisenProduzieren();
+					if (this.beendePopUp()) {
+						// Abweichung ist gedacht für LebkuchenHaus, klick
+						// öffnet "dahinter" liegendes Gebäude
+						// diese beiden Schleifen müssen raus aus der Main
+						// Methode!!!
+						this.erhoeheAbweichung();
+					} else {
+						this.resetAbweichung();
+					}
+				} while (restart(startZeit, this));
+				waitAfterRestart = Long.valueOf(600000L);
+				// logger.info("Restart in: " + waitAfterRestart + " ms");
+			}
+		} catch (Exception e) {
+			// logger.severe(e.getMessage());
+		}
+	}
+
+	private static boolean restart(long startZeit, FoEUIRobot foERobot) {
+		if (mehrAlsEineMinutenVergangen(startZeit)) {
+			foERobot.beendeBrowser();
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean mehrAlsEineMinutenVergangen(long startZeit) {
+		long aktuelleZeit = new Date().getTime();
+		return aktuelleZeit - startZeit > 300000;
 	}
 
 	private boolean klickSpezielleAbweichung(String dateiPfad, int abweichungY) {
@@ -49,28 +101,32 @@ public class FoEUIRobot extends Robot {
 	public void starteFoEBrowser() {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		if (findeKoordinaten(koordinaten2d, IconFinden.KLICK_01)) {
-			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
+			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG,
+					EINFACHE_ABWEICHUNG);
 		}
 	}
 
 	public void spieleFoE() {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		if (findeKoordinaten(koordinaten2d, IconFinden.KLICK_02)) {
-			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
+			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG,
+					EINFACHE_ABWEICHUNG);
 		}
 	}
 
 	public void waehleServerRugnir() {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		if (findeKoordinaten(koordinaten2d, IconFinden.KLICK_03)) {
-			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
+			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG,
+					EINFACHE_ABWEICHUNG);
 		}
 	}
 
 	public void menuesBestaetigen() {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		if (findeKoordinaten(koordinaten2d, IconFinden.KLICK_04)) {
-			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
+			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG,
+					EINFACHE_ABWEICHUNG);
 		}
 	}
 
@@ -116,14 +172,15 @@ public class FoEUIRobot extends Robot {
 		}
 		return false;
 	}
-	
+
 	private void klickKoordinaten(Koordinaten2D koordinaten2d) {
 		mouseMove(koordinaten2d.x, koordinaten2d.y + abweichung);
 		mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 	}
-	
-	private void doppelKlickKoordinaten(Koordinaten2D koordinaten2d, int abweichungX, int abweichungY) {
+
+	private void doppelKlickKoordinaten(Koordinaten2D koordinaten2d,
+			int abweichungX, int abweichungY) {
 		mouseMove(koordinaten2d.x + abweichungX, koordinaten2d.y + abweichungY);
 		mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
