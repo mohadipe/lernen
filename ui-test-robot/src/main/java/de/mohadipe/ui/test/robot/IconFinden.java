@@ -22,11 +22,13 @@ public class IconFinden {
 	public static final String GUTES_HUFEISEN = "gutesHufeisen.bmp";
 
 	private Koordinaten2D koordinaten = null;
-	private int xKoordinate = 0;
-	private int yKoordinate = 0;
 
-	public void findeIcon(final String fileName, final BufferedImage currentScreen) throws IconNotFoundException {
+	public void findeIcon(final String fileName,
+			final BufferedImage currentScreen) throws IconNotFoundException {
+		ScreenPlausibilisierung screenPlausibilisierung = new ScreenPlausibilisierung(
+				currentScreen);
 		try {
+			System.out.println("Read: " + fileName);
 			BufferedImage icon = ImageIO.read(new File(fileName));
 			int anzahlPixelIcon = icon.getWidth() * icon.getHeight();
 			for (int x = 0; x < currentScreen.getWidth(); x++) {
@@ -35,12 +37,19 @@ public class IconFinden {
 					int uebereinstimmendePixel = 0;
 					for (int x2 = 0; x2 < icon.getWidth() && matches; x2++) {
 						for (int y2 = 0; y2 < icon.getHeight() && matches; y2++) {
-							if (icon.getRGB(x2, y2) != currentScreen.getRGB(x
-									+ x2, y + y2)) {
-								matches = false;
-							} else {
-								// Ein Pixel vom Icon und vom Screen stimmen ueberein.
-								uebereinstimmendePixel++;
+							try {
+								int rgbIcon = indexSaveRGB(icon, x2, y2);
+								int rgbScreen = indexSaveRGB(currentScreen, x
+										+ x2, y + y2);
+								if (rgbIcon != rgbScreen) {
+									matches = false;
+								} else {
+									// Ein Pixel vom Icon und vom Screen stimmen
+									// ueberein.
+									uebereinstimmendePixel++;
+								}
+							} catch (UngueltigeScreenKoordinate e) {
+								System.out.println(e);
 							}
 						}
 					}
@@ -48,30 +57,35 @@ public class IconFinden {
 						koordinaten = new Koordinaten2D();
 						System.out.println("Icon X: " + x);
 						koordinaten.x = x;
-						xKoordinate = x;
 						System.out.println("Icon Y: " + y);
 						koordinaten.y = y;
-						yKoordinate = y;
 						return;
 					}
 				}
 			}
-			System.out.println("Icon-Width: " + icon.getWidth() + " Icon-Height: " + icon.getHeight());
+			System.out.println("Icon-Width: " + icon.getWidth()
+					+ " Icon-Height: " + icon.getHeight());
 		} catch (IOException e) {
 			throw new RuntimeException("Datei nicht gefunden.", e);
 		}
-		System.out.println("Screen-Width: " + currentScreen.getWidth() + " Screen-Height: " + currentScreen.getHeight());
+		System.out.println("Screen-Width: " + currentScreen.getWidth()
+				+ " Screen-Height: " + currentScreen.getHeight());
 		throw new IconNotFoundException(fileName, currentScreen);
 	}
 
-	public int getxKoordinate() {
-		return xKoordinate;
+	private int indexSaveRGB(BufferedImage image, int x2, int y2)
+			throws UngueltigeScreenKoordinate {
+		ScreenPlausibilisierung screenPlausibilisierung = new ScreenPlausibilisierung(
+				image);
+		Koordinaten2D koordinaten2d = new Koordinaten2D();
+		koordinaten2d.x = x2;
+		koordinaten2d.y = y2;
+		if (screenPlausibilisierung.isKoordinateAufScreen(koordinaten2d)) {
+			return image.getRGB(x2, y2);
+		}
+		throw new UngueltigeScreenKoordinate(image, x2, y2);
 	}
 
-	public int getyKoordinate() {
-		return yKoordinate;
-	}
-	
 	public Koordinaten2D getKoordinaten() {
 		return koordinaten;
 	}

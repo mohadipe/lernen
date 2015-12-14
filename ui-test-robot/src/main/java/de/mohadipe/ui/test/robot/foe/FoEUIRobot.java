@@ -33,8 +33,8 @@ public class FoEUIRobot extends Robot {
 		IconFinden iconFinden = new IconFinden();
 		try {
 			iconFinden.findeIcon(dateiPfad, currentScreen);
-			int x = iconFinden.getxKoordinate();
-			int y = iconFinden.getyKoordinate();
+			int x = iconFinden.getKoordinaten().x;
+			int y = iconFinden.getKoordinaten().y;
 			mouseMove(x, y + abweichungY);
 
 			mousePress(InputEvent.BUTTON1_DOWN_MASK);
@@ -48,36 +48,28 @@ public class FoEUIRobot extends Robot {
 
 	public void starteFoEBrowser() {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
-		String iconName = pfadeService.getPath() + IconFinden.KLICK_01;
-		System.out.println(iconName);
-		if (findeKoordinaten(koordinaten2d, iconName)) {
+		if (findeKoordinaten(koordinaten2d, IconFinden.KLICK_01)) {
 			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
 		}
 	}
 
 	public void spieleFoE() {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
-		String iconName = pfadeService.getPath() + IconFinden.KLICK_02;
-		System.out.println(iconName);
-		if (findeKoordinaten(koordinaten2d, iconName)) {
+		if (findeKoordinaten(koordinaten2d, IconFinden.KLICK_02)) {
 			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
 		}
 	}
 
 	public void waehleServerRugnir() {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
-		String iconName = pfadeService.getPath() + IconFinden.KLICK_03;
-		System.out.println(iconName);
-		if (findeKoordinaten(koordinaten2d, iconName)) {
+		if (findeKoordinaten(koordinaten2d, IconFinden.KLICK_03)) {
 			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
 		}
 	}
 
 	public void menuesBestaetigen() {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
-		String iconName = pfadeService.getPath() + IconFinden.KLICK_04;
-		System.out.println(iconName);
-		if (findeKoordinaten(koordinaten2d, iconName)) {
+		if (findeKoordinaten(koordinaten2d, IconFinden.KLICK_04)) {
 			doppelKlickKoordinaten(koordinaten2d, EINFACHE_ABWEICHUNG, EINFACHE_ABWEICHUNG);
 		}
 	}
@@ -151,8 +143,8 @@ public class FoEUIRobot extends Robot {
 		IconFinden iconFinden = new IconFinden();
 		try {
 			iconFinden.findeIcon(dateiPfad, currentScreen);
-			koordinaten2d.x = iconFinden.getxKoordinate();
-			koordinaten2d.y = iconFinden.getyKoordinate();
+			koordinaten2d.x = iconFinden.getKoordinaten().x;
+			koordinaten2d.y = iconFinden.getKoordinaten().y;
 			return true;
 		} catch (IconNotFoundException e) {
 			return false;
