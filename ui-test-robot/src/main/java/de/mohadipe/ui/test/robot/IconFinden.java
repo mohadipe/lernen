@@ -25,52 +25,15 @@ public class IconFinden {
 
 	public void findeIcon(final String fileName,
 			final BufferedImage currentScreen) throws IconNotFoundException {
-		ScreenPlausibilisierung screenPlausibilisierung = new ScreenPlausibilisierung(
-				currentScreen);
+		System.out.println("Read: " + fileName);
+		BufferedImage icon;
 		try {
-			System.out.println("Read: " + fileName);
-			BufferedImage icon = ImageIO.read(new File(fileName));
-			int anzahlPixelIcon = icon.getWidth() * icon.getHeight();
-			for (int x = 0; x < currentScreen.getWidth(); x++) {
-				for (int y = 0; y < currentScreen.getHeight(); y++) {
-					boolean matches = true;
-					int uebereinstimmendePixel = 0;
-					for (int x2 = 0; x2 < icon.getWidth() && matches; x2++) {
-						for (int y2 = 0; y2 < icon.getHeight() && matches; y2++) {
-							try {
-								int rgbIcon = indexSaveRGB(icon, x2, y2);
-								int rgbScreen = indexSaveRGB(currentScreen, x
-										+ x2, y + y2);
-								if (rgbIcon != rgbScreen) {
-									matches = false;
-								} else {
-									// Ein Pixel vom Icon und vom Screen stimmen
-									// ueberein.
-									uebereinstimmendePixel++;
-								}
-							} catch (UngueltigeScreenKoordinate e) {
-								System.out.println(e);
-							}
-						}
-					}
-					if (matches && anzahlPixelIcon == uebereinstimmendePixel) {
-						koordinaten = new Koordinaten2D();
-						System.out.println("Icon X: " + x);
-						koordinaten.x = x;
-						System.out.println("Icon Y: " + y);
-						koordinaten.y = y;
-						return;
-					}
-				}
-			}
-			System.out.println("Icon-Width: " + icon.getWidth()
-					+ " Icon-Height: " + icon.getHeight());
+			icon = ImageIO.read(new File(fileName));
+			findeIcon(icon, currentScreen);
 		} catch (IOException e) {
-			throw new RuntimeException("Datei nicht gefunden.", e);
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
-		System.out.println("Screen-Width: " + currentScreen.getWidth()
-				+ " Screen-Height: " + currentScreen.getHeight());
-		throw new IconNotFoundException(fileName, currentScreen);
 	}
 
 	private int indexSaveRGB(BufferedImage image, int x2, int y2)
@@ -88,5 +51,46 @@ public class IconFinden {
 
 	public Koordinaten2D getKoordinaten() {
 		return koordinaten;
+	}
+
+	public void findeIcon(BufferedImage icon, BufferedImage currentScreen) throws IconNotFoundException {
+		int anzahlPixelIcon = icon.getWidth() * icon.getHeight();
+		for (int x = 0; x < currentScreen.getWidth(); x++) {
+			for (int y = 0; y < currentScreen.getHeight(); y++) {
+				boolean matches = true;
+				int uebereinstimmendePixel = 0;
+				for (int x2 = 0; x2 < icon.getWidth() && matches; x2++) {
+					for (int y2 = 0; y2 < icon.getHeight() && matches; y2++) {
+						try {
+							int rgbIcon = indexSaveRGB(icon, x2, y2);
+							int rgbScreen = indexSaveRGB(currentScreen, x + x2,
+									y + y2);
+							if (rgbIcon != rgbScreen) {
+								matches = false;
+							} else {
+								// Ein Pixel vom Icon und vom Screen stimmen
+								// ueberein.
+								uebereinstimmendePixel++;
+							}
+						} catch (UngueltigeScreenKoordinate e) {
+							System.out.println(e);
+						}
+					}
+				}
+				if (matches && anzahlPixelIcon == uebereinstimmendePixel) {
+					koordinaten = new Koordinaten2D();
+					System.out.println("Icon X: " + x);
+					koordinaten.x = x;
+					System.out.println("Icon Y: " + y);
+					koordinaten.y = y;
+					return;
+				}
+			}
+		}
+		System.out.println("Icon-Width: " + icon.getWidth() + " Icon-Height: "
+				+ icon.getHeight());
+		System.out.println("Screen-Width: " + currentScreen.getWidth()
+				+ " Screen-Height: " + currentScreen.getHeight());
+		throw new IconNotFoundException(icon, currentScreen);
 	}
 }

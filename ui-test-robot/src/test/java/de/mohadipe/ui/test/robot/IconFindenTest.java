@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
-import de.mohadipe.util.BilderLaden;
+import de.mohadipe.ui.test.robot.util.BilderLaden;
 
 public class IconFindenTest {
 
@@ -20,7 +20,7 @@ public class IconFindenTest {
 		Koordinaten2D expected = new Koordinaten2D();
 		expected.x = 1417;
 		expected.y = 232;
-		BufferedImage screenShot = new BilderLaden().ladeScreenShotFoEVerknuepfung();
+		BufferedImage screenShot = new BilderLaden(null).ladeScreenShotFoEVerknuepfung();
 		IconFinden iconFinden = new IconFinden();
 		GrafikDateiPfadeService grafikDateiPfadeService = new GrafikDateiPfadeService(true);
 		String iconName = grafikDateiPfadeService.getPath() + IconFinden.KLICK_01;
@@ -62,5 +62,18 @@ public class IconFindenTest {
 		IconFinden iconFinden = new IconFinden();
 		String iconName = grafikDateiPfadeService.getPath() + IconFinden.KLICK_02;
 		iconFinden.findeIcon(iconName, screenShot);
+	}
+	
+	@Test
+	public void findeSpielenButton() throws IconNotFoundException {
+		BufferedImage ladeStartseiteFoE = new BilderLaden(null).ladeStartseiteFoE();
+		BufferedImage ladeSpielenButton = new BilderLaden(null).ladeSpielenButton();
+		IconFinden iconFinden = new IconFinden();
+		iconFinden.findeIcon(ladeSpielenButton, ladeStartseiteFoE);
+		Koordinaten2D koordinaten = iconFinden.getKoordinaten();
+		Koordinaten2D expected = new Koordinaten2D();
+		expected.x = 1181;
+		expected.y = 510;
+		Assert.assertEquals(expected, koordinaten);
 	}
 }

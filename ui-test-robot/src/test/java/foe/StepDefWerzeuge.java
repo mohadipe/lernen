@@ -10,7 +10,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import de.mohadipe.ui.test.robot.foe.FoEUIRobot;
 import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
-import de.mohadipe.util.BilderLaden;
+import de.mohadipe.ui.test.robot.util.BilderLaden;
 
 public class StepDefWerzeuge {
 
@@ -20,7 +20,7 @@ public class StepDefWerzeuge {
 
 	@Given("^Die Werkzeugproduktion einer Schmiede ist fertig\\.$")
 	public void dieWerkzeugproduktionEinerSchmiedeIstFertig() {
-		screenShot = new BilderLaden().ladeScreenshotWerkzeugeAbholbereit();
+		screenShot = new BilderLaden(null).ladeScreenshotWerkzeugeAbholbereit();
 		Assert.assertNotNull(screenShot);
 	}
 
@@ -30,7 +30,7 @@ public class StepDefWerzeuge {
 
 	@Given("^Ein Schmiede hat keine aktive Produktion\\.$")
 	public void eineSchmiedeHatKeineAktiveProduktion() {
-		screenShot = new BilderLaden().ladeScreenshotWerkzeugeProduzierbar();
+		screenShot = new BilderLaden(null).ladeScreenshotWerkzeugeProduzierbar();
 		Assert.assertNotNull(screenShot);
 	}
 
@@ -67,7 +67,7 @@ public class StepDefWerzeuge {
 	@Then("^Öffnet sich das Produktionsfenster\\.$")
 	public void oeffnetSichDasProduktionsfenster() {
 		if (klickErfolgreich) {
-			screenShot = new BilderLaden()
+			screenShot = new BilderLaden(null)
 					.ladeScreenshotSchmiedeProduktion();
 			Assert.assertNotNull(screenShot);
 		} else {

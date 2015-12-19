@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class IconNotFoundException extends Exception {
  
-	public IconNotFoundException(String fileName, BufferedImage currentScreen) {
+	public IconNotFoundException(BufferedImage icon, BufferedImage currentScreen) {
 		// TODO Auto-generated constructor stub
 	}
 

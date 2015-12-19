@@ -11,3 +11,10 @@ Scenario: Forge of Empire spielen
 	Then Öffnet sich die Auswahl des Servers.
 	When Der Server Rugnir ausgewählt wird.
 	Then Die Stadt des Spielers erscheint.
+	
+Scenario: Forge of Empire starten und in Stadt Arrakeen einloggen.
+	Given Die FoE Verknüpfung muss geklickt werden.
+	And Der Spielen Button muss geklickt werden.
+	And Der Server Rugnir muss ausgewählt werden.
+	When Der Bot gestartet wird.
+	Then Alle Aufgaben sind erfolgreich ausgeführt worden.

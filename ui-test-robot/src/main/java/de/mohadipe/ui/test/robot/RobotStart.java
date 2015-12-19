@@ -2,10 +2,9 @@ package de.mohadipe.ui.test.robot;
 
 import java.awt.AWTException;
 import java.io.IOException;
-import java.util.Date;
 import java.util.logging.Logger;
 
-import de.mohadipe.ui.test.robot.foe.FoEUIRobot;
+import de.mohadipe.ui.test.robot.foe.FoEAufgabenRobot;
 import de.mohadipe.ui.test.robot.log.RoboLogger;
 import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
 
@@ -29,9 +28,9 @@ public class RobotStart {
 				false);
 		grafikDateiPfadeService.setProgrammRoot(programmRootVerzeichnis);
 		try {
-			FoEUIRobot foERobot = new FoEUIRobot();
+			FoEAufgabenRobot foERobot = new FoEAufgabenRobot();
 			foERobot.setGrafikPathService(grafikDateiPfadeService);
-			foERobot.starteRobot();
+			foERobot.sammleGoldUndWerkzeuge();
 		} catch (AWTException e) {
 			logger.severe(e.getMessage());
 			throw new RuntimeException(e);

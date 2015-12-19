@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.mohadipe.util.BilderLaden;
+import de.mohadipe.ui.test.robot.util.BilderLaden;
 
 public class ScreenPlausibilisierungTest {
 	@Test
@@ -13,7 +13,7 @@ public class ScreenPlausibilisierungTest {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		koordinaten2d.x = 1921;
 		koordinaten2d.y = 1080;
-		BufferedImage screen = new BilderLaden()
+		BufferedImage screen = new BilderLaden(null)
 				.ladeScreenShotFoEVerknuepfung();
 		ScreenPlausibilisierung screenPlausibilisierung = new ScreenPlausibilisierung(
 				screen);
@@ -26,7 +26,7 @@ public class ScreenPlausibilisierungTest {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		koordinaten2d.x = 1920;
 		koordinaten2d.y = 1081;
-		BufferedImage screen = new BilderLaden()
+		BufferedImage screen = new BilderLaden(null)
 				.ladeScreenShotFoEVerknuepfung();
 		ScreenPlausibilisierung screenPlausibilisierung = new ScreenPlausibilisierung(
 				screen);
@@ -39,7 +39,7 @@ public class ScreenPlausibilisierungTest {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		koordinaten2d.x = 1921;
 		koordinaten2d.y = 1081;
-		BufferedImage screen = new BilderLaden()
+		BufferedImage screen = new BilderLaden(null)
 				.ladeScreenShotFoEVerknuepfung();
 		ScreenPlausibilisierung screenPlausibilisierung = new ScreenPlausibilisierung(
 				screen);
@@ -52,7 +52,7 @@ public class ScreenPlausibilisierungTest {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		koordinaten2d.x = 1920;
 		koordinaten2d.y = -1;
-		BufferedImage screen = new BilderLaden()
+		BufferedImage screen = new BilderLaden(null)
 				.ladeScreenShotFoEVerknuepfung();
 		ScreenPlausibilisierung screenPlausibilisierung = new ScreenPlausibilisierung(
 				screen);
@@ -65,7 +65,7 @@ public class ScreenPlausibilisierungTest {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		koordinaten2d.x = -1;
 		koordinaten2d.y = 500;
-		BufferedImage screen = new BilderLaden()
+		BufferedImage screen = new BilderLaden(null)
 				.ladeScreenShotFoEVerknuepfung();
 		ScreenPlausibilisierung screenPlausibilisierung = new ScreenPlausibilisierung(
 				screen);
@@ -78,7 +78,7 @@ public class ScreenPlausibilisierungTest {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		koordinaten2d.x = 1920;
 		koordinaten2d.y = 1080;
-		BufferedImage screen = new BilderLaden()
+		BufferedImage screen = new BilderLaden(null)
 				.ladeScreenShotFoEVerknuepfung();
 		ScreenPlausibilisierung screenPlausibilisierung = new ScreenPlausibilisierung(
 				screen);
@@ -91,7 +91,7 @@ public class ScreenPlausibilisierungTest {
 		Koordinaten2D koordinaten2d = new Koordinaten2D();
 		koordinaten2d.x = 0;
 		koordinaten2d.y = 0;
-		BufferedImage screen = new BilderLaden()
+		BufferedImage screen = new BilderLaden(null)
 				.ladeScreenShotFoEVerknuepfung();
 		ScreenPlausibilisierung screenPlausibilisierung = new ScreenPlausibilisierung(
 				screen);

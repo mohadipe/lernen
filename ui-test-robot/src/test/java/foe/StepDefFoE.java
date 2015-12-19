@@ -1,6 +1,9 @@
 package foe;
 
+import static org.mockito.Mockito.mock;
+
 import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.image.BufferedImage;
 
 import org.hamcrest.Matchers;
@@ -9,14 +12,21 @@ import org.junit.Assert;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import de.mohadipe.ui.test.robot.AufgabenAusfuehren;
 import de.mohadipe.ui.test.robot.IconFinden;
 import de.mohadipe.ui.test.robot.IconNotFoundException;
 import de.mohadipe.ui.test.robot.Koordinaten2D;
+import de.mohadipe.ui.test.robot.aufgabe.AufgabeDaten;
+import de.mohadipe.ui.test.robot.aufgabe.DoppelKlickeKoordinaten;
+import de.mohadipe.ui.test.robot.aufgabe.FindeGrafikInGrafik;
+import de.mohadipe.ui.test.robot.aufgabe.Warten;
 import de.mohadipe.ui.test.robot.foe.FoEUIRobot;
 import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
-import de.mohadipe.util.BilderLaden;
+import de.mohadipe.ui.test.robot.protokoll.Protokoll;
+import de.mohadipe.ui.test.robot.util.BilderLaden;
 
 public class StepDefFoE {
+	private AufgabenAusfuehren ausfuehren = new AufgabenAusfuehren();
 	private BufferedImage screenShotFoEVerknuepfung;
 	private Koordinaten2D geklickteKoordinaten;
 	private GrafikDateiPfadeService pfadeService = new GrafikDateiPfadeService(true);
@@ -28,25 +38,25 @@ public class StepDefFoE {
 	
 	@Given("^Ein Screenshot mit FoE-Verknüpfung\\.$")
 	public void einScreenshotMitFoEVerknuepfung() {
-		screenShotFoEVerknuepfung = new BilderLaden().ladeScreenShotFoEVerknuepfung();
+		screenShotFoEVerknuepfung = new BilderLaden(null).ladeScreenShotFoEVerknuepfung();
 		Assert.assertNotNull(screenShotFoEVerknuepfung);
 	}
 
 	@Given("^Die Münzproduktion eines Wohnhauses ist fertig\\.$")
 	public void dieMuenzenproduktionEinesWohnhausesIstFertig() {
-		screenShotFoEVerknuepfung = new BilderLaden().ladeScreenshotMuenzenAbholbereit();
+		screenShotFoEVerknuepfung = new BilderLaden(null).ladeScreenshotMuenzenAbholbereit();
 		Assert.assertNotNull(screenShotFoEVerknuepfung);
 	}
 
 	@Given("^Die Münzproduktion eines Wohnhauses mit Stern ist fertig\\.$")
 	public void dieMuenzproduktionEinesWohnhausesMitSternIstFertig() {
-		screenShotFoEVerknuepfung = new BilderLaden().ladeScreenshotMuenzenMitSternAbholbereit();
+		screenShotFoEVerknuepfung = new BilderLaden(null).ladeScreenshotMuenzenMitSternAbholbereit();
 		Assert.assertNotNull(screenShotFoEVerknuepfung);
 	}
 
 	@Given("^Die Startseite von Forge of Empire ist im Browser offen\\.$")
 	public void dieStartseiteVonForgeOfEmpireIstImBrowserOffen() {
-		screenShotFoEVerknuepfung = new BilderLaden().ladeStartseiteFoE();
+		screenShotFoEVerknuepfung = new BilderLaden(null).ladeStartseiteFoE();
 		Assert.assertNotNull(screenShotFoEVerknuepfung);
 	}
 
@@ -80,7 +90,7 @@ public class StepDefFoE {
 		try {
 			iconFinden.findeIcon(klick02, screenShotFoEVerknuepfung);
 			geklickteKoordinaten = iconFinden.getKoordinaten();
-			screenShotFoEVerknuepfung = new BilderLaden().waehleServerRugnir();
+			screenShotFoEVerknuepfung = new BilderLaden(null).ladeAuswahlServerRugnir();
 			Assert.assertNotNull(screenShotFoEVerknuepfung);
 		} catch (IconNotFoundException e) {
 			Assert.fail(e.getMessage());
@@ -125,5 +135,61 @@ public class StepDefFoE {
 		expected.x = 884;
 		expected.y = 355;
 		Assert.assertThat(geklickteKoordinaten, Matchers.equalTo(expected));
+	}
+	
+	@Given("^Die FoE Verknüpfung muss geklickt werden\\.$") 
+	public void dieFoEVerknuepfungMussGeklicktWerden() throws AWTException {
+		BufferedImage zuFindende = new BilderLaden(null).ladeRotesIcon();
+		BufferedImage zuDurchsuchende = new BilderLaden(null).ladeScreenShotFoEVerknuepfung();
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(zuFindende);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_DURCHSUCHENDE_GRAFIK, zuDurchsuchende);
+		ausfuehren.addAufgabe(findeGrafikInGrafik);
+		DoppelKlickeKoordinaten doppelKlickeKoordinaten = new DoppelKlickeKoordinaten();
+		Robot robot = new FoEUIRobot();
+		doppelKlickeKoordinaten.setRobot(robot);
+		doppelKlickeKoordinaten.addAbhaengigkeit(findeGrafikInGrafik);
+		ausfuehren.addAufgabe(doppelKlickeKoordinaten);
+		ausfuehren.addAufgabe(new Warten(1));
+	}
+
+	@Given("^Der Spielen Button muss geklickt werden\\.$")
+	public void derSpielenButtonMussGeklicktWerden() throws AWTException {
+		BufferedImage zuFindende = new BilderLaden(null).ladeSpielenButton();
+		BufferedImage zuDurchsuchende = new BilderLaden(null).ladeStartseiteFoE();
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(zuFindende);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_DURCHSUCHENDE_GRAFIK, zuDurchsuchende);
+		ausfuehren.addAufgabe(findeGrafikInGrafik);
+		DoppelKlickeKoordinaten doppelKlickeKoordinaten = new DoppelKlickeKoordinaten();
+		Robot robot = new FoEUIRobot();
+		doppelKlickeKoordinaten.setRobot(robot);
+		doppelKlickeKoordinaten.addAbhaengigkeit(findeGrafikInGrafik);
+		ausfuehren.addAufgabe(doppelKlickeKoordinaten);
+		ausfuehren.addAufgabe(new Warten(1));
+	}
+
+	@Given("^Der Server Rugnir muss ausgewählt werden\\.$")
+	public void derServerRugnirMussAusgewaehltWerden() throws AWTException {
+		Robot robotMock = mock(Robot.class);
+		BufferedImage zuFindende = new BilderLaden(null).ladeServerRugnirButton();
+		BufferedImage zuDurchsuchende = new BilderLaden(null).ladeAuswahlServerRugnir();
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(zuFindende);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_DURCHSUCHENDE_GRAFIK, zuDurchsuchende);
+		ausfuehren.addAufgabe(findeGrafikInGrafik);
+		DoppelKlickeKoordinaten doppelKlickeKoordinaten = new DoppelKlickeKoordinaten();
+		doppelKlickeKoordinaten.setRobot(robotMock);
+		doppelKlickeKoordinaten.addAbhaengigkeit(findeGrafikInGrafik);
+		ausfuehren.addAufgabe(doppelKlickeKoordinaten);
+		ausfuehren.addAufgabe(new Warten(1));
+	}
+
+	@When("^Der Bot gestartet wird\\.$")
+	public void derBotGestartetWird() {
+		ausfuehren.fuehreAufgabenAus();
+	}
+
+	@Then("^Alle Aufgaben sind erfolgreich ausgeführt worden\\.$")
+	public void istNachKurzemWartenDieStadtArrakeenGeladen() {
+		Protokoll protokoll = ausfuehren.getProtokoll();
+		Assert.assertTrue(protokoll.alleAufgabenErfolgreich());
 	}
 }
