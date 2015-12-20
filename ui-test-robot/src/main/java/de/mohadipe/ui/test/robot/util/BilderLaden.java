@@ -19,6 +19,7 @@ public class BilderLaden {
 	public final static String WIEDERHOLEN_03 = "wiederholen03.bmp";
 	public final static String WIEDERHOLEN_04 = "wiederholen04.bmp";
 	public final static String WIEDERHOLEN_05 = "wiederholen05.bmp";
+	public final static String WIEDERHOLEN_06 = "wiederholen06.bmp";
 	public final static String X = "x.bmp";
 	public final static String BROWSER_X = "browser_x.bmp";
 	public static final String PRODUZIEREN_01 = "produzieren01.bmp";
@@ -141,4 +142,7 @@ public class BilderLaden {
 		return ladeBild(WIEDERHOLEN_05);
 	}
 
+	public BufferedImage ladeMuenzVergleich06() {
+		return ladeBild(WIEDERHOLEN_06);
+	}
 }

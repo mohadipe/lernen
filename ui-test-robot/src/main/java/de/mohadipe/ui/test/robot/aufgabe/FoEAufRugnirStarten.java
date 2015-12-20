@@ -26,9 +26,7 @@ public class FoEAufRugnirStarten extends AbstractAufgabe {
 		addSpielenButtonKlicken();
 		addWarten(2000);
 		addServerRugnirKlicken();
-		addWarten(2500);
 		addMenuSchliessenKlicken();
-		addWarten(1000);
 	}
 	
 	private BilderLaden getBilderLaden() {
@@ -40,15 +38,20 @@ public class FoEAufRugnirStarten extends AbstractAufgabe {
 	}
 	
 	private void addMenuSchliessenKlicken() {
+		long spielLadenTimeOut = ((Long)getDaten(AufgabeDaten.SPIEL_LADEN_TIMEOUT)).longValue();
 		BufferedImage zuFindende = getBilderLaden().ladeOkButton();
 		FindeGrafikInGrafik findeGrafik = new FindeGrafikInGrafik(zuFindende);
 		findeGrafik.setDaten(AufgabeDaten.NAME, "Menu Ok finden");
 		findeGrafik.setRobot(this.getRobot());
-		ausfuehren.addAufgabe(findeGrafik);
 		EinfachKlickKoordinaten einfachKlickKoordinaten = new EinfachKlickKoordinaten();
 		einfachKlickKoordinaten.setRobot(getRobot());
 		einfachKlickKoordinaten.addAbhaengigkeit(findeGrafik);
-		ausfuehren.addAufgabe(einfachKlickKoordinaten);		
+		
+		WiederholeAufgabe wiederholeAufgabe = new WiederholeAufgabe();
+		wiederholeAufgabe.addAbhaengigkeit(findeGrafik);
+		wiederholeAufgabe.addAbhaengigkeit(einfachKlickKoordinaten);
+		wiederholeAufgabe.setDaten(AufgabeDaten.TIMEOUT, spielLadenTimeOut);
+		ausfuehren.addAufgabe(wiederholeAufgabe);
 	}
 
 	private void addServerRugnirKlicken() {

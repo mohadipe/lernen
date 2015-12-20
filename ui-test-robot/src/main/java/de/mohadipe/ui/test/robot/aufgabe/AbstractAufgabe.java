@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractAufgabe implements Aufgabe {
-	
+
 	private Map<AufgabeDaten, Object> daten = new HashMap<AufgabeDaten, Object>();
 	private Map<AufgabenArten, Aufgabe> abhaengigkeiten = new HashMap<AufgabenArten, Aufgabe>();
-	
+
 	@Override
 	public int getPositionAusfuehrung() {
 		return ((Integer) daten.get(AufgabeDaten.REIHENFOLGE)).intValue();
@@ -50,5 +50,9 @@ public abstract class AbstractAufgabe implements Aufgabe {
 	protected BufferedImage takeScreenShot() {
 		return getRobot().createScreenCapture(
 				new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+	}
+
+	protected Map<AufgabenArten, Aufgabe> getAbhaengigeAufgaben() {
+		return abhaengigkeiten;
 	}
 }

@@ -12,11 +12,17 @@ public class EinfachKlickKoordinaten extends AbstractAufgabe {
 	@Override
 	public void ausfuehren() {
 		Aufgabe aufgabe = getAbhaengigeAufgabeByArt(AufgabenArten.GRAFIK_IN_GRAFIK_FINDEN);
+		Integer abweichungY = ((Integer) getDaten(AufgabeDaten.ABWEICHUNG_Y));
 		if (aufgabe.isErfolgreich()) {
 			Koordinaten2D koordinaten = (Koordinaten2D) aufgabe
 					.getDaten(AufgabeDaten.KOORDINATE);
 			Robot robot = getRobot();
-			robot.mouseMove(koordinaten.x, koordinaten.y);
+			int mouseOnX = koordinaten.x;
+			int mouseOnY = koordinaten.y;
+			if (abweichungY != null) {
+				mouseOnY = koordinaten.y + abweichungY.intValue();
+			}
+			robot.mouseMove(mouseOnX, mouseOnY);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			isErfolgreich = true;

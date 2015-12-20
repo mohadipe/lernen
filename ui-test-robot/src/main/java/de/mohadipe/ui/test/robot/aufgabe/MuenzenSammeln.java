@@ -40,13 +40,26 @@ public class MuenzenSammeln extends AbstractAufgabe {
 	}
 	
 	private void setup() {
-		BufferedImage zuFindende = getBilderLaden().ladeMuenzVergleich01();
-		FindeGrafikInGrafik muenze01 = new FindeGrafikInGrafik(zuFindende);
-		muenze01.setRobot(this.getRobot());
-		ausfuehren.addAufgabe(muenze01);
+		BufferedImage zuFindende01 = getBilderLaden().ladeMuenzVergleich01();
+		muenzeFindenUndKlicken(zuFindende01);
+		BufferedImage zuFindende02 = getBilderLaden().ladeMuenzVergleich02();
+		muenzeFindenUndKlicken(zuFindende02);
+		BufferedImage zuFindende03 = getBilderLaden().ladeMuenzVergleich03();
+		muenzeFindenUndKlicken(zuFindende03);
+		BufferedImage zuFindende04 = getBilderLaden().ladeMuenzVergleich04();
+		muenzeFindenUndKlicken(zuFindende04);
+		BufferedImage zuFindende06 = getBilderLaden().ladeMuenzVergleich06();
+		muenzeFindenUndKlicken(zuFindende06);
+	}
+
+	private void muenzeFindenUndKlicken(BufferedImage zuFindende) {
+		FindeGrafikInGrafik muenze = new FindeGrafikInGrafik(zuFindende);
+		muenze.setRobot(this.getRobot());
+		ausfuehren.addAufgabe(muenze);
 		EinfachKlickKoordinaten einfachKlickKoordinaten = new EinfachKlickKoordinaten();
 		einfachKlickKoordinaten.setRobot(getRobot());
-		einfachKlickKoordinaten.addAbhaengigkeit(muenze01);
+		einfachKlickKoordinaten.setDaten(AufgabeDaten.ABWEICHUNG_Y, Integer.valueOf(60));
+		einfachKlickKoordinaten.addAbhaengigkeit(muenze);
 		ausfuehren.addAufgabe(einfachKlickKoordinaten);
 	}
 }

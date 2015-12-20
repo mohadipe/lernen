@@ -24,9 +24,10 @@ public class FoEAufRugnirStartenTest {
 		BufferedImage bild3 = new BilderLaden(null).ladeAuswahlServerRugnir();
 		when(robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()))).thenReturn(bild1, bild2, bild3);
 		foEAufRugnirStarten.setRobot(robot);
+		foEAufRugnirStarten.setDaten(AufgabeDaten.SPIEL_LADEN_TIMEOUT, 10L);
 		foEAufRugnirStarten.ausfuehren();
 		Assert.assertTrue(foEAufRugnirStarten.isErfolgreich());
 		Protokoll protokoll = (Protokoll) foEAufRugnirStarten.getDaten(AufgabeDaten.PROTOKOLL);
-		Assert.assertFalse(protokoll.alleAufgabenErfolgreich());
+		Assert.assertTrue(protokoll.alleAufgabenErfolgreich());
 	}
 }
