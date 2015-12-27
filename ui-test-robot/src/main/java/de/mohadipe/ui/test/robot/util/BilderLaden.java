@@ -30,6 +30,7 @@ public class BilderLaden {
 	public static final String GUTES_HUFEISEN = "gutesHufeisen.bmp";
 	private static final String HERAUSGEZOOMT = "screenVielAbholbereit.bmp";
 	private static final String HERAUSGEZOOMT_02 = "screenVielAbholbereit02.bmp";
+	private static final String EIN_PIXEL = "EinPixel.bmp";
 	
 	private GrafikDateiPfadeService pfadeService = new GrafikDateiPfadeService(
 			true);
@@ -174,5 +175,9 @@ public class BilderLaden {
 
 	public BufferedImage screenHerausgezoomt02() {
 		return ladeBild(HERAUSGEZOOMT_02);
+	}
+
+	public BufferedImage ladeEinPixel() {
+		return ladeBild(EIN_PIXEL);
 	}
 }

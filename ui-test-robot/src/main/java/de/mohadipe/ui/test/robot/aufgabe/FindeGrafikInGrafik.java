@@ -16,10 +16,24 @@ public class FindeGrafikInGrafik extends AbstractAufgabe {
 	}
 
 	private boolean isIn() {
+		boolean gefunden = false;
 		IconFinden iconFinden = new IconFinden();
-		if (zuFindende != null) {
+		gefunden = findeGrafik(iconFinden);
+		if (gefunden) {
+			return gefunden;
+		}
+		gefunden = findeFarbe(iconFinden);
+		return gefunden;
+	}
+
+	private boolean findeFarbe(IconFinden iconFinden) {
+		if (iconFinden.getKoordinaten() == null) {
 			try {
-				iconFinden.findeIcon(zuFindende, zuDurchsuchende);
+				Integer farbe = (Integer) getDaten(AufgabeDaten.ZU_FINDENDE_FARBE);
+				if (farbe == null) {
+					return false;
+				}
+				iconFinden.findeFarbeAufScreen(zuDurchsuchende, farbe.intValue());
 				super.setDaten(AufgabeDaten.KOORDINATE,
 						iconFinden.getKoordinaten());
 				return true;
@@ -27,9 +41,13 @@ public class FindeGrafikInGrafik extends AbstractAufgabe {
 				System.out.println(e.getMessage());
 			}
 		}
-		if (iconFinden.getKoordinaten() == null) {
+		return false;
+	}
+
+	private boolean findeGrafik(IconFinden iconFinden) {
+		if (zuFindende != null) {
 			try {
-				iconFinden.findeFarbeAufScreen(zuDurchsuchende);
+				iconFinden.findeIcon(zuFindende, zuDurchsuchende);
 				super.setDaten(AufgabeDaten.KOORDINATE,
 						iconFinden.getKoordinaten());
 				return true;

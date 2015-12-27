@@ -58,7 +58,7 @@ public class IconFinden {
 		return koordinaten;
 	}
 
-	public void findeFarbeAufScreen(BufferedImage currentScreen) throws IconNotFoundException {
+	public void findeFarbeAufScreen(BufferedImage currentScreen, int farbe) throws IconNotFoundException {
 		int rgb = -10083840;
 		int anzahlUebereinstimmenderFelder = 1;
 		Block block = new Block(anzahlUebereinstimmenderFelder);

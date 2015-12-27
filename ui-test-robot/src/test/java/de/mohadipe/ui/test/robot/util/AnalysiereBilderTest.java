@@ -8,7 +8,7 @@ public class AnalysiereBilderTest {
 
 	@Test
 	public void ladeBildPrintRGB() {
-		BufferedImage muenze01 = new BilderLaden(null).ladeMuenzVergleich01();
+		BufferedImage muenze01 = new BilderLaden(null).ladeEinPixel();
 		int width = muenze01.getWidth();
 		int height = muenze01.getHeight();
 		for (int i = 0; i < width; i++) {
