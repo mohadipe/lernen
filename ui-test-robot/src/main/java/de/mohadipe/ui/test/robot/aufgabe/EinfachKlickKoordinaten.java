@@ -19,9 +19,11 @@ public class EinfachKlickKoordinaten extends AbstractAufgabe {
 			Robot robot = getRobot();
 			int mouseOnX = koordinaten.x;
 			int mouseOnY = koordinaten.y;
+			System.out.println("Zu klickende Koordinaten X: " + mouseOnX + " Y: " + mouseOnY);
 			if (abweichungY != null) {
 				mouseOnY = koordinaten.y + abweichungY.intValue();
 			}
+			System.out.println("Mit Abweichung X: " + mouseOnX + " Y: " + mouseOnY);
 			robot.mouseMove(mouseOnX, mouseOnY);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);

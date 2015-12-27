@@ -7,6 +7,7 @@ import de.mohadipe.ui.test.robot.AufgabenAusfuehren;
 import de.mohadipe.ui.test.robot.aufgabe.AufgabeDaten;
 import de.mohadipe.ui.test.robot.aufgabe.FoEAufRugnirStarten;
 import de.mohadipe.ui.test.robot.aufgabe.MuenzenSammeln;
+import de.mohadipe.ui.test.robot.aufgabe.WerkzeugeSammeln;
 import de.mohadipe.ui.test.robot.aufgabe.WiederholeAufgabe;
 import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
 
@@ -41,8 +42,12 @@ public class FoEAufgabenRobot extends Robot {
 		MuenzenSammeln muenzenSammeln = new MuenzenSammeln();
 		muenzenSammeln.setRobot(this);
 		muenzenSammeln.setDaten(AufgabeDaten.GRAFIKPFAD, grafikPfad);
+		WerkzeugeSammeln werkzeugeSammeln = new WerkzeugeSammeln();
+		werkzeugeSammeln.setRobot(this);
+		werkzeugeSammeln.setDaten(AufgabeDaten.GRAFIKPFAD, grafikPfad);
 		WiederholeAufgabe wiederholeAufgabe = new WiederholeAufgabe();
 		wiederholeAufgabe.addAbhaengigkeit(muenzenSammeln);
+		wiederholeAufgabe.addAbhaengigkeit(werkzeugeSammeln);
 		wiederholeAufgabe.setDaten(AufgabeDaten.TIMEOUT, Long.valueOf(120000));
 		ausfuehren.addAufgabe(wiederholeAufgabe);
 	}

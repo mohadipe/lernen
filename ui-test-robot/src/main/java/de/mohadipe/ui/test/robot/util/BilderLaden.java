@@ -20,10 +20,16 @@ public class BilderLaden {
 	public final static String WIEDERHOLEN_04 = "wiederholen04.bmp";
 	public final static String WIEDERHOLEN_05 = "wiederholen05.bmp";
 	public final static String WIEDERHOLEN_06 = "wiederholen06.bmp";
+	public static final String WIEDERHOLEN_07 = "wiederholen07.bmp";
+	private static final String WIEDERHOLEN_08 = "wiederholen08.bmp";
+	private static final String WIEDERHOLEN_09 = "wiederholen09.bmp";
+	private static final String WIEDERHOLEN_10 = "wiederholen10.bmp";;
 	public final static String X = "x.bmp";
 	public final static String BROWSER_X = "browser_x.bmp";
 	public static final String PRODUZIEREN_01 = "produzieren01.bmp";
 	public static final String GUTES_HUFEISEN = "gutesHufeisen.bmp";
+	private static final String HERAUSGEZOOMT = "screenVielAbholbereit.bmp";
+	private static final String HERAUSGEZOOMT_02 = "screenVielAbholbereit02.bmp";
 	
 	private GrafikDateiPfadeService pfadeService = new GrafikDateiPfadeService(
 			true);
@@ -138,11 +144,35 @@ public class BilderLaden {
 		return ladeBild(WIEDERHOLEN_04);
 	}
 
-	public BufferedImage ladeMuenzVergleich05() {
+	public BufferedImage ladeWerkzeugVergleich05() {
 		return ladeBild(WIEDERHOLEN_05);
 	}
 
 	public BufferedImage ladeMuenzVergleich06() {
 		return ladeBild(WIEDERHOLEN_06);
+	}
+
+	public BufferedImage ladeMuenzVergleich07() {
+		return ladeBild(WIEDERHOLEN_07);
+	}
+
+	public BufferedImage screenHerausgezoomt() {
+		return ladeBild(HERAUSGEZOOMT);
+	}
+
+	public BufferedImage ladeMuenzVergleich08() {
+		return ladeBild(WIEDERHOLEN_08);
+	}
+
+	public BufferedImage ladeWerkzeugVergleich09() {
+		return ladeBild(WIEDERHOLEN_09);
+	}
+
+	public BufferedImage ladeMuenzVergleich10() {
+		return ladeBild(WIEDERHOLEN_10);
+	}
+
+	public BufferedImage screenHerausgezoomt02() {
+		return ladeBild(HERAUSGEZOOMT_02);
 	}
 }

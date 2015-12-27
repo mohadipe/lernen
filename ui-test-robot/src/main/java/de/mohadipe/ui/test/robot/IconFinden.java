@@ -3,8 +3,13 @@ package de.mohadipe.ui.test.robot;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.imageio.ImageIO;
+
+import de.mohadipe.ui.test.robot.aufgabe.Block;
 
 public class IconFinden {
 	public final static String KLICK_01 = "klick01.bmp";
@@ -53,6 +58,72 @@ public class IconFinden {
 		return koordinaten;
 	}
 
+	public void findeFarbeAufScreen(BufferedImage currentScreen) throws IconNotFoundException {
+		int rgb = -10083840;
+		int anzahlUebereinstimmenderFelder = 1;
+		Block block = new Block(anzahlUebereinstimmenderFelder);
+		List<Block> treffer = new ArrayList<Block>();
+		for (int x = 0; x < currentScreen.getWidth(); x++) {
+			for (int y = 0; y < currentScreen.getHeight(); y++) {
+				int cSRGB = currentScreen.getRGB(x, y);
+				if (cSRGB == rgb) {
+					try {
+						block.addKoordinate(x, y);
+					} catch (GehoertNichtZuBlockException e) {
+						block = new Block(anzahlUebereinstimmenderFelder);
+					}
+				}
+				if (block.isBlockVoll()) {
+					treffer.add(block);
+					block = new Block(anzahlUebereinstimmenderFelder);
+				}
+			}
+		}
+		if (treffer.isEmpty()) {
+			throw new IconNotFoundException(null, currentScreen);
+		}
+		try {
+			List<Block> kombinationen = kombiniereBloecke(treffer);
+			kombinationen.sort(new Comparator<Block>() {
+
+				@Override
+				public int compare(Block o1, Block o2) {
+					if (o1.getAnzahlKoordinaten() < o2.getAnzahlKoordinaten()) {
+						return 1;
+					}
+					if (o1.getAnzahlKoordinaten() > o2.getAnzahlKoordinaten()) {
+						return -1;
+					}
+					return 0;
+				}
+			});
+			Block block2 = kombinationen.get(0);
+			this.koordinaten = block2.getKoordinaten();
+		} catch (GehoertNichtZuBlockException e) {
+			e.printStackTrace();
+			throw new IconNotFoundException(null, currentScreen);
+		}
+	}
+	
+	private List<Block> kombiniereBloecke(List<Block> einzelneBloecke) throws GehoertNichtZuBlockException {
+		List<Block> kombinationen = new ArrayList<Block>();
+		for (Block block : einzelneBloecke) {
+			Block tmp = new Block(block.getKantenLaenge());
+			tmp.addBlock(block);
+			for (Block block2 : einzelneBloecke) {
+				try {
+					tmp.addBlock(block2);
+				} catch (GehoertNichtZuBlockException e) {
+					continue;
+				}
+			}
+			if (!kombinationen.contains(tmp)) {
+				kombinationen.add(tmp);
+			}
+		}
+		return kombinationen;
+	}
+	
 	public void findeIcon(BufferedImage icon, BufferedImage currentScreen) throws IconNotFoundException {
 		int anzahlPixelIcon = icon.getWidth() * icon.getHeight();
 		for (int x = 0; x < currentScreen.getWidth(); x++) {

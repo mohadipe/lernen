@@ -32,7 +32,7 @@ public class WiederholeAufgabeTest {
 		wiederholeAufgabe.ausfuehren();
 		
 		Integer wiederholungen = (Integer) wiederholeAufgabe.getDaten(AufgabeDaten.ANZAHL_WIEDERHOLUNGEN);
-		Assert.assertTrue("Zu viele Wiederholungen. ", (1 <= wiederholungen.intValue()) && (wiederholungen.intValue() <= 400));
+		Assert.assertTrue("Zu viele Wiederholungen. ", (1 <= wiederholungen.intValue()) && (wiederholungen.intValue() <= 800));
 	}
 	
 }

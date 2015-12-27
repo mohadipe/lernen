@@ -6,6 +6,39 @@ import com.google.gson.Gson;
 public class Koordinaten2D {
 	public int x;
 	public int y;
+	public Koordinaten2D(int x2, int y2) {
+		this.x = x2;
+		this.y = y2;
+	}
+	public Koordinaten2D() {
+	}
+	public boolean isNachbarVon(Koordinaten2D kandidat) {
+		if (x == kandidat.x && (y + 1) == kandidat.y) {
+			return true;
+		}
+		if ((x+1) == kandidat.x && y == kandidat.y) {
+			return true;
+		}
+		if ((x+1) == kandidat.x && (y+1) == kandidat.y) {
+			return true;
+		}
+		if ((x+1) == kandidat.x && (y-1) == kandidat.y) {
+			return true;
+		}
+		if ((x-1) == kandidat.x && (y+1) == kandidat.y) {
+			return true;
+		}
+		if ((x-1) == kandidat.x && y == kandidat.y) {
+			return true;
+		}
+		if (x == kandidat.x && (y-1) == kandidat.y) {
+			return true;
+		}
+		if ((x-1) == kandidat.x && (y-1) == kandidat.y) {
+			return true;
+		}
+		return false;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

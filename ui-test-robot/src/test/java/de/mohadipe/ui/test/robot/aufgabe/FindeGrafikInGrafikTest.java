@@ -23,4 +23,27 @@ public class FindeGrafikInGrafikTest {
 		expected.x = 1417; expected.y = 232;
 		Assert.assertEquals(expected, koordinaten);
 	}
+	
+	@Test
+	public void findeMuenzeHerausgezoomt() {
+		BufferedImage zuFindende = new BilderLaden(null).ladeMuenzVergleich10();
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(zuFindende);
+		BufferedImage zuDurchsuchende = new BilderLaden(null).screenHerausgezoomt02();
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_DURCHSUCHENDE_GRAFIK, zuDurchsuchende);
+	
+		findeGrafikInGrafik.ausfuehren();
+		
+		Assert.assertTrue(findeGrafikInGrafik.isErfolgreich());
+	}
+	
+	@Test
+	public void findeWerkzeugeHerausgezoomt() {
+		BufferedImage zuFindende = new BilderLaden(null).ladeWerkzeugVergleich09();
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(zuFindende);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_DURCHSUCHENDE_GRAFIK, new BilderLaden(null).screenHerausgezoomt());
+	
+		findeGrafikInGrafik.ausfuehren();
+		
+		Assert.assertTrue(findeGrafikInGrafik.isErfolgreich());		
+	}
 }

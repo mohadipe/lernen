@@ -14,19 +14,32 @@ public class FindeGrafikInGrafik extends AbstractAufgabe {
 	public FindeGrafikInGrafik(final BufferedImage zuFindende) {
 		this.zuFindende = zuFindende;
 	}
-	
+
 	private boolean isIn() {
 		IconFinden iconFinden = new IconFinden();
-		try {
-			iconFinden.findeIcon(zuFindende, zuDurchsuchende);
-			super.setDaten(AufgabeDaten.KOORDINATE, iconFinden.getKoordinaten());
-			return true;
-		} catch (IconNotFoundException e) {
-			System.out.println(e.getMessage());
-			return false;
+		if (zuFindende != null) {
+			try {
+				iconFinden.findeIcon(zuFindende, zuDurchsuchende);
+				super.setDaten(AufgabeDaten.KOORDINATE,
+						iconFinden.getKoordinaten());
+				return true;
+			} catch (IconNotFoundException e) {
+				System.out.println(e.getMessage());
+			}
 		}
+		if (iconFinden.getKoordinaten() == null) {
+			try {
+				iconFinden.findeFarbeAufScreen(zuDurchsuchende);
+				super.setDaten(AufgabeDaten.KOORDINATE,
+						iconFinden.getKoordinaten());
+				return true;
+			} catch (IconNotFoundException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return false;
 	}
-	
+
 	public Koordinaten2D getKoordinaten() {
 		return (Koordinaten2D) super.getDaten(AufgabeDaten.KOORDINATE);
 	}
