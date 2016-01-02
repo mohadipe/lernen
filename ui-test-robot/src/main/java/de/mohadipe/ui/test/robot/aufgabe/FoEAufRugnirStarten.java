@@ -1,11 +1,8 @@
 package de.mohadipe.ui.test.robot.aufgabe;
 
 import java.awt.image.BufferedImage;
-import java.util.logging.Logger;
 
 import de.mohadipe.ui.test.robot.AufgabenAusfuehren;
-import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
-import de.mohadipe.ui.test.robot.util.BilderLaden;
 
 public class FoEAufRugnirStarten extends AbstractAufgabe {
 
@@ -15,7 +12,6 @@ public class FoEAufRugnirStarten extends AbstractAufgabe {
 	@Override
 	public void ausfuehren() {
 		setup();
-		ausfuehren.setLogger((Logger) getDaten(AufgabeDaten.LOGGER));
 		ausfuehren.fuehreAufgabenAus();
 		setDaten(AufgabeDaten.PROTOKOLL, ausfuehren.getProtokoll());
 	}
@@ -29,10 +25,6 @@ public class FoEAufRugnirStarten extends AbstractAufgabe {
 		addMenuSchliessenKlicken();
 	}
 	
-	private BilderLaden getBilderLaden() {
-		return new BilderLaden((GrafikDateiPfadeService) this.getDaten(AufgabeDaten.GRAFIKPFAD));
-	}
-
 	private void addWarten(int dauer) {
 		ausfuehren.addAufgabe(new Warten(dauer));
 	}

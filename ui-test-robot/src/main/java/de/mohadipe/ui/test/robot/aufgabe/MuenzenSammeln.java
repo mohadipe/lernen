@@ -1,7 +1,7 @@
 package de.mohadipe.ui.test.robot.aufgabe;
 
 import de.mohadipe.ui.test.robot.AufgabenAusfuehren;
-import de.mohadipe.ui.test.robot.foe.Farben;
+import de.mohadipe.ui.test.robot.foe.FarbBloecke;
 
 public class MuenzenSammeln extends AbstractAufgabe {
 
@@ -16,30 +16,26 @@ public class MuenzenSammeln extends AbstractAufgabe {
 	@Override
 	public void ausfuehren() {
 		setup();
-		boolean ergebnisVorletzteSchleife = false;
-		do {
-			ausfuehren.fuehreAufgabenAus();
-			isErfolgreich = ausfuehren.getProtokoll().alleAufgabenErfolgreich();
-			if (isErfolgreich) {
-				ergebnisVorletzteSchleife = isErfolgreich;
-			}
-		} while (ausfuehren.getProtokoll().alleAufgabenErfolgreich());
-		isErfolgreich = ergebnisVorletzteSchleife;
+		System.out.println("Sammle Muenzen");
+		ausfuehren.fuehreAufgabenAus();
+		isErfolgreich = ausfuehren.getProtokoll().alleAufgabenErfolgreich();
 	}
-	
+
 	@Override
 	public boolean isErfolgreich() {
 		return isErfolgreich;
 	}
-	
+
 	private void setup() {
+		ausfuehren.clearAufgaben();
 		FindeGrafikInGrafik muenze = new FindeGrafikInGrafik(null);
-		muenze.setDaten(AufgabeDaten.ZU_FINDENDE_FARBE, Integer.valueOf(Farben.MUENZE.getFarbe()));
+		muenze.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.MUENZE.getFarbBlock());
 		muenze.setRobot(this.getRobot());
 		ausfuehren.addAufgabe(muenze);
 		EinfachKlickKoordinaten einfachKlickKoordinaten = new EinfachKlickKoordinaten();
 		einfachKlickKoordinaten.setRobot(this.getRobot());
-		einfachKlickKoordinaten.setDaten(AufgabeDaten.ABWEICHUNG_Y, Integer.valueOf(60));
+		einfachKlickKoordinaten.setDaten(AufgabeDaten.ABWEICHUNG_Y,
+				Integer.valueOf(60));
 		einfachKlickKoordinaten.addAbhaengigkeit(muenze);
 		ausfuehren.addAufgabe(einfachKlickKoordinaten);
 	}

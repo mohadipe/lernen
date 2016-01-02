@@ -7,6 +7,9 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.mohadipe.ui.test.robot.path.GrafikDateiPfadeService;
+import de.mohadipe.ui.test.robot.util.BilderLaden;
+
 public abstract class AbstractAufgabe implements Aufgabe {
 
 	private Map<AufgabeDaten, Object> daten = new HashMap<AufgabeDaten, Object>();
@@ -54,5 +57,9 @@ public abstract class AbstractAufgabe implements Aufgabe {
 
 	protected Map<AufgabenArten, Aufgabe> getAbhaengigeAufgaben() {
 		return abhaengigkeiten;
+	}
+
+	protected BilderLaden getBilderLaden() {
+		return new BilderLaden((GrafikDateiPfadeService) this.getDaten(AufgabeDaten.GRAFIKPFAD));
 	}
 }

@@ -31,6 +31,8 @@ public class BilderLaden {
 	private static final String HERAUSGEZOOMT = "screenVielAbholbereit.bmp";
 	private static final String HERAUSGEZOOMT_02 = "screenVielAbholbereit02.bmp";
 	private static final String EIN_PIXEL = "EinPixel.bmp";
+	private static final String X2 = "x2.bmp";
+	private static final String SCHLAFEN = "schlafen.bmp";
 	
 	private GrafikDateiPfadeService pfadeService = new GrafikDateiPfadeService(
 			true);
@@ -179,5 +181,73 @@ public class BilderLaden {
 
 	public BufferedImage ladeEinPixel() {
 		return ladeBild(EIN_PIXEL);
+	}
+
+	public BufferedImage ladeBrowserClose() {
+		return ladeBild(BROWSER_X);
+	}
+
+	public BufferedImage ladePopUpClose() {
+		return ladeBild(X2);
+	}
+
+	public BufferedImage ladeSchlafen() {
+		return ladeBild(SCHLAFEN);
+	}
+
+	public BufferedImage ladeWerkzeug() {
+		return ladeBild("werkzeug.bmp");
+	}
+
+	public BufferedImage ladePopupX() {
+		return ladeBild("popup_x.bmp");
+	}
+
+	public BufferedImage ladeMuenze02() {
+		return ladeBild("Muenze02.bmp");
+	}
+
+	public BufferedImage ladeMuenze03() {
+		return ladeBild("Muenze03.bmp");
+	}
+
+	public BufferedImage ladeMuenze04() {
+		return ladeBild("Muenze04.bmp");
+	}
+
+	public BufferedImage ladeWerkzeug01() {
+		return ladeBild("Werkzeug01.bmp");
+	}
+
+	public BufferedImage ladeSchlafen01() {
+		return ladeBild("Schlafen01.bmp");
+	}
+
+	public BufferedImage ladePopup01() {
+		return ladeBild("Popup01.bmp");
+	}
+
+	public BufferedImage ladeMuenze01() {
+		return ladeBild("Muenze01.bmp");
+	}
+
+	public BufferedImage ladeWerkzeug02() {
+		return ladeBild("Werkzeug02.bmp");
+	}
+
+	public BufferedImage ladeSchlafen02() {
+		return ladeBild("Schlafen02.bmp");
+	}
+
+	public BufferedImage ladeWerkzeug03() {
+		return ladeBild("Werkzeug03.bmp");
+	}
+
+	public BufferedImage ladeBildByName(String string) {
+		return ladeBild(string);
+	}
+
+	public BufferedImage ladeX3() {
+		return ladeBild("x3.bmp");
 	}
 }

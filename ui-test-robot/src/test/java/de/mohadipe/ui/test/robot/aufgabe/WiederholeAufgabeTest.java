@@ -7,19 +7,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class WiederholeAufgabeTest {
-
-//	@Test brauche ich erstmal nicht
-//	public void wiederholeAufgabeZweiMal() {
-//		Aufgabe zuWiederholendeAufgabe = mock(FindeGrafikInGrafik.class);
-//		when(zuWiederholendeAufgabe.isErfolgreich()).thenReturn(false, true);
-//		
-//		WiederholeAufgabe wiederholeAufgabe = new WiederholeAufgabe();
-//		wiederholeAufgabe.addAbhaengigkeit(zuWiederholendeAufgabe);
-//		wiederholeAufgabe.ausfuehren();
-//		
-//		Integer wiederholungen = (Integer) wiederholeAufgabe.getDaten(AufgabeDaten.ANZAHL_WIEDERHOLUNGEN);
-//		Assert.assertEquals(2, wiederholungen.intValue());
-//	}
 	
 	@Test
 	public void brichWiederholungWegenTimeoutAb() {
@@ -32,7 +19,6 @@ public class WiederholeAufgabeTest {
 		wiederholeAufgabe.ausfuehren();
 		
 		Integer wiederholungen = (Integer) wiederholeAufgabe.getDaten(AufgabeDaten.ANZAHL_WIEDERHOLUNGEN);
-		Assert.assertTrue("Zu viele Wiederholungen. ", (1 <= wiederholungen.intValue()) && (wiederholungen.intValue() <= 800));
+		Assert.assertTrue("Zu viele Wiederholungen. ", (1 <= wiederholungen.intValue()) && (wiederholungen.intValue() <= 1000));
 	}
-	
 }

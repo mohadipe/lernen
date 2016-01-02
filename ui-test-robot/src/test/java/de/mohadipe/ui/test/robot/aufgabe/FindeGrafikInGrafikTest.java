@@ -1,12 +1,18 @@
 package de.mohadipe.ui.test.robot.aufgabe;
 
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import de.mohadipe.ui.test.robot.Koordinaten2D;
+import de.mohadipe.ui.test.robot.foe.FarbBloecke;
 import de.mohadipe.ui.test.robot.util.BilderLaden;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class FindeGrafikInGrafikTest {
 
@@ -26,11 +32,11 @@ public class FindeGrafikInGrafikTest {
 	
 	@Test
 	public void findeMuenzeHerausgezoomt() {
-		BufferedImage zuFindende = new BilderLaden(null).ladeMuenzVergleich10();
-		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(zuFindende);
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
 		BufferedImage zuDurchsuchende = new BilderLaden(null).screenHerausgezoomt02();
 		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_DURCHSUCHENDE_GRAFIK, zuDurchsuchende);
-	
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.MUENZE.getFarbBlock());
+		
 		findeGrafikInGrafik.ausfuehren();
 		
 		Assert.assertTrue(findeGrafikInGrafik.isErfolgreich());
@@ -45,5 +51,50 @@ public class FindeGrafikInGrafikTest {
 		findeGrafikInGrafik.ausfuehren();
 		
 		Assert.assertTrue(findeGrafikInGrafik.isErfolgreich());		
+	}
+	
+	@Test
+	public void findeWerkzeug() {
+		BufferedImage bildMitWerkzeuge = new BilderLaden(null).ladeScreenshotWerkzeugeAbholbereit();
+		Robot robot = mock(Robot.class);
+		when(robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()))).thenReturn(bildMitWerkzeuge);
+		
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.WERKZEUG.getFarbBlock());
+		findeGrafikInGrafik.setRobot(robot);
+		
+		findeGrafikInGrafik.ausfuehren();
+		
+		Assert.assertNotNull(findeGrafikInGrafik.getKoordinaten());
+	}
+	
+	@Test
+	public void produziereWerkzeug() {
+		BufferedImage bildMitFreierProd = new BilderLaden(null).ladeScreenshotWerkzeugeProduzierbar();
+		Robot robot = mock(Robot.class);
+		when(robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()))).thenReturn(bildMitFreierProd);
+		
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.SCHLAFEN.getFarbBlock());
+		findeGrafikInGrafik.setRobot(robot);
+		
+		findeGrafikInGrafik.ausfuehren();
+		
+		Assert.assertNotNull(findeGrafikInGrafik.getKoordinaten());
+	}
+	
+	@Test
+	public void keinOffenesPopup() {
+		BufferedImage bildMitFreierProd = new BilderLaden(null).ladeBildByName("LeereStadt.bmp");
+		Robot robot = mock(Robot.class);
+		when(robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()))).thenReturn(bildMitFreierProd);
+		
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.POPUP.getFarbBlock());
+		findeGrafikInGrafik.setRobot(robot);
+		
+		findeGrafikInGrafik.ausfuehren();
+		
+		Assert.assertNull(findeGrafikInGrafik.getKoordinaten());
 	}
 }

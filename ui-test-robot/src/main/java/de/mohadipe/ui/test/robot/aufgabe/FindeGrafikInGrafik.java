@@ -2,6 +2,7 @@ package de.mohadipe.ui.test.robot.aufgabe;
 
 import java.awt.image.BufferedImage;
 
+import de.mohadipe.ui.test.robot.FarbBlock;
 import de.mohadipe.ui.test.robot.IconFinden;
 import de.mohadipe.ui.test.robot.IconNotFoundException;
 import de.mohadipe.ui.test.robot.Koordinaten2D;
@@ -29,11 +30,11 @@ public class FindeGrafikInGrafik extends AbstractAufgabe {
 	private boolean findeFarbe(IconFinden iconFinden) {
 		if (iconFinden.getKoordinaten() == null) {
 			try {
-				Integer farbe = (Integer) getDaten(AufgabeDaten.ZU_FINDENDE_FARBE);
+				FarbBlock farbe = (FarbBlock) getDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK);
 				if (farbe == null) {
 					return false;
 				}
-				iconFinden.findeFarbeAufScreen(zuDurchsuchende, farbe.intValue());
+				iconFinden.findeFarbBlockAufScreen(zuDurchsuchende, farbe);
 				super.setDaten(AufgabeDaten.KOORDINATE,
 						iconFinden.getKoordinaten());
 				return true;
@@ -64,8 +65,7 @@ public class FindeGrafikInGrafik extends AbstractAufgabe {
 
 	@Override
 	public void ausfuehren() {
-		System.out.println("Aufgabe FindeGrafikInGrafik wird ausgefuehrt.");
-		System.out.println((String) getDaten(AufgabeDaten.NAME));
+		System.out.println("Finde Grafik");
 		this.zuDurchsuchende = (BufferedImage) getDaten(AufgabeDaten.ZU_DURCHSUCHENDE_GRAFIK);
 		if (this.zuDurchsuchende == null) {
 			this.zuDurchsuchende = takeScreenShot();

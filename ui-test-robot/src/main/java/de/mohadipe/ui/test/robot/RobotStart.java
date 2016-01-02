@@ -27,11 +27,20 @@ public class RobotStart {
 		GrafikDateiPfadeService grafikDateiPfadeService = new GrafikDateiPfadeService(
 				false);
 		grafikDateiPfadeService.setProgrammRoot(programmRootVerzeichnis);
+
+		// Alle 5 Min schließt der Robot den Browser.
+		// Wartet 3 Min
+		// Danach Neustart des Robots
 		try {
 			FoEAufgabenRobot foERobot = new FoEAufgabenRobot();
 			foERobot.setGrafikPathService(grafikDateiPfadeService);
-			foERobot.sammleGoldUndWerkzeuge();
-		} catch (AWTException e) {
+			foERobot.setLaufZeitTimeOut(120000L);
+			do {
+				foERobot.sammleGoldUndWerkzeuge();
+				Thread.sleep(240000L);
+				foERobot.schliesseBrowser();
+			} while (true);
+		} catch (AWTException | InterruptedException e) {
 			logger.severe(e.getMessage());
 			throw new RuntimeException(e);
 		}

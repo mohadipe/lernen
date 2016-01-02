@@ -11,26 +11,36 @@ public class EinfachKlickKoordinaten extends AbstractAufgabe {
 
 	@Override
 	public void ausfuehren() {
+		System.out.println("Einfach Klicken");
 		Aufgabe aufgabe = getAbhaengigeAufgabeByArt(AufgabenArten.GRAFIK_IN_GRAFIK_FINDEN);
 		Integer abweichungY = ((Integer) getDaten(AufgabeDaten.ABWEICHUNG_Y));
-		if (aufgabe.isErfolgreich()) {
-			Koordinaten2D koordinaten = (Koordinaten2D) aufgabe
-					.getDaten(AufgabeDaten.KOORDINATE);
-			Robot robot = getRobot();
-			int mouseOnX = koordinaten.x;
-			int mouseOnY = koordinaten.y;
-			System.out.println("Zu klickende Koordinaten X: " + mouseOnX + " Y: " + mouseOnY);
-			if (abweichungY != null) {
-				mouseOnY = koordinaten.y + abweichungY.intValue();
+		if (aufgabe != null && aufgabe.isErfolgreich()) {
+			System.out.println("Gefundene Koordinaten klicken.");
+			Koordinaten2D koordinaten = (Koordinaten2D) getDaten(AufgabeDaten.KOORDINATE);
+			if (koordinaten == null) {
+				System.out.println("Koordinaten aus AbhängigerAufgabe klicken");
+				koordinaten = (Koordinaten2D) aufgabe.getDaten(AufgabeDaten.KOORDINATE);
 			}
-			System.out.println("Mit Abweichung X: " + mouseOnX + " Y: " + mouseOnY);
-			robot.mouseMove(mouseOnX, mouseOnY);
-			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			isErfolgreich = true;
+			klickeKoordinatenAn(abweichungY, koordinaten);
+			isErfolgreich = true;	
 		} else {
 			isErfolgreich = false;
 		}
+	}
+
+	private void klickeKoordinatenAn(Integer abweichungY,
+			Koordinaten2D koordinaten) {
+		Robot robot = getRobot();
+		int mouseOnX = koordinaten.x;
+		int mouseOnY = koordinaten.y;
+		System.out.println("Zu klickende Koordinaten X: " + mouseOnX + " Y: " + mouseOnY);
+		if (abweichungY != null) {
+			mouseOnY = koordinaten.y + abweichungY.intValue();
+		}
+		System.out.println("Mit Abweichung X: " + mouseOnX + " Y: " + mouseOnY);
+		robot.mouseMove(mouseOnX, mouseOnY);
+		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 	}
 
 	@Override
