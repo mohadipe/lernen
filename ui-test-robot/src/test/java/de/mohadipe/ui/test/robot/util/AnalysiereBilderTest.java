@@ -10,7 +10,7 @@ public class AnalysiereBilderTest {
 
 	@Test
 	public void ladeBildPrintRGB() throws AWTException {
-		BufferedImage muenze01 = new BilderLaden(null).ladeBildByName("Muenze05.bmp");
+		BufferedImage muenze01 = new BilderLaden(null).ladeBildByName("WerkzeugBlock02.bmp");
 //		BufferedImage muenze01 = new BilderLaden(null).ladeSchlafen02();
 		int width = muenze01.getWidth();
 		int height = muenze01.getHeight();

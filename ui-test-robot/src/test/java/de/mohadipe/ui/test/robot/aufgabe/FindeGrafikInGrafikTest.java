@@ -8,14 +8,18 @@ import java.awt.image.BufferedImage;
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.mohadipe.ui.test.robot.FarbBlock;
 import de.mohadipe.ui.test.robot.Koordinaten2D;
 import de.mohadipe.ui.test.robot.foe.FarbBloecke;
 import de.mohadipe.ui.test.robot.util.BilderLaden;
+import de.mohadipe.ui.test.robot.util.ImageToFarbBlockUtil;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class FindeGrafikInGrafikTest {
 
+	private BilderLaden bilder = new BilderLaden(null);
+	
 	@Test
 	public void findeVerknuepfungRotesIcon() {
 		BufferedImage zuDurchsuchende = new BilderLaden(null).ladeScreenShotFoEVerknuepfung();
@@ -35,7 +39,8 @@ public class FindeGrafikInGrafikTest {
 		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
 		BufferedImage zuDurchsuchende = new BilderLaden(null).screenHerausgezoomt02();
 		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_DURCHSUCHENDE_GRAFIK, zuDurchsuchende);
-		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.MUENZE.getFarbBlock());
+		FarbBlock farbBlock = ImageToFarbBlockUtil.erstelleFarbBlock(bilder.ladeBildByName("Wiederholen11.bmp"));
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, farbBlock);
 		
 		findeGrafikInGrafik.ausfuehren();
 		
@@ -44,10 +49,11 @@ public class FindeGrafikInGrafikTest {
 	
 	@Test
 	public void findeWerkzeugeHerausgezoomt() {
-		BufferedImage zuFindende = new BilderLaden(null).ladeWerkzeugVergleich09();
-		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(zuFindende);
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
 		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_DURCHSUCHENDE_GRAFIK, new BilderLaden(null).screenHerausgezoomt());
-	
+		FarbBlock farbBlock = ImageToFarbBlockUtil.erstelleFarbBlock(bilder.ladeBildByName("Wiederholen12.bmp"));
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, farbBlock);
+		
 		findeGrafikInGrafik.ausfuehren();
 		
 		Assert.assertTrue(findeGrafikInGrafik.isErfolgreich());		
@@ -60,7 +66,8 @@ public class FindeGrafikInGrafikTest {
 		when(robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()))).thenReturn(bildMitWerkzeuge);
 		
 		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
-		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.WERKZEUG.getFarbBlock());
+		FarbBlock farbBlock = ImageToFarbBlockUtil.erstelleFarbBlock(bilder.ladeBildByName("Wiederholen12.bmp"));
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, farbBlock);
 		findeGrafikInGrafik.setRobot(robot);
 		
 		findeGrafikInGrafik.ausfuehren();
@@ -96,5 +103,65 @@ public class FindeGrafikInGrafikTest {
 		findeGrafikInGrafik.ausfuehren();
 		
 		Assert.assertNull(findeGrafikInGrafik.getKoordinaten());
+	}
+	
+	@Test
+	public void findeFarbBlockWerkzeug01() {
+		BufferedImage bildMitFreierProd = new BilderLaden(null).ladeBildByName("Werkzeug01.bmp");
+		Robot robot = mock(Robot.class);
+		when(robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()))).thenReturn(bildMitFreierProd);
+		
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.WERKZEUG.getFarbBlock());
+		findeGrafikInGrafik.setRobot(robot);
+		
+		findeGrafikInGrafik.ausfuehren();
+		
+		Assert.assertNotNull(findeGrafikInGrafik.getKoordinaten());
+	}
+	
+	@Test
+	public void findeFarbBlockWerkzeug02() {
+		BufferedImage bildMitFreierProd = new BilderLaden(null).ladeBildByName("Werkzeug02.bmp");
+		Robot robot = mock(Robot.class);
+		when(robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()))).thenReturn(bildMitFreierProd);
+		
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.WERKZEUG.getFarbBlock());
+		findeGrafikInGrafik.setRobot(robot);
+		
+		findeGrafikInGrafik.ausfuehren();
+		
+		Assert.assertNotNull(findeGrafikInGrafik.getKoordinaten());
+	}
+	
+	@Test
+	public void findeFarbBlockWerkzeug03() {
+		BufferedImage bildMitFreierProd = new BilderLaden(null).ladeBildByName("Werkzeug03.bmp");
+		Robot robot = mock(Robot.class);
+		when(robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()))).thenReturn(bildMitFreierProd);
+		
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.WERKZEUG.getFarbBlock());
+		findeGrafikInGrafik.setRobot(robot);
+		
+		findeGrafikInGrafik.ausfuehren();
+		
+		Assert.assertNotNull(findeGrafikInGrafik.getKoordinaten());
+	}
+	
+	@Test
+	public void findeFarbBlockWerkzeug04() {
+		BufferedImage bildMitFreierProd = new BilderLaden(null).ladeBildByName("Werkzeug04.bmp");
+		Robot robot = mock(Robot.class);
+		when(robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()))).thenReturn(bildMitFreierProd);
+		
+		FindeGrafikInGrafik findeGrafikInGrafik = new FindeGrafikInGrafik(null);
+		findeGrafikInGrafik.setDaten(AufgabeDaten.ZU_FINDENDEN_FARBBLOCK, FarbBloecke.WERKZEUG.getFarbBlock());
+		findeGrafikInGrafik.setRobot(robot);
+		
+		findeGrafikInGrafik.ausfuehren();
+		
+		Assert.assertNotNull(findeGrafikInGrafik.getKoordinaten());
 	}
 }

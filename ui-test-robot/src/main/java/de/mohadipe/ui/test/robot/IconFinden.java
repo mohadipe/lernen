@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -97,15 +99,15 @@ public class IconFinden {
 	}
 
 	public void findeFarbBlockAufScreen(BufferedImage currentScreen,
-			FarbBlock farbBlock) throws IconNotFoundException {
+			FarbBlock farbBlock, int tolleranz) throws IconNotFoundException {
 		for (int x = 0; x < currentScreen.getWidth(); x++) {
 			for (int y = 0; y < currentScreen.getHeight(); y++) {
 				Color farbeLinksObenBlock = farbBlock.getFarbe(0, 0);
 				Color screenColor = getColor(currentScreen, x, y);
-				if (farbeLinksObenBlock.equals(screenColor)) {
+				if (isAehnlich(farbeLinksObenBlock, screenColor, tolleranz)) {
 					FarbBlock screenBlock = erstelleVergleichsBlock(
 							currentScreen, x, y, farbBlock);
-					if (farbBlock.isAehnlich(screenBlock)) {
+					if (farbBlock.isAehnlich(screenBlock, tolleranz)) {
 						System.out.println("FarbBlock: " + farbBlock
 								+ " gefunden an.");
 						koordinaten = new Koordinaten2D();
@@ -121,6 +123,11 @@ public class IconFinden {
 		throw new IconNotFoundException(null, currentScreen);
 	}
 
+	public void findeFarbBlockAufScreen(BufferedImage currentScreen,
+			FarbBlock farbBlock) throws IconNotFoundException {
+		findeFarbBlockAufScreen(currentScreen, farbBlock, 5);
+	}
+	
 	private FarbBlock erstelleVergleichsBlock(BufferedImage currentScreen,
 			int x, int y, FarbBlock farbBlock) {
 		FarbBlock tmp = new FarbBlock();
@@ -138,8 +145,74 @@ public class IconFinden {
 			int rgb = currentScreen.getRGB(x, y);
 			return new Color(rgb, true);
 		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println(e);
 			return new Color(0, true);
 		}
+	}
+
+	public List<Koordinaten2D> findeAlleFarbBloecke(
+			BufferedImage currentScreen, FarbBlock farbBlock, int tolleranz) {
+		List<Koordinaten2D> koordinatenZuFarbBlock = new ArrayList<Koordinaten2D>();
+
+		for (int x = 0; x < currentScreen.getWidth(); x++) {
+			for (int y = 0; y < currentScreen.getHeight(); y++) {
+				Color farbeLinksObenBlock = farbBlock.getFarbe(0, 0);
+				Color screenColor = getColor(currentScreen, x, y);
+				if (isAehnlich(farbeLinksObenBlock, screenColor, tolleranz)) {
+					FarbBlock screenBlock = erstelleVergleichsBlock(
+							currentScreen, x, y, farbBlock);
+					if (farbBlock.isAehnlich(screenBlock, tolleranz)) {
+						System.out.println("FarbBlock: " + farbBlock
+								+ " gefunden an.");
+						koordinaten = new Koordinaten2D();
+						koordinaten.x = x;
+						koordinaten.y = y;
+						System.out.println(koordinaten);
+						koordinatenZuFarbBlock.add(koordinaten);
+					}
+				}
+			}
+		}
+		return koordinatenZuFarbBlock;
+	}
+
+	private boolean isAehnlich(Color referenz, Color other, int tolleranz) {
+		if (isNotIn(other.getRed(), referenz.getRed(), tolleranz)) {
+			return false;
+		}
+		if (isNotIn(other.getGreen(), referenz.getGreen(), tolleranz)) {
+			return false;
+		}
+		if (isNotIn(other.getBlue(), referenz.getBlue(), tolleranz)) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean isNotIn(int other, int referenz, int tolleranz) {
+		int min = referenz - tolleranz;
+		int max = referenz + tolleranz;
+		if (other < min) {
+			return true;
+		}
+		if (other > max) {
+			return true;
+		}
+		return false;
+	}
+
+	public void findeIconByColorAehnlichkeit(BufferedImage image,
+			BufferedImage screen, int i) throws IconNotFoundException {
+		FarbBlock imageFarbBlock = erstelleFarbBlock(image);
+		findeFarbBlockAufScreen(screen, imageFarbBlock, i);
+	}
+
+	private FarbBlock erstelleFarbBlock(BufferedImage image) {
+		FarbBlock tmp = new FarbBlock();
+		for (int w = 0; w < image.getWidth(); w++) {
+			for (int h = 0; h < image.getHeight(); h++) {
+				tmp.addFarbe(new Koordinaten2D(w, h), getColor(image, w, h));
+			}
+		}
+		return tmp;
 	}
 }

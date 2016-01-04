@@ -69,7 +69,7 @@ public class FarbBlockTest {
 
 		werkzeug02.addFarbe(new Koordinaten2D(0, 0), new Color(113, 49, 0));
 		werkzeug02.addFarbe(new Koordinaten2D(0, 1), new Color(104, 42, 4));
-		werkzeug02.addFarbe(new Koordinaten2D(1, 2), new Color(102, 45, 0));
+		werkzeug02.addFarbe(new Koordinaten2D(0, 2), new Color(102, 45, 0));
 		werkzeug02.addFarbe(new Koordinaten2D(1, 0), new Color(151, 66, 0));
 		werkzeug02.addFarbe(new Koordinaten2D(1, 1), new Color(179, 96, 0));
 		werkzeug02.addFarbe(new Koordinaten2D(1, 2), new Color(119, 51, 0));
@@ -145,21 +145,21 @@ public class FarbBlockTest {
 	
 	@Test
 	public void aehnlicheFarbBloeckeMuenze() {
-		Assert.assertTrue(muenze01.isAehnlich(muenze02));
+		Assert.assertTrue(muenze01.isAehnlich(muenze02, 17));
 	}
 	
 	@Test
 	public void aehnlicheFarbBloeckeWerkzeug() {
-		Assert.assertTrue(werkzeug01.isAehnlich(werkzeug02));
+		Assert.assertTrue(werkzeug01.isAehnlich(werkzeug02, 49));
 	}
 	
 	@Test
 	public void aehnlicheFarbBloeckeSchlafen() {
-		Assert.assertTrue(schlafen01.isAehnlich(schlafen02));
+		Assert.assertTrue(schlafen01.isAehnlich(schlafen02, 5));
 	}
 	
 	@Test
 	public void aehnlicheFarbBloeckePopup() {
-		Assert.assertTrue(popup01.isAehnlich(popup02));
+		Assert.assertTrue(popup01.isAehnlich(popup02, 18));
 	}
 }

@@ -100,7 +100,7 @@ public class FarbBlock {
 		}
 	}
 
-	public boolean isAehnlich(FarbBlock other) {
+	public boolean isAehnlich(FarbBlock other, int tolleranz) {
 		if (this.equals(other)) {
 			return true;
 		}
@@ -109,57 +109,34 @@ public class FarbBlock {
 			Color otherColor = other.getFarbe(entry.getKey().x,
 					entry.getKey().y);
 			Color thisColor = entry.getValue();
-			// muenzen
-			if (thisColor.getRed() == 255) {
-				if (thisColor.getRed() != otherColor.getRed()) {
-					return false;
-				}
-				if (200 > thisColor.getGreen() || 200 > otherColor.getGreen()) {
-					return false;
-				}
-				if (100 > thisColor.getBlue() || 100 > otherColor.getBlue()) {
-					return false;
-				}
-				return true;
+			if (!isAehnlich(thisColor, otherColor, tolleranz)) {
+				return false;
 			}
-			// werkzeug
-			if (thisColor.getBlue() < 5) {
-				if (100 > thisColor.getRed() || 100 > otherColor.getRed()) {
-					return false;
-				}
-				if (120 < thisColor.getGreen() || 120 < otherColor.getGreen()) {
-					return false;
-				}
-				return true;
-			}
-			// schlafen
-			if (thisColor.getGreen() < 180 && 150 < thisColor.getGreen()) {
-				if ((170 > thisColor.getRed() && thisColor.getRed() < 210)
-						|| (170 > otherColor.getRed() && otherColor.getRed() < 210)) {
-					return false;
-				}
-				if ((80 > thisColor.getBlue() && thisColor.getBlue() < 120)
-						|| (80 > otherColor.getBlue() && otherColor.getBlue() < 120)) {
-					return false;
-				}
-				return true;
-			}
-			// popup
-			if (thisColor.getRed() < 100) {
-				if ((90 > thisColor.getRed() && thisColor.getRed() < 50)
-						|| (90 > otherColor.getRed() && otherColor.getRed() < 50)) {
-					return false;
-				}
-				if ((60 > thisColor.getGreen() && thisColor.getGreen() < 100)
-						|| (60 > otherColor.getGreen() && otherColor.getGreen() < 100)) {
-					return false;
-				}
-				if ((80 > thisColor.getBlue() && thisColor.getBlue() < 120)
-						|| (80 > otherColor.getBlue() && otherColor.getBlue() < 120)) {
-					return false;
-				}
-				return true;
-			}
+		}
+		return true;
+	}
+	
+	private boolean isAehnlich(Color referenz, Color other, int tolleranz) {
+		if (isNotIn(other.getRed(), referenz.getRed(), tolleranz)) {
+			return false;
+		}
+		if (isNotIn(other.getGreen(), referenz.getGreen(), tolleranz)) {
+			return false;
+		}
+		if (isNotIn(other.getBlue(), referenz.getBlue(), tolleranz)) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean isNotIn(int other, int referenz, int tolleranz) {
+		int min = referenz - tolleranz;
+		int max = referenz + tolleranz;
+		if (other < min) {
+			return true;
+		}
+		if (other > max) {
+			return true;
 		}
 		return false;
 	}
