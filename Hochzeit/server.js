@@ -24,7 +24,8 @@ require('./config/passport')(passport); // pass passport for configuration
 // express application configuration
 app.use(logger('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies need for the authenticatiom
-app.use(bodyParser()); // get information from html forms
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('views', path.join(__dirname + '/views'));
 app.set('view engine', 'ejs'); // set up ejs for templating
@@ -40,6 +41,8 @@ app.use(expressSession({
 	httpOnly: true, // dont let browser javascript access cookies ever
 	secure: true, // only use cookies over https
 	ephemeral: true, // delete this cookie when the browser is closed
+	resave: true,
+	saveUninitialized: true,
 }));
 app.use(passport.initialize()); // passport intialize
 app.use(passport.session()); // persistent login sessions of passport

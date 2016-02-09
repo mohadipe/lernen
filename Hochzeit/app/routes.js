@@ -6,7 +6,7 @@ module.exports = function(app, passport) {
                 // nur ein workaround solange die Hochzeitsseite benötigt wird.
                 app.get('/', function(req, res) {
                                 res.redirect('/index.html');
-                } 
+                }); 
                 // show the home page (will also have our login links)
                 app.get('/hochzeit/', function(req, res) {
                                 res.render('home.ejs');
