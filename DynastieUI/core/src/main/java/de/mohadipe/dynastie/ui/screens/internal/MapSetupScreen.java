@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import de.mohadipe.dynastie.logik.DynastieLogik;
 import de.mohadipe.dynastie.logik.adapter.DynastieLogikAdapter;
 import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.controler.EinheitAuswaehlenController;
@@ -54,6 +55,7 @@ public class MapSetupScreen implements IMapSetupScreen {
     private Einheit einheit;
     private SpielMenu menu;
     private GameCameraBewegung cameraBewegung;
+    private boolean markiereBewegungsReichweite = false;
 
     @Override
     public void show() {
@@ -82,6 +84,11 @@ public class MapSetupScreen implements IMapSetupScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // http://badlogicgames.com/forum/viewtopic.php?f=11&t=3638
+        // Fog of War
+        Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+        Gdx.gl.glDepthFunc(GL20.GL_ALWAYS);
+        Gdx.gl.glDepthMask(true);
 
         handleInput((InputProcessor) Gdx.input.getInputProcessor());
 
@@ -101,6 +108,14 @@ public class MapSetupScreen implements IMapSetupScreen {
         stage.draw();
         game.batch.end();
 
+        if (markiereBewegungsReichweite) {
+            ShapeRenderer sr = new ShapeRenderer();
+            sr.setProjectionMatrix(game.gameCamera.combined);
+            sr.begin(ShapeRenderer.ShapeType.Line);
+            sr.setColor(new Color(0, 0, 1, 0));
+            sr.rect((einheit.getX()-12), (einheit.getY()-12), (3 * 12), (3 * 12));
+            sr.end();
+        }
     }
 
     @Override
@@ -150,6 +165,7 @@ public class MapSetupScreen implements IMapSetupScreen {
                 // Einheit ist "Aktiv"
                 // Ist an der geclickten Position eine Einheit wird diese aktiviert.
                 einheit.setAktiv();
+                markiereBewegungsReichweite = true;
             } else {
                 // Wenn erneut geklickt wird und eine Einheit aktiv ist soll sich die aktive Einheit dort hin bewegen.
                 if (einheit.isAktiv()) {
@@ -157,11 +173,14 @@ public class MapSetupScreen implements IMapSetupScreen {
                     Feld zielFeld = koordinatenSystem.getFeldByWorldKoords(worldKoords);
                     Vector2 possitionFuerFeld = koordinatenSystem.getPossitionFuerFeld(zielFeld);
                     Feld aktuellesFeld = koordinatenSystem.getFeldByWorldKoords(einheit.getKoordinaten());
-                    // TODO Anbindung der DynastieLogik-Bibliothek
-                    if (DynastieLogikAdapter.getInstance().isBewegungErlaubt(einheit, zielFeld, aktuellesFeld)) {
+                    de.mohadipe.dynastie.logik.model.Einheit logikEinheit = DynastieLogikAdapter.convertToLogikEinheit(this.einheit);
+                    de.mohadipe.dynastie.logik.model.Feld logikZielFeld = DynastieLogikAdapter.convertToLogikFeld(zielFeld);
+                    de.mohadipe.dynastie.logik.model.Feld logikAktuellesFeld = DynastieLogikAdapter.convertToLogikFeld(aktuellesFeld);
+                    DynastieLogik dynastieLogik = DynastieLogikAdapter.getInstance();
+                    if (dynastieLogik.isBewegungErlaubt(logikEinheit, logikZielFeld, logikAktuellesFeld)) {
                         // positioniere Einheit in Feld
-                        einheit.setX(possitionFuerFeld.x);
-                        einheit.setY(possitionFuerFeld.y);
+                        this.einheit.setX(possitionFuerFeld.x);
+                        this.einheit.setY(possitionFuerFeld.y);
                     } else {
                         // TODO Hinweis Reichweite der Einheit überschritten.
                     }
