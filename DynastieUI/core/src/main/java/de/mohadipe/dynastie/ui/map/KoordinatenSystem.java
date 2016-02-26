@@ -6,6 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.mohadipe.dynastie.ui.entities.Spieler;
+
 public class KoordinatenSystem {
     private int tilePixelWidth;
     private int tilePixelHeight;
@@ -30,8 +35,8 @@ public class KoordinatenSystem {
 
     public Vector2 getMitteDerMap() {
         Vector2 mitteDerMap = new Vector2();
-        mitteDerMap.x = mapPixelWidth/2;
-        mitteDerMap.y = mapPixelHeight/2;
+        mitteDerMap.x = mapPixelWidth / 2;
+        mitteDerMap.y = mapPixelHeight / 2;
         return mitteDerMap;
     }
 
@@ -53,5 +58,21 @@ public class KoordinatenSystem {
         float x = feld.getX() * tilePixelWidth - tilePixelWidth;
         float y = feld.getY() * tilePixelHeight - tilePixelHeight;
         return new Vector2(x, y);
+    }
+
+    public float getFeldLaengeX() {
+        return tilePixelWidth;
+    }
+
+    public float getFeldLaengeY() {
+        return tilePixelHeight;
+    }
+
+    public float getMaxX() {
+        return mapPixelWidth;
+    }
+
+    public float getMaxY() {
+        return mapPixelHeight;
     }
 }

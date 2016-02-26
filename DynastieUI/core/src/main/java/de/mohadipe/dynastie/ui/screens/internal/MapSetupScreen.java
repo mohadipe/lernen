@@ -1,45 +1,28 @@
 package de.mohadipe.dynastie.ui.screens.internal;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.Map;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-import de.mohadipe.dynastie.logik.DynastieLogik;
-import de.mohadipe.dynastie.logik.adapter.DynastieLogikAdapter;
 import de.mohadipe.dynastie.ui.DynastieUI;
-import de.mohadipe.dynastie.ui.controler.EinheitAuswaehlenController;
-import de.mohadipe.dynastie.ui.entities.Einheit;
+import de.mohadipe.dynastie.ui.controller.EinheitenController;
 import de.mohadipe.dynastie.ui.entities.Monk;
+import de.mohadipe.dynastie.ui.entities.Spieler;
+import de.mohadipe.dynastie.ui.input.EinheitInteraktion;
 import de.mohadipe.dynastie.ui.input.GameCameraBewegung;
 import de.mohadipe.dynastie.ui.input.InputProcessor;
+import de.mohadipe.dynastie.ui.map.AufmarschZonen;
 import de.mohadipe.dynastie.ui.map.Feld;
 import de.mohadipe.dynastie.ui.map.KoordinatenSystem;
 import de.mohadipe.dynastie.ui.menu.SpielMenu;
 import de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen;
-import de.mohadipe.dynastie.ui.screens.listener.ExitButtonClickListener;
-import javafx.application.Platform;
-
-import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Line;
 
 public class MapSetupScreen implements IMapSetupScreen {
 
@@ -51,11 +34,10 @@ public class MapSetupScreen implements IMapSetupScreen {
 
     private Stage stage;
 
-    private int[] background = new int[] {0}, foreground = new int[] {1};
-    private Einheit einheit;
+    private int[] background = new int[]{0}, foreground = new int[]{1};
     private SpielMenu menu;
     private GameCameraBewegung cameraBewegung;
-    private boolean markiereBewegungsReichweite = false;
+    private EinheitInteraktion einheitInteraktion;
 
     @Override
     public void show() {
@@ -77,7 +59,21 @@ public class MapSetupScreen implements IMapSetupScreen {
         MapProperties properties = tiledMap.getProperties();
         koordinatenSystem = new KoordinatenSystem(properties);
         koordinatenSystem.insertDebugInfoInto(menu.getDebugLabel());
-        einheit = new Monk();
+        platziereEinheiten();
+        einheitInteraktion = new EinheitInteraktion(game, menu, koordinatenSystem);
+    }
+
+    private void platziereEinheiten() {
+        AufmarschZonen aufmarschZonen = new AufmarschZonen();
+        aufmarschZonen.init(koordinatenSystem);
+        EinheitenController einheitenController = game.getEinheitenController();
+        for (Spieler sp : game.getSpielerListe()) {
+            aufmarschZonen.verbindeFreieZoneMitSpieler(sp);
+            Feld freiesFeld = aufmarschZonen.getFreiesFeld(sp);
+            einheitenController.platziereEinheit(freiesFeld, Monk.class, sp);
+            Feld freiesFeld2 = aufmarschZonen.getFreiesFeld(sp);
+            einheitenController.platziereEinheit(freiesFeld2, Monk.class, sp);
+        }
     }
 
     @Override
@@ -95,9 +91,9 @@ public class MapSetupScreen implements IMapSetupScreen {
         game.gameCamera.update();
         renderer.setView(game.gameCamera);
         renderer.render(background);
-        ((OrthogonalTiledMapRenderer)renderer).getBatch().begin();
-        einheit.draw(((OrthogonalTiledMapRenderer) renderer).getBatch());
-        ((OrthogonalTiledMapRenderer)renderer).getBatch().end();
+        ((OrthogonalTiledMapRenderer) renderer).getBatch().begin();
+        game.getEinheitenController().drawEinheiten(renderer);
+        ((OrthogonalTiledMapRenderer) renderer).getBatch().end();
         renderer.render(foreground);
 
         game.menuCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -108,20 +104,13 @@ public class MapSetupScreen implements IMapSetupScreen {
         stage.draw();
         game.batch.end();
 
-        if (markiereBewegungsReichweite) {
-            ShapeRenderer sr = new ShapeRenderer();
-            sr.setProjectionMatrix(game.gameCamera.combined);
-            sr.begin(ShapeRenderer.ShapeType.Line);
-            sr.setColor(new Color(0, 0, 1, 0));
-            sr.rect((einheit.getX()-12), (einheit.getY()-12), (3 * 12), (3 * 12));
-            sr.end();
-        }
+        game.getEinheitenController().bewegungsReichweiteAktiverEinheitAnzeigen(game);
     }
 
     @Override
     public void resize(int width, int height) {
-        game.gameCamera.viewportWidth = width/2;
-        game.gameCamera.viewportHeight = height/2;
+        game.gameCamera.viewportWidth = width / 2;
+        game.gameCamera.viewportHeight = height / 2;
         Vector2 position = koordinatenSystem.getMitteDerMap();
         game.gameCamera.position.set(position.x, position.y, 0);
         game.gameCamera.update();
@@ -156,52 +145,6 @@ public class MapSetupScreen implements IMapSetupScreen {
     private void handleInput(InputProcessor processor) {
         cameraBewegung.handleInput(processor);
 
-        if (processor.isLeftMouseClicked()) {
-            Vector2 screenKoords = processor.getClickedMousePosition();
-            menu.getDebugLabel().setText("Mouse geklickt an X: " + screenKoords.x + " und Y: " + screenKoords.y);
-            Vector3 worldKoords = koordinatenSystem.getWorldKoords(game.gameCamera, screenKoords);
-            // Herausfinden ob eine Einheit angeklickt wurde.
-            if (new EinheitAuswaehlenController(einheit, worldKoords).isEinheitAusgeweahlt()) {
-                // Einheit ist "Aktiv"
-                // Ist an der geclickten Position eine Einheit wird diese aktiviert.
-                einheit.setAktiv();
-                markiereBewegungsReichweite = true;
-            } else {
-                // Wenn erneut geklickt wird und eine Einheit aktiv ist soll sich die aktive Einheit dort hin bewegen.
-                if (einheit.isAktiv()) {
-                    // ermittle geklicktes Feld
-                    Feld zielFeld = koordinatenSystem.getFeldByWorldKoords(worldKoords);
-                    Vector2 possitionFuerFeld = koordinatenSystem.getPossitionFuerFeld(zielFeld);
-                    Feld aktuellesFeld = koordinatenSystem.getFeldByWorldKoords(einheit.getKoordinaten());
-                    de.mohadipe.dynastie.logik.model.Einheit logikEinheit = DynastieLogikAdapter.convertToLogikEinheit(this.einheit);
-                    de.mohadipe.dynastie.logik.model.Feld logikZielFeld = DynastieLogikAdapter.convertToLogikFeld(zielFeld);
-                    de.mohadipe.dynastie.logik.model.Feld logikAktuellesFeld = DynastieLogikAdapter.convertToLogikFeld(aktuellesFeld);
-                    DynastieLogik dynastieLogik = DynastieLogikAdapter.getInstance();
-                    if (dynastieLogik.isBewegungErlaubt(logikEinheit, logikZielFeld, logikAktuellesFeld)) {
-                        // positioniere Einheit in Feld
-                        this.einheit.setX(possitionFuerFeld.x);
-                        this.einheit.setY(possitionFuerFeld.y);
-                    } else {
-                        // TODO Hinweis Reichweite der Einheit überschritten.
-                    }
-
-                }
-            }
-            processor.resetLeftMouseClick();
-        }
-        if (processor.isRightMouseClicked()) {
-            einheit.setInAktiv();
-            // TODO later Kontextmenu an Einheit.
-            processor.resetRightMouseClick();
-        }
-
-        // TODO Grenzen für scrollen und zoomen müssen noch implementiert werden
-//        game.gameCamera.zoom = MathUtils.clamp(game.gameCamera.zoom, 0.1f, 100 / game.gameCamera.viewportWidth);
-
-//        float effectiveViewportWidth = game.gameCamera.viewportWidth * game.gameCamera.zoom;
-//        float effectiveViewportHeight = game.gameCamera.viewportHeight * game.gameCamera.zoom;
-//
-//        game.gameCamera.position.x = MathUtils.clamp(game.gameCamera.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
-//        game.gameCamera.position.y = MathUtils.clamp(game.gameCamera.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+        einheitInteraktion.handleInput(processor);
     }
 }

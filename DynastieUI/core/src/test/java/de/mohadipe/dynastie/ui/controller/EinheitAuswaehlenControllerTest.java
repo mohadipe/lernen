@@ -1,17 +1,19 @@
-package de.mohadipe.dynastie.ui.controler;
+package de.mohadipe.dynastie.ui.controller;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.mohadipe.dynastie.ui.entities.Einheit;
 import de.mohadipe.dynastie.ui.entities.Monk;
@@ -30,7 +32,7 @@ public class EinheitAuswaehlenControllerTest {
 
     @Test
     public void einheitAusgewaehltXYderEinheitGecklickt() {
-        Einheit einheit = new Monk();
+        Einheit einheit = new Monk(0,0);
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = einheit.getX();
         gecklicktePosition.y = einheit.getY();
@@ -40,7 +42,7 @@ public class EinheitAuswaehlenControllerTest {
 
     @Test
     public void einheitAusgewaehltFlaecheDerEinheitGecklickt() {
-        Einheit einheit = new Monk();
+        Einheit einheit = new Monk(0,0);
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = 5;
         gecklicktePosition.y = 5;
@@ -50,7 +52,7 @@ public class EinheitAuswaehlenControllerTest {
 
     @Test
     public void einheitAusgewaehltAufRandDerEinheitGecklickt() {
-        Einheit einheit = new Monk();
+        Einheit einheit = new Monk(0,0);
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = 12;
         gecklicktePosition.y = 12;
@@ -60,7 +62,7 @@ public class EinheitAuswaehlenControllerTest {
 
     @Test
     public void einheitNichtAusgewaehltAufMapGecklickt() {
-        Einheit einheit = new Monk();
+        Einheit einheit = new Monk(0,0);
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = 13;
         gecklicktePosition.y = 13;
@@ -70,11 +72,25 @@ public class EinheitAuswaehlenControllerTest {
 
     @Test
     public void einheitNichtAusgewaehltAusserhalbMapGecklickt() {
-        Einheit einheit = new Monk();
+        Einheit einheit = new Monk(0,0);
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = -1;
         gecklicktePosition.y = -1;
         EinheitAuswaehlenController einheitAuswaehlenController = new EinheitAuswaehlenController(einheit, gecklicktePosition);
         Assert.assertFalse(einheitAuswaehlenController.isEinheitAusgeweahlt());
+    }
+
+    @Test
+    public void ermittleAusgewaehlteEinheitAusListeEineEinheitGecklickt() {
+        List<Einheit> einheiten = new ArrayList<>();
+        einheiten.add(new Monk(0,0));
+        einheiten.add(new Monk(1,1));
+        einheiten.add(new Monk(23,23));
+        Vector3 gecklicktePosition = new Vector3();
+        gecklicktePosition.x = 0;
+        gecklicktePosition.y = 0;
+        EinheitAuswaehlenController einheitAuswaehlenController = new EinheitAuswaehlenController(einheiten, gecklicktePosition);
+        Einheit angecklickt = einheitAuswaehlenController.getGecklickteEinheit();
+        Assert.assertNotNull(angecklickt);
     }
 }

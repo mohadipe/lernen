@@ -46,5 +46,4 @@ public class KoordinatenSystemTest {
         Vector2 actualPosition = koordinatenSystem.getPossitionFuerFeld(feld);
         Assert.assertThat(actualPosition, CoreMatchers.equalTo(erwartetePosition));
     }
-
 }

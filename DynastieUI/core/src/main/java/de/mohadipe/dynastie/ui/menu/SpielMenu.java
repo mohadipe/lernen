@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import de.mohadipe.dynastie.ui.DynastieUI;
 import de.mohadipe.dynastie.ui.screens.listener.ExitButtonClickListener;
+import de.mohadipe.dynastie.ui.screens.listener.NextTurnButtonClickListener;
 
 public class SpielMenu {
 
@@ -25,6 +26,7 @@ public class SpielMenu {
         TextureAtlas buttonTextAtlas = new TextureAtlas("ui/button.pack");
         Skin skin = new Skin(buttonTextAtlas);
         TextButton exitButton = createButton("Exit", new ExitButtonClickListener(), skin);
+        TextButton nextTurnButton = createButton("Next Turn", new NextTurnButtonClickListener(game), skin);
         Label.LabelStyle labelStyle = new Label.LabelStyle(game.font, Color.WHITE);
         debugLabel = new Label("Debug Debug Debug", labelStyle);
 
@@ -32,6 +34,7 @@ public class SpielMenu {
         table.setBounds(200, 0, 100, 100);
         table.add(debugLabel);
         table.row();
+        table.add(nextTurnButton);
         table.add(exitButton);
         stage.addActor(table);
     }
