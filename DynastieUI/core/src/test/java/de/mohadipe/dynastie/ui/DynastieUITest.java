@@ -1,6 +1,7 @@
 package de.mohadipe.dynastie.ui;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,33 +11,40 @@ import de.mohadipe.dynastie.ui.entities.Spieler;
 
 public class DynastieUITest {
 
+    private DynastieUI dynastieUI = new DynastieUI();
+
+    @Before
+    public void setUp() {
+        dynastieUI.initSpieler();
+    }
+
     @Test
     public void naechsterSpieler() {
-        DynastieUI dynastieUI = new DynastieUI();
-        Spieler spieler = new Spieler(1);
-        Spieler spieler2 = new Spieler(2);
-        List<Spieler> spielerList = new ArrayList<>();
-        spielerList.add(spieler);
-        spielerList.add(spieler2);
-        dynastieUI.setAktivenSpieler(spieler);
-        dynastieUI.setSpielerListe(spielerList);
         dynastieUI.nextTurn();
         Spieler aktSpieler = dynastieUI.getAktiveSpieler();
-        Assert.assertEquals(spieler2, aktSpieler);
+        Assert.assertNotNull(aktSpieler);
+    }
+
+    @Test
+    public void naechsterSpielerNichtDerGleiche() {
+        dynastieUI.nextTurn();
+        Spieler aktSpieler = dynastieUI.getAktiveSpieler();
+        Assert.assertNotNull(aktSpieler);
+        dynastieUI.nextTurn();
+        Spieler naechsterSpieler = dynastieUI.getAktiveSpieler();
+        Assert.assertNotEquals(aktSpieler, naechsterSpieler);
     }
 
     @Test
     public void naechsterSpielerVonVorn() {
-        DynastieUI dynastieUI = new DynastieUI();
-        Spieler spieler = new Spieler(1);
-        Spieler spieler2 = new Spieler(2);
-        List<Spieler> spielerList = new ArrayList<>();
-        spielerList.add(spieler);
-        spielerList.add(spieler2);
-        dynastieUI.setAktivenSpieler(spieler2);
-        dynastieUI.setSpielerListe(spielerList);
         dynastieUI.nextTurn();
         Spieler aktSpieler = dynastieUI.getAktiveSpieler();
-        Assert.assertEquals(spieler, aktSpieler);
+        Assert.assertNotNull(aktSpieler);
+        dynastieUI.nextTurn();
+        Spieler naechsterSpieler = dynastieUI.getAktiveSpieler();
+        Assert.assertNotEquals(aktSpieler, naechsterSpieler);
+        dynastieUI.nextTurn();
+        Spieler ersterSpieler = dynastieUI.getAktiveSpieler();
+        Assert.assertEquals(aktSpieler, ersterSpieler);
     }
 }

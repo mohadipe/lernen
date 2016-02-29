@@ -28,11 +28,6 @@ public class KoordinatenSystem {
         mapPixelHeight = mapHeight * tilePixelHeight;
     }
 
-    public void insertDebugInfoInto(Label debug) {
-        debug.setText("MapWith: " + mapHeight + " MapHeight: " + mapHeight + "\n TilePixelWidth: " + tilePixelWidth + " TilePixelHeight: " + tilePixelHeight
-                + "\n MapPixelWidth: " + mapPixelWidth + " MapPixelHeight: " + mapPixelHeight);
-    }
-
     public Vector2 getMitteDerMap() {
         Vector2 mitteDerMap = new Vector2();
         mitteDerMap.x = mapPixelWidth / 2;
@@ -57,7 +52,19 @@ public class KoordinatenSystem {
     public Vector2 getPossitionFuerFeld(Feld feld) {
         float x = feld.getX() * tilePixelWidth - tilePixelWidth;
         float y = feld.getY() * tilePixelHeight - tilePixelHeight;
-        return new Vector2(x, y);
+        if (isKoordinateAufKarte(x,y)) {
+            return new Vector2(x, y);
+        } else {
+            return null;
+        }
+    }
+
+    private boolean isKoordinateAufKarte(float x, float y) {
+        if ((x >= 0 && x <= mapPixelWidth)
+            && (y >= 0 && y <= mapPixelWidth)) {
+            return true;
+        }
+        return false;
     }
 
     public float getFeldLaengeX() {

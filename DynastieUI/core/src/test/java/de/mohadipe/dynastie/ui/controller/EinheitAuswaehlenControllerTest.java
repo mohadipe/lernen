@@ -32,7 +32,7 @@ public class EinheitAuswaehlenControllerTest {
 
     @Test
     public void einheitAusgewaehltXYderEinheitGecklickt() {
-        Einheit einheit = new Monk(0,0);
+        Einheit einheit = new Monk(0f,0f);
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = einheit.getX();
         gecklicktePosition.y = einheit.getY();
@@ -42,7 +42,7 @@ public class EinheitAuswaehlenControllerTest {
 
     @Test
     public void einheitAusgewaehltFlaecheDerEinheitGecklickt() {
-        Einheit einheit = new Monk(0,0);
+        Einheit einheit = new Monk(0f,0f);
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = 5;
         gecklicktePosition.y = 5;
@@ -52,7 +52,7 @@ public class EinheitAuswaehlenControllerTest {
 
     @Test
     public void einheitAusgewaehltAufRandDerEinheitGecklickt() {
-        Einheit einheit = new Monk(0,0);
+        Einheit einheit = new Monk(0f,0f);
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = 12;
         gecklicktePosition.y = 12;
@@ -62,7 +62,7 @@ public class EinheitAuswaehlenControllerTest {
 
     @Test
     public void einheitNichtAusgewaehltAufMapGecklickt() {
-        Einheit einheit = new Monk(0,0);
+        Einheit einheit = new Monk(0f,0f);
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = 13;
         gecklicktePosition.y = 13;
@@ -72,7 +72,7 @@ public class EinheitAuswaehlenControllerTest {
 
     @Test
     public void einheitNichtAusgewaehltAusserhalbMapGecklickt() {
-        Einheit einheit = new Monk(0,0);
+        Einheit einheit = new Monk(0f,0f);
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = -1;
         gecklicktePosition.y = -1;
@@ -83,9 +83,9 @@ public class EinheitAuswaehlenControllerTest {
     @Test
     public void ermittleAusgewaehlteEinheitAusListeEineEinheitGecklickt() {
         List<Einheit> einheiten = new ArrayList<>();
-        einheiten.add(new Monk(0,0));
-        einheiten.add(new Monk(1,1));
-        einheiten.add(new Monk(23,23));
+        einheiten.add(new Monk(0f,0f));
+        einheiten.add(new Monk(1f,1f));
+        einheiten.add(new Monk(23f,23f));
         Vector3 gecklicktePosition = new Vector3();
         gecklicktePosition.x = 0;
         gecklicktePosition.y = 0;

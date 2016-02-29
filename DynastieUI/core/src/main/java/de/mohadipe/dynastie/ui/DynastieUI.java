@@ -58,7 +58,7 @@ public class DynastieUI extends Game {
         setScreen(screen);
 	}
 
-    private void initSpieler() {
+    protected void initSpieler() {
         spielerListe = new ArrayList<>();
         spielerListe.add(new Spieler(1));
         spielerListe.add(new Spieler(2));

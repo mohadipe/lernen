@@ -17,13 +17,11 @@ import de.mohadipe.dynastie.ui.menu.SpielMenu;
 
 public class EinheitInteraktion {
 
-    private final SpielMenu menu;
     private final KoordinatenSystem koordinatenSystem;
     private DynastieUI game;
 
-    public EinheitInteraktion(DynastieUI game, SpielMenu menu, KoordinatenSystem koordinatenSystem) {
+    public EinheitInteraktion(DynastieUI game, KoordinatenSystem koordinatenSystem) {
         this.game = game;
-        this.menu = menu;
         this.koordinatenSystem = koordinatenSystem;
     }
 
@@ -31,7 +29,6 @@ public class EinheitInteraktion {
         EinheitenController einheitenController = game.getEinheitenController();
         if (processor.isLeftMouseClicked()) {
             Vector2 screenKoords = processor.getClickedMousePosition();
-            menu.getDebugLabel().setText("Mouse geklickt an X: " + screenKoords.x + " und Y: " + screenKoords.y);
             Vector3 worldKoords = koordinatenSystem.getWorldKoords(game.gameCamera, screenKoords);
             // Herausfinden ob eine Einheit angeklickt wurde.
             List<Einheit> einheits = einheitenController.getEinheitenDesSpielers(game.getAktiveSpieler());
@@ -53,7 +50,9 @@ public class EinheitInteraktion {
 //                    DynastieLogik dynastieLogik = DynastieLogikAdapter.getInstance();
 //                    if (dynastieLogik.isBewegungErlaubt(logikEinheit, logikZielFeld, logikAktuellesFeld)) {
                         // positioniere Einheit in Feld
+                    if (possitionFuerFeld != null) {
                         einheitenController.bewegeAktiveEinheit(possitionFuerFeld);
+                    }
 //                    } else {
 //                         TODO Hinweis Reichweite der Einheit überschritten.
 //                    }
