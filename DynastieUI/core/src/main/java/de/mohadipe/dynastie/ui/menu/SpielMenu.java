@@ -16,31 +16,36 @@ import de.mohadipe.dynastie.ui.screens.listener.NextTurnButtonClickListener;
 public class SpielMenu {
 
     DynastieUI game;
-    private Label debugLabel;
+    private Label console;
 
     public SpielMenu(DynastieUI game){
         this.game = game;
     }
 
-    public void addMenuToStage(Stage stage) {
+    public Table getMainMenu() {
         TextureAtlas buttonTextAtlas = new TextureAtlas("ui/button.pack");
         Skin skin = new Skin(buttonTextAtlas);
+
+        Table main = new Table(skin);
+        main.setFillParent(true);
+        main.debug();
+
         TextButton exitButton = createButton("Exit", new ExitButtonClickListener(), skin);
         TextButton nextTurnButton = createButton("Next Turn", new NextTurnButtonClickListener(game), skin);
+
+        Table t = new Table(skin);
         Label.LabelStyle labelStyle = new Label.LabelStyle(game.font, Color.WHITE);
-        debugLabel = new Label("Debug Debug Debug", labelStyle);
-
-        Table table = new Table(null);
-        table.setBounds(200, 0, 100, 100);
-        table.add(debugLabel);
-        table.row();
-        table.add(nextTurnButton);
-        table.add(exitButton);
-        stage.addActor(table);
-    }
-
-    public Label getDebugLabel() {
-        return debugLabel;
+        console = new Label("Label2", labelStyle);
+        t.add(console);
+        main.add(t).expandX().height(20);
+        main.row();
+        main.add().expand();
+        main.row();
+        Table b = new Table(skin);
+        b.add(nextTurnButton);
+        b.add(exitButton);
+        main.add(b).expandX().height(20);
+        return main;
     }
 
     private TextButton createButton(String text, EventListener buttonclickListener, Skin skin) {
@@ -55,5 +60,9 @@ public class SpielMenu {
         tmpButton.addListener(buttonclickListener);
         tmpButton.pad(20);
         return tmpButton;
+    }
+
+    public Label getConsole() {
+        return console;
     }
 }

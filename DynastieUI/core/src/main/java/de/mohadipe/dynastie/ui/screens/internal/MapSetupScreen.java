@@ -2,21 +2,17 @@ package de.mohadipe.dynastie.ui.screens.internal;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import de.mohadipe.dynastie.ui.DynastieUI;
@@ -31,8 +27,6 @@ import de.mohadipe.dynastie.ui.map.Feld;
 import de.mohadipe.dynastie.ui.map.KoordinatenSystem;
 import de.mohadipe.dynastie.ui.menu.SpielMenu;
 import de.mohadipe.dynastie.ui.screens.external.IMapSetupScreen;
-import de.mohadipe.dynastie.ui.screens.listener.ExitButtonClickListener;
-import de.mohadipe.dynastie.ui.screens.listener.NextTurnButtonClickListener;
 
 public class MapSetupScreen implements IMapSetupScreen {
 
@@ -42,11 +36,10 @@ public class MapSetupScreen implements IMapSetupScreen {
     private TiledMapRenderer renderer;
     private KoordinatenSystem koordinatenSystem;
 
-    private Skin skin;
     private Stage stage;
+    private Label console;
 
     private int[] background = new int[]{0}, foreground = new int[]{1};
-//    private SpielMenu menu;
     private GameCameraBewegung cameraBewegung;
     private EinheitInteraktion einheitInteraktion;
 
@@ -58,8 +51,6 @@ public class MapSetupScreen implements IMapSetupScreen {
 //        marschMusic.play();
 //        https://github.com/libgdx/libgdx/wiki/Tile-maps
 //        https://www.youtube.com/watch?v=DOpqkaX9844
-        TextureAtlas buttonTextAtlas = new TextureAtlas("ui/button.pack");
-        skin = new Skin(buttonTextAtlas);
 
         stage = new InputProcessor();
         stage.setViewport(new ScreenViewport());
@@ -69,64 +60,31 @@ public class MapSetupScreen implements IMapSetupScreen {
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
-        game.gameCamera.setToOrtho(false, (w / (h - 40)) * 10, 10);
-        game.gameCamera.update();
-        Gdx.input.setInputProcessor(stage);
-
         final String einfach_ortho_map = "maps/einfach_ortho_map.tmx";
         tiledMap = new TmxMapLoader().load(einfach_ortho_map);
-        float unitScale = 1/32f;
+//        float unitScale = 1/12f;
         renderer = new OrthogonalTiledMapRenderer(tiledMap); //, unitScale);
         MapProperties properties = tiledMap.getProperties();
         // https://github.com/libgdx/libgdx/wiki/Tile-maps
         // Mit unitScale kann ich mir vielleicht das umgerechne sparen.
         koordinatenSystem = new KoordinatenSystem(properties);
+
+        game.gameCamera.setToOrtho(false, (w / (h - 40)) * 10, 10);
+        Vector2 mitteDerMap = koordinatenSystem.getMitteDerMap();
+        game.gameCamera.translate(mitteDerMap);
+        game.gameCamera.zoom = 85f;
+        game.gameCamera.update();
+        Gdx.input.setInputProcessor(stage);
+
         platziereEinheiten();
         einheitInteraktion = new EinheitInteraktion(game, koordinatenSystem);
 
-        Table main = getMainMenu();
+        SpielMenu spielMenu = new SpielMenu(game);
+        Table main = spielMenu.getMainMenu();
+        this.console = spielMenu.getConsole();
 
         stage.addActor(main);
 
-    }
-
-    private Table getMainMenu() {
-        Table main = new Table(skin);
-        main.setFillParent(true);
-        main.debug();
-
-        TextureAtlas buttonTextAtlas = new TextureAtlas("ui/button.pack");
-        Skin skin = new Skin(buttonTextAtlas);
-        TextButton exitButton = createButton("Exit", new ExitButtonClickListener(), skin);
-        TextButton nextTurnButton = createButton("Next Turn", new NextTurnButtonClickListener(game), skin);
-
-        Table t = new Table(skin);
-        Label.LabelStyle labelStyle = new Label.LabelStyle(game.font, Color.WHITE);
-        t.add(nextTurnButton);
-        t.add(new Label("Label2", labelStyle));
-        main.add(t).expandX().height(20);
-        main.row();
-        main.add().expand();
-        main.row();
-        Table b = new Table(skin);
-        b.add(new Label("Label3", labelStyle));
-        b.add(exitButton);
-        main.add(b).expandX().height(20);
-        return main;
-    }
-
-    private TextButton createButton(String text, EventListener buttonclickListener, Skin skin) {
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = skin.getDrawable("button.up.patch");
-        textButtonStyle.down = skin.getDrawable("button.down.patch");
-        textButtonStyle.pressedOffsetX = 1;
-        textButtonStyle.pressedOffsetY = -1;
-        textButtonStyle.font = game.font;
-        textButtonStyle.fontColor = Color.BLACK;
-        TextButton tmpButton = new TextButton(text, textButtonStyle);
-        tmpButton.addListener(buttonclickListener);
-        tmpButton.pad(20);
-        return tmpButton;
     }
 
     private void platziereEinheiten() {
@@ -166,7 +124,7 @@ public class MapSetupScreen implements IMapSetupScreen {
 //        game.batch.end();
 
         // Prepare for embedded map drawing by applying the desired viewport for the map
-        Gdx.gl.glViewport(0, 20, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight() - 40);
+        Gdx.gl.glViewport(0, 20, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - 40);
         game.gameCamera.update();
         renderer.setView(game.gameCamera);
         renderer.render();
@@ -216,6 +174,8 @@ public class MapSetupScreen implements IMapSetupScreen {
     }
 
     private void handleInput(InputProcessor processor) {
+        processor.setConsole(console);
+
         cameraBewegung.handleInput(processor);
 
         einheitInteraktion.handleInput(processor);

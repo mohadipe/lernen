@@ -38,7 +38,7 @@ public class KoordinatenSystem {
     public Vector3 getWorldKoords(OrthographicCamera gameCamera, Vector2 screenKoords) {
         Vector3 positionWithZ = new Vector3();
         positionWithZ.x = screenKoords.x;
-        positionWithZ.y = screenKoords.y;
+        positionWithZ.y = screenKoords.y + 10; // Die 10 wegen dem Rand oben und unten.
         positionWithZ.z = gameCamera.zoom;
         return gameCamera.unproject(positionWithZ);
     }
@@ -61,7 +61,7 @@ public class KoordinatenSystem {
 
     private boolean isKoordinateAufKarte(float x, float y) {
         if ((x >= 0 && x <= mapPixelWidth)
-            && (y >= 0 && y <= mapPixelWidth)) {
+            && (y >= 0 && y <= mapPixelHeight)) {
             return true;
         }
         return false;

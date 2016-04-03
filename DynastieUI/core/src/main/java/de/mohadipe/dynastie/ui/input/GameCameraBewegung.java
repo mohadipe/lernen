@@ -1,6 +1,7 @@
 package de.mohadipe.dynastie.ui.input;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class GameCameraBewegung {
     private OrthographicCamera camera;
@@ -13,9 +14,11 @@ public class GameCameraBewegung {
     public void handleInput(InputProcessor processor) {
         if (processor.isZoomingOut()) {
             camera.zoom += 0.02;
+            processor.outputConsole("Zoom: " + camera.zoom);
         }
         if (processor.isZoomingIn()) {
             camera.zoom -= 0.02;
+            processor.outputConsole("Zoom: " + camera.zoom);
         }
         if (processor.isGameCamMoveLeft()) {
             camera.translate(-3, 0, 0);

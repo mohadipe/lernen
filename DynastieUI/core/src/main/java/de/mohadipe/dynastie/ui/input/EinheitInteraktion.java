@@ -2,6 +2,7 @@ package de.mohadipe.dynastie.ui.input;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class EinheitInteraktion {
         if (processor.isLeftMouseClicked()) {
             Vector2 screenKoords = processor.getClickedMousePosition();
             Vector3 worldKoords = koordinatenSystem.getWorldKoords(game.gameCamera, screenKoords);
+            processor.outputConsole("WKoords: " + worldKoords.toString());
             // Herausfinden ob eine Einheit angeklickt wurde.
             List<Einheit> einheits = einheitenController.getEinheitenDesSpielers(game.getAktiveSpieler());
             EinheitAuswaehlenController einheitAuswaehlenController = new EinheitAuswaehlenController(einheits, worldKoords);

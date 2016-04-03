@@ -3,6 +3,7 @@ package de.mohadipe.dynastie.ui.input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import de.mohadipe.dynastie.ui.DynastieUI;
 
@@ -18,6 +19,7 @@ public class InputProcessor extends Stage {
     private boolean leftMouseClicked;
     private Vector2 clickedMousePosition;
     private boolean rightMouseClicked;
+    private Label console;
 
     @Override
     public boolean keyDown(int keycode) {
@@ -89,6 +91,7 @@ public class InputProcessor extends Stage {
             getClickedMousePosition().x = screenX;
             getClickedMousePosition().y = screenY;
         }
+        console.setText("X: "+screenX+" Y: "+screenY);
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
@@ -150,5 +153,13 @@ public class InputProcessor extends Stage {
 
     public void resetRightMouseClick() {
         rightMouseClicked = false;
+    }
+
+    public void setConsole(Label console) {
+        this.console = console;
+    }
+
+    public void outputConsole(String output) {
+        console.setText(output);
     }
 }
