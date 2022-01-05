@@ -1,4 +1,1 @@
-RewriteEngine On
-RewriteRule ^$ index.html [L]
-RewriteCond %{REQUEST_URI} ^/hochzeit/$ [NC]
-RewriteRule ^(.*) https://localhost:65102/$1 [P]
+RewriteBase /
